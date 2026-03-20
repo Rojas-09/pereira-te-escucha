@@ -21,10 +21,27 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permite adjuntar fotos como evidencia para tu PQRD.",
+          "cameraPermission": "Permite tomar fotos para adjuntar evidencia de tu caso."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Permite ubicar en el mapa el punto exacto de tu solicitud ciudadana."
+        }
+      ]
+    ]
   }
 }
