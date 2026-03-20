@@ -41,6 +41,26 @@ type PersonalData = {
 type ResponseMedium = 'cartelera' | 'correo_electronico' | 'correo_fisico';
 type SubmitStageStatus = 'pending' | 'active' | 'done';
 
+type TrackingEvent = {
+  to_status: string;
+  reason: string | null;
+  detail: string | null;
+  created_at: string;
+};
+
+type TrackingSnapshot = {
+  trackingCode: string;
+  status: string;
+  consecutivoOficial?: string | null;
+  radicadoOficial?: string | null;
+  portalMessage?: string | null;
+  lastErrorCode?: string | null;
+  lastErrorMessage?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  events: TrackingEvent[];
+};
+
 const API_BASE_URL = 'http://10.0.2.2:3001';
 
 async function fetchWithTimeout(resource: string, options: RequestInit, timeoutMs = 30000) {
@@ -260,6 +280,46 @@ function generateRadicado(type: string) {
   return `PQR-${type.slice(0, 3).toUpperCase()}-${stamp}-${randomCode}`;
 }
 
+function formatTrackingStatusLabel(status: string) {
+  switch (status) {
+    case 'recibido':
+      return 'Recibido';
+    case 'en_proceso':
+      return 'En proceso';
+    case 'radicado':
+      return 'Radicado';
+    case 'error_temporal':
+      return 'Error temporal';
+    case 'fallido':
+      return 'Fallido';
+    default:
+      return status;
+  }
+}
+
+function shouldContinuePolling(status: string) {
+  return status === 'recibido' || status === 'en_proceso' || status === 'error_temporal';
+}
+
+function formatStatusDate(value?: string) {
+  if (!value) {
+    return '';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return '';
+  }
+
+  return parsed.toLocaleString('es-CO', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Sora_400Regular,
@@ -275,6 +335,10 @@ export default function App() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [radicadoCode, setRadicadoCode] = useState('');
+  const [trackingCode, setTrackingCode] = useState('');
+  const [trackingSnapshot, setTrackingSnapshot] = useState<TrackingSnapshot | null>(null);
+  const [isRefreshingStatus, setIsRefreshingStatus] = useState(false);
+  const [trackingStatusError, setTrackingStatusError] = useState('');
   const [locationNotice, setLocationNotice] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('Buscando direccion...');
   const [isResolvingAddress, setIsResolvingAddress] = useState(false);
@@ -302,6 +366,7 @@ export default function App() {
   const stageTranslateY = useRef(submitStages.map(() => new Animated.Value(6))).current;
   const stageCheckScale = useRef(submitStages.map(() => new Animated.Value(1))).current;
   const previousStageStatus = useRef<SubmitStageStatus[]>(submitStageStatus);
+  const statusPollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const setStageActive = (index: number) => {
     setSubmitStageStatus((prev) =>
@@ -584,6 +649,70 @@ export default function App() {
     return Date.now() - stageStartedAt;
   };
 
+  const fetchTrackingStatus = async (code: string, timeoutMs = 10000) => {
+    if (!code) {
+      return;
+    }
+
+    setIsRefreshingStatus(true);
+    try {
+      const response = await fetchWithTimeout(`${API_BASE_URL}/api/pqrs/status/${encodeURIComponent(code)}`, { method: 'GET' }, timeoutMs);
+      const payload = await response.json();
+
+      if (!response.ok || !payload?.ok || !payload?.data) {
+        throw new Error(payload?.message || payload?.detail || 'No fue posible consultar el estado actual');
+      }
+
+      setTrackingSnapshot(payload.data as TrackingSnapshot);
+      setTrackingStatusError('');
+    } catch (error) {
+      const safeMessage = error instanceof Error ? error.message : 'No fue posible consultar el estado';
+      setTrackingStatusError(safeMessage);
+    } finally {
+      setIsRefreshingStatus(false);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (statusPollingRef.current) {
+        clearInterval(statusPollingRef.current);
+        statusPollingRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (statusPollingRef.current) {
+      clearInterval(statusPollingRef.current);
+      statusPollingRef.current = null;
+    }
+
+    if (currentStep !== 5 || !trackingCode) {
+      return;
+    }
+
+    fetchTrackingStatus(trackingCode).catch(() => {
+      setTrackingStatusError('No fue posible consultar el estado');
+    });
+
+    const activeStatus = trackingSnapshot?.status || '';
+    if (shouldContinuePolling(activeStatus)) {
+      statusPollingRef.current = setInterval(() => {
+        fetchTrackingStatus(trackingCode, 7000).catch(() => {
+          setTrackingStatusError('No fue posible actualizar el estado');
+        });
+      }, 8000);
+    }
+
+    return () => {
+      if (statusPollingRef.current) {
+        clearInterval(statusPollingRef.current);
+        statusPollingRef.current = null;
+      }
+    };
+  }, [currentStep, trackingCode, trackingSnapshot?.status]);
+
   const handleSend = async () => {
     setIsSubmitting(true);
     setSubmitStageStatus(['active', 'pending', 'pending', 'pending']);
@@ -659,8 +788,11 @@ export default function App() {
 
       const realCode = payload?.data?.radicado || payload?.data?.consecutive || generateRadicado(selectedType);
       setRadicadoCode(realCode);
-  const stage3Duration = await ensureMinStageDuration(stageStart, 1200);
-  setStageDone(3, stage3Duration);
+        setTrackingCode(payload?.data?.trackingCode || '');
+        setTrackingSnapshot(null);
+        setTrackingStatusError('');
+        const stage3Duration = await ensureMinStageDuration(stageStart, 1200);
+        setStageDone(3, stage3Duration);
       setCurrentStep(5);
     } catch (error) {
       let safeMessage = error instanceof Error ? error.message : 'Error no controlado';
@@ -918,19 +1050,77 @@ export default function App() {
         <Text style={styles.stepTitle}>✅ Radicación completada</Text>
         <Text style={styles.successTitle}>Tu caso fue registrado correctamente 🎉</Text>
         <Text style={styles.successCode}>{radicadoCode}</Text>
+        {trackingCode ? <Text style={styles.trackingCodeText}>Tracking interno: {trackingCode}</Text> : null}
         <Text style={styles.stepHint}>
           Guarda este número para hacer seguimiento. También puedes radicar otro caso desde el botón inferior.
         </Text>
 
+        <View style={styles.statusPanel}>
+          <Text style={styles.statusPanelTitle}>Seguimiento del estado</Text>
+          <Text style={styles.statusValueText}>
+            Estado actual:{' '}
+            {trackingSnapshot?.status
+              ? formatTrackingStatusLabel(trackingSnapshot.status)
+              : trackingCode
+                ? 'Consultando...'
+                : 'No disponible'}
+          </Text>
+          {trackingSnapshot?.radicadoOficial ? (
+            <Text style={styles.statusMetaText}>Radicado oficial: {trackingSnapshot.radicadoOficial}</Text>
+          ) : null}
+          {trackingSnapshot?.consecutivoOficial ? (
+            <Text style={styles.statusMetaText}>Consecutivo oficial: {trackingSnapshot.consecutivoOficial}</Text>
+          ) : null}
+          {trackingSnapshot?.updatedAt ? (
+            <Text style={styles.statusMetaText}>Ultima actualizacion: {formatStatusDate(trackingSnapshot.updatedAt)}</Text>
+          ) : null}
+          {trackingSnapshot?.lastErrorMessage ? (
+            <Text style={styles.statusErrorText}>Detalle de error: {trackingSnapshot.lastErrorMessage}</Text>
+          ) : null}
+          {trackingStatusError ? <Text style={styles.statusErrorText}>{trackingStatusError}</Text> : null}
+
+          <Pressable
+            style={[styles.statusRefreshButton, (!trackingCode || isRefreshingStatus) && styles.primaryDisabled]}
+            disabled={!trackingCode || isRefreshingStatus}
+            onPress={() => fetchTrackingStatus(trackingCode)}
+          >
+            <Text style={styles.statusRefreshButtonText}>
+              {isRefreshingStatus ? 'Actualizando...' : 'Actualizar estado'}
+            </Text>
+          </Pressable>
+
+          {trackingSnapshot?.events?.length ? (
+            <View style={styles.timelineWrap}>
+              {trackingSnapshot.events.map((event, index) => (
+                <View key={`${event.created_at}-${index}`} style={styles.timelineItem}>
+                  <View style={styles.timelineDot} />
+                  <View style={styles.timelineContent}>
+                    <Text style={styles.timelineTitle}>{formatTrackingStatusLabel(event.to_status)}</Text>
+                    {event.detail ? <Text style={styles.timelineDetail}>{event.detail}</Text> : null}
+                    {event.created_at ? <Text style={styles.timelineDate}>{formatStatusDate(event.created_at)}</Text> : null}
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : null}
+        </View>
+
         <Pressable
           style={styles.restartButton}
           onPress={() => {
+            if (statusPollingRef.current) {
+              clearInterval(statusPollingRef.current);
+              statusPollingRef.current = null;
+            }
             setCurrentStep(1);
             setInformalContext('');
             setFormalLetter('');
             setPhotos([]);
             setPersonalData({ fullName: '', idNumber: '', email: '', phone: '' });
             setRadicadoCode('');
+            setTrackingCode('');
+            setTrackingSnapshot(null);
+            setTrackingStatusError('');
           }}
         >
           <Text style={styles.restartButtonText}>🔁 Radicar otro caso</Text>
@@ -1403,6 +1593,94 @@ const styles = StyleSheet.create({
     color: '#0e766e',
     letterSpacing: 0.4,
     fontFamily: 'Sora_700Bold',
+  },
+  trackingCodeText: {
+    marginTop: -2,
+    marginBottom: 8,
+    color: '#2f5f68',
+    fontSize: 12,
+    fontFamily: 'Sora_600SemiBold',
+  },
+  statusPanel: {
+    marginTop: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#d2e7e2',
+    backgroundColor: '#f6fcfa',
+    padding: 12,
+  },
+  statusPanelTitle: {
+    color: '#1d4f58',
+    fontSize: 14,
+    marginBottom: 8,
+    fontFamily: 'Sora_700Bold',
+  },
+  statusValueText: {
+    color: '#214c54',
+    fontSize: 13,
+    fontFamily: 'Sora_600SemiBold',
+  },
+  statusMetaText: {
+    marginTop: 6,
+    color: '#42656d',
+    fontSize: 12,
+    fontFamily: 'Sora_400Regular',
+  },
+  statusErrorText: {
+    marginTop: 8,
+    color: '#b42318',
+    fontSize: 12,
+    fontFamily: 'Sora_600SemiBold',
+  },
+  statusRefreshButton: {
+    marginTop: 10,
+    borderRadius: 10,
+    backgroundColor: '#0f4c5c',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  statusRefreshButtonText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontFamily: 'Sora_700Bold',
+  },
+  timelineWrap: {
+    marginTop: 12,
+    gap: 8,
+  },
+  timelineItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  timelineDot: {
+    width: 9,
+    height: 9,
+    marginTop: 4,
+    borderRadius: 99,
+    backgroundColor: '#0e766e',
+    marginRight: 8,
+  },
+  timelineContent: {
+    flex: 1,
+  },
+  timelineTitle: {
+    color: '#1f4e57',
+    fontSize: 12,
+    fontFamily: 'Sora_600SemiBold',
+  },
+  timelineDetail: {
+    marginTop: 2,
+    color: '#4e6e76',
+    fontSize: 11,
+    fontFamily: 'Sora_400Regular',
+    lineHeight: 16,
+  },
+  timelineDate: {
+    marginTop: 2,
+    color: '#6f8e96',
+    fontSize: 11,
+    fontFamily: 'Sora_400Regular',
   },
   restartButton: {
     marginTop: 16,
