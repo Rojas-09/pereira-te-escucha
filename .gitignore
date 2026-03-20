@@ -39,3 +39,12 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# env files
+.env
+.env.*
+!.env.example
+
+# backend debug artifacts
+backend/failure-*.png
+backend/*.log
