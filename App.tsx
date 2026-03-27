@@ -61,7 +61,13 @@ type TrackingSnapshot = {
   events: TrackingEvent[];
 };
 
-const API_BASE_URL = 'http://10.0.2.2:3001';
+// Configuración de API según el entorno
+// Para emulador Android: 10.0.2.2
+// Para celular físico: IP de tu PC en la red local
+// Para producción: URL del servidor real
+const API_BASE_URL = __DEV__ 
+  ? 'http://192.168.100.12:3001'  // Cambiar por la IP de tu PC
+  : 'https://api.pereira-pqrs.com';  // URL de producción (cambiar cuando despliegues)
 
 async function fetchWithTimeout(resource: string, options: RequestInit, timeoutMs = 30000) {
   const controller = new AbortController();
