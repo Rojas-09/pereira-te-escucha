@@ -7,9 +7,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import multer from 'multer';
 import pinoHttp from 'pino-http';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { MAX_FILES, MAX_FILE_SIZE_BYTES } from './constants.js';
-import { mapToHumanValues, validateBody, validateFiles } from './validation.js';
+import { mapToHumanValues, validateBody, validateFiles, sanitizeText } from './validation.js';
 import { submitAnonymousPQRS } from './pereiraAutomation.js';
 import { pool, query } from './db.js';
 
@@ -20,6 +21,23 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 const PEREIRA_FORM_URL = process.env.PEREIRA_FORM_URL || 'https://doc.pereira.gov.co/ws/pqr/index.html';
 const PLAYWRIGHT_HEADLESS = (process.env.PLAYWRIGHT_HEADLESS || 'true').toLowerCase() !== 'false';
 const PLAYWRIGHT_TIMEOUT_MS = Number(process.env.PLAYWRIGHT_TIMEOUT_MS || 90000);
+
+// Rate limiting: Protección contra abuso de API
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100, // máximo 100 requests por ventana
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, code: 'TOO_MANY_REQUESTS', message: 'Demasiadas solicitudes. Intenta en 15 minutos.' },
+});
+
+const submitLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hora
+  max: 10, // máximo 10 radicaciones por hora por IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, code: 'SUBMIT_RATE_LIMITED', message: 'Limite de radicaciones alcanzado. Intenta en 1 hora.' },
+});
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -39,10 +57,26 @@ const upload = multer({
 });
 
 const app = express();
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 app.use(cors({ origin: ALLOWED_ORIGIN === '*' ? true : ALLOWED_ORIGIN }));
 app.use(express.json({ limit: '2mb' }));
 app.use(pinoHttp());
+app.use(generalLimiter);
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'pereira-pqrs-backend' });
@@ -126,7 +160,7 @@ app.get('/api/pqrs/status/:trackingCode', async (req, res) => {
   }
 });
 
-app.post('/api/pqrs/submit-anonymous', upload.array('files', MAX_FILES), async (req, res) => {
+app.post('/api/pqrs/submit-anonymous', submitLimiter, upload.array('files', MAX_FILES), async (req, res) => {
   const files = req.files || [];
 
   const bodyValidation = validateBody(req.body);

@@ -14,6 +14,21 @@ export const ALLOWED_EXTENSIONS = new Set([
   '.pptx'
 ]);
 
+// MIME types permitidos para validación adicional
+export const ALLOWED_MIME_TYPES = new Set([
+  'application/vnd.ms-excel', // .xls
+  'application/msword', // .doc
+  'application/pdf', // .pdf
+  'image/jpeg', // .jpg, .jpeg
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+  'image/png', // .png
+  'image/tiff', // .tiff, .tif
+  'image/gif', // .gif
+  'application/vnd.ms-powerpoint', // .ppt
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+]);
+
 export const MAX_FILES = 10;
 export const MAX_FILE_SIZE_BYTES = 27 * 1024 * 1024;
 

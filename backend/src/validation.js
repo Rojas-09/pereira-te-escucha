@@ -1,13 +1,25 @@
 import path from 'node:path';
 import { z } from 'zod';
-import { ALLOWED_EXTENSIONS, MAX_FILES, MAX_FILE_SIZE_BYTES, MEDIO_RESPUESTA_LABEL, TIPO_SOLICITUD_LABEL } from './constants.js';
+import { ALLOWED_EXTENSIONS, MAX_FILES, MAX_FILE_SIZE_BYTES, MEDIO_RESPUESTA_LABEL, TIPO_SOLICITUD_LABEL, ALLOWED_MIME_TYPES } from './constants.js';
+
+// Sanitización contra XSS - elimina caracteres peligrosos
+export function sanitizeText(input) {
+  if (typeof input !== 'string') return '';
+  
+  return input
+    .replace(/[<>]/g, '') // Elimina < y > para prevenir HTML injection
+    .replace(/javascript:/gi, '') // Elimina javascript: URIs
+    .replace(/on\w+\s*=/gi, '') // Elimina event handlers como onclick=
+    .replace(/data:/gi, '') // Elimina data: URIs potencialmente peligrosos
+    .trim();
+}
 
 const requestSchema = z.object({
   medioRespuesta: z.enum(['cartelera', 'correo_electronico', 'correo_fisico']),
   correo: z.string().email().optional().or(z.literal('')),
   tipoSolicitud: z.enum(['peticion', 'queja', 'reclamo', 'sugerencia', 'denuncia']),
-  asunto: z.string().min(5).max(255),
-  descripcion: z.string().min(20),
+  asunto: z.string().min(5).max(255).transform(sanitizeText),
+  descripcion: z.string().min(20).transform(sanitizeText),
   aceptarTratamiento: z.coerce.boolean().default(true)
 });
 
@@ -56,10 +68,26 @@ export function validateFiles(files = []) {
       });
     }
 
+    // Validación de MIME type real
+    if (file.mimetype && !ALLOWED_MIME_TYPES.has(file.mimetype)) {
+      errors.push({
+        path: `files.${index}`,
+        message: `Tipo de archivo no permitido (${file.mimetype})`
+      });
+    }
+
     if (file.size > MAX_FILE_SIZE_BYTES) {
       errors.push({
         path: `files.${index}`,
         message: `El archivo ${file.originalname} supera 27 MB`
+      });
+    }
+
+    // Validación de nombre de archivo para prevenir path traversal
+    if (file.originalname && (file.originalname.includes('..') || file.originalname.includes('/'))) {
+      errors.push({
+        path: `files.${index}`,
+        message: `Nombre de archivo invalido`
       });
     }
   });
