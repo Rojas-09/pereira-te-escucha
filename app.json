@@ -36,6 +36,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "./plugins/withKotlinVersion",
+      "./plugins/withDisableBundleCompressionPatch",
       "expo-font",
       [
         "expo-image-picker",
