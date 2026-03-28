@@ -15,7 +15,6 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.pereira.pqrsapp",
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -24,19 +23,20 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION",
-        "READ_MEDIA_IMAGES"
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.RECORD_AUDIO"
       ],
       "predictiveBackGestureEnabled": false,
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.rojas09.pqiaapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font",
-      "expo-dev-client",
       [
         "expo-image-picker",
         {
@@ -50,6 +50,11 @@
           "locationWhenInUsePermission": "Permite ubicar en el mapa el punto exacto de tu solicitud ciudadana."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c9370033-d12a-4959-9d99-5345a2a2124d"
+      }
+    }
   }
 }
