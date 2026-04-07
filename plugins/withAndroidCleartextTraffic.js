@@ -10,7 +10,11 @@ module.exports = function withAndroidCleartextTraffic(config) {
       buildProfile === 'development' ||
       buildProfile === 'preview';
 
-    const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+    const mainApplication = AndroidConfig.Manifest.getMainApplication(config.modResults);
+    if (!mainApplication) {
+      return config;
+    }
+
     mainApplication.$['android:usesCleartextTraffic'] = shouldEnableCleartext ? 'true' : 'false';
     return config;
   });

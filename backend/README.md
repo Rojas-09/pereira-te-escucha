@@ -36,6 +36,27 @@ npx playwright install chromium
 npm run dev
 ```
 
+## Flujo local rapido (Windows + Docker)
+
+Desde la raiz de `pq-ia-app`:
+
+```bash
+npm run local:setup
+```
+
+Este comando automatiza:
+
+- Levantar PostgreSQL en Docker.
+- Crear base de datos y esquema minimo requerido.
+- Crear `backend/.env` desde `backend/.env.example`.
+- Validar conexion a base de datos.
+
+Luego inicia el backend con:
+
+```bash
+npm run local:backend
+```
+
 ## Pruebas
 
 ```bash

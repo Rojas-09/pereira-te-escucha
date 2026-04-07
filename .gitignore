@@ -36,10 +36,13 @@ yarn-error.*
 .envrc
 .env*.local
 !.env.example
+password.md
 
 # backend debug artifacts
 backend/failure-*.png
 backend/*.log
+.eas-build-view.json
+.eas-log-*.txt
 
 # typescript
 *.tsbuildinfo

@@ -16,7 +16,6 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -38,7 +37,6 @@
     },
     "plugins": [
       "expo-dev-client",
-      "./plugins/withAndroidCleartextTraffic",
       "./plugins/withKotlinVersion",
       "./plugins/withDisableBundleCompressionPatch",
       "expo-font",
