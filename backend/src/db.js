@@ -5,7 +5,7 @@ const { Pool } = pg;
 
 dotenv.config();
 
-const databaseUrl = process.env.DATABASE_URL || 'postgresql://pqrs_user:pqrs_pass@localhost:5432/pqrs_db';
+const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
   throw new Error('DATABASE_URL no esta configurada. Define la variable en .env');

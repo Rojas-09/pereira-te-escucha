@@ -16,6 +16,7 @@ Backend Node.js para radicar PQRSD anonimas en el formulario oficial de Pereira 
 Copia `.env.example` a `.env`.
 
 - `PORT`: puerto del backend (default 3001).
+- `DATABASE_URL`: cadena de conexion PostgreSQL (obligatoria).
 - `ALLOWED_ORIGIN`: origen permitido para CORS (`*` para desarrollo).
 - `PEREIRA_FORM_URL`: URL del formulario publico.
 - `PLAYWRIGHT_HEADLESS`: `true|false`.
@@ -33,6 +34,12 @@ npx playwright install chromium
 
 ```bash
 npm run dev
+```
+
+## Pruebas
+
+```bash
+npm test
 ```
 
 Healthcheck:

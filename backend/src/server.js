@@ -163,6 +163,16 @@ app.get('/api/pqrs/status/:trackingCode', async (req, res) => {
 app.post('/api/pqrs/submit-anonymous', submitLimiter, upload.array('files', MAX_FILES), async (req, res) => {
   const files = req.files || [];
 
+  req.log.info(
+    {
+      endpoint: '/api/pqrs/submit-anonymous',
+      contentType: req.headers['content-type'] || null,
+      bodyKeys: Object.keys(req.body || {}),
+      filesCount: files.length,
+    },
+    'Submit request received'
+  );
+
   const bodyValidation = validateBody(req.body);
   if (!bodyValidation.ok) {
     await cleanupFiles(files);

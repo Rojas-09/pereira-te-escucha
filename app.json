@@ -2,6 +2,7 @@
   "expo": {
     "name": "pq-ia-app",
     "slug": "pq-ia-app",
+    "scheme": "pqiaapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,6 +37,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "expo-dev-client",
+      "./plugins/withAndroidCleartextTraffic",
       "./plugins/withKotlinVersion",
       "./plugins/withDisableBundleCompressionPatch",
       "expo-font",

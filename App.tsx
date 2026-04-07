@@ -61,13 +61,22 @@ type TrackingSnapshot = {
   events: TrackingEvent[];
 };
 
-// Configuración de API según el entorno
-// Para emulador Android: 10.0.2.2
-// Para celular físico: IP de tu PC en la red local
-// Para producción: URL del servidor real
-const API_BASE_URL = __DEV__ 
-  ? 'http://192.168.100.12:3001'  // Cambiar por la IP de tu PC
-  : 'https://api.pereira-pqrs.com';  // URL de producción (cambiar cuando despliegues)
+const trimTrailingSlashes = (url: string) => url.replace(/\/+$/, '');
+
+const resolveApiBaseUrl = () => {
+  const configuredUrl = process.env.EXPO_PUBLIC_API_BASE_URL?.trim();
+  if (configuredUrl) {
+    return trimTrailingSlashes(configuredUrl);
+  }
+
+  if (__DEV__) {
+    return Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://localhost:3001';
+  }
+
+  return 'https://api.pereira-pqrs.com';
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 async function fetchWithTimeout(resource: string, options: RequestInit, timeoutMs = 30000) {
   const controller = new AbortController();
@@ -730,7 +739,7 @@ export default function App() {
       setStageActive(0);
       const healthResponse = await fetchWithTimeout(`${API_BASE_URL}/health`, { method: 'GET' }, 5000);
       if (!healthResponse.ok) {
-        throw new Error('El backend de radicacion no esta disponible.');
+        throw new Error(`El backend de radicacion no esta disponible en ${API_BASE_URL}.`);
       }
       const stage0Duration = await ensureMinStageDuration(stageStart, 900);
       setStageDone(0, stage0Duration);
@@ -804,6 +813,9 @@ export default function App() {
       let safeMessage = error instanceof Error ? error.message : 'Error no controlado';
       if (error instanceof Error && error.name === 'AbortError') {
         safeMessage = 'La radicacion tardo demasiado. Intenta de nuevo en unos segundos.';
+      } else if (safeMessage.toLowerCase().includes('network request failed')) {
+        safeMessage =
+          `No se pudo conectar con el backend (${API_BASE_URL}). Verifica EXPO_PUBLIC_API_BASE_URL, que el servidor este accesible desde tu celular y que Android permita trafico HTTP local en builds de desarrollo.`;
       }
       showAppNotice('No se pudo radicar', safeMessage, 'error');
     } finally {
