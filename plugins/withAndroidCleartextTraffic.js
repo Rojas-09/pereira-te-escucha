@@ -6,7 +6,6 @@ module.exports = function withAndroidCleartextTraffic(config) {
     const explicitFlag = (process.env.EXPO_PUBLIC_ALLOW_CLEARTEXT || '').toLowerCase();
     const shouldEnableCleartext =
       explicitFlag === 'true' ||
-      buildProfile === '' ||
       buildProfile === 'development' ||
       buildProfile === 'preview';
 

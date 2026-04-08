@@ -21,6 +21,7 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 const PEREIRA_FORM_URL = process.env.PEREIRA_FORM_URL || 'https://doc.pereira.gov.co/ws/pqr/index.html';
 const PLAYWRIGHT_HEADLESS = (process.env.PLAYWRIGHT_HEADLESS || 'true').toLowerCase() !== 'false';
 const PLAYWRIGHT_TIMEOUT_MS = Number(process.env.PLAYWRIGHT_TIMEOUT_MS || 90000);
+const REQUIRED_TABLES = ['requests', 'request_status_events', 'request_attachments', 'automation_jobs'];
 
 // Rate limiting: Protección contra abuso de API
 const generalLimiter = rateLimit({
@@ -264,10 +265,64 @@ app.use((error, _req, res, _next) => {
   return res.status(500).json({ ok: false, code: 'INTERNAL_ERROR', message: 'Error interno no controlado' });
 });
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`PQRS backend listening on port ${PORT}`);
-});
+startServer();
+
+async function startServer() {
+  try {
+    await ensureDatabaseBootstrap();
+    app.listen(PORT, () => {
+      // eslint-disable-next-line no-console
+      console.log(`PQRS backend listening on port ${PORT}`);
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Startup failed: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+async function ensureDatabaseBootstrap() {
+  const missingTablesResult = await query(
+    `SELECT required.table_name
+     FROM unnest($1::text[]) AS required(table_name)
+     LEFT JOIN information_schema.tables t
+       ON t.table_schema = 'public'
+      AND t.table_name = required.table_name
+     WHERE t.table_name IS NULL`,
+    [REQUIRED_TABLES]
+  );
+
+  if (missingTablesResult.rowCount > 0) {
+    const missingTables = missingTablesResult.rows.map((row) => row.table_name).join(', ');
+    throw new Error(
+      `Schema incompleto. Faltan tablas: ${missingTables}. Ejecuta primero el setup local o la migracion de base de datos.`
+    );
+  }
+
+  const requestIdConstraintResult = await query(
+    `SELECT EXISTS (
+       SELECT 1
+       FROM pg_constraint c
+       JOIN pg_class rel ON rel.oid = c.conrelid
+       JOIN pg_namespace ns ON ns.oid = rel.relnamespace
+       JOIN unnest(c.conkey) AS k(attnum) ON true
+       JOIN pg_attribute a
+         ON a.attrelid = rel.oid
+        AND a.attnum = k.attnum
+       WHERE ns.nspname = 'public'
+         AND rel.relname = 'automation_jobs'
+         AND c.contype IN ('u', 'p')
+       GROUP BY c.oid
+       HAVING bool_or(a.attname = 'request_id')
+     ) AS has_constraint`
+  );
+
+  if (!requestIdConstraintResult.rows[0]?.has_constraint) {
+    throw new Error(
+      'Schema invalido. automation_jobs.request_id requiere una restriccion UNIQUE o PRIMARY KEY para soportar ON CONFLICT.'
+    );
+  }
+}
 
 function buildTrackingCode() {
   const timestamp = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);

@@ -38,6 +38,7 @@
     "plugins": [
       "expo-dev-client",
       "./plugins/withKotlinVersion",
+      "./plugins/withAndroidCleartextTraffic",
       "./plugins/withDisableBundleCompressionPatch",
       "expo-font",
       [

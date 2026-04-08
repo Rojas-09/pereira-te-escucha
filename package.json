@@ -4,9 +4,9 @@
   "main": "index.ts",
   "scripts": {
     "setup": "npm install && cd backend && npm install && npx playwright install chromium",
-    "local:setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-local.ps1",
-    "local:setup:fast": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-local.ps1 -SkipNpmInstall -SkipPlaywrightInstall",
-    "local:backend": "powershell -ExecutionPolicy Bypass -File ./scripts/start-local-backend.ps1",
+    "local:setup": "cd backend && npm run local:setup",
+    "local:setup:fast": "cd backend && npm run local:setup",
+    "local:backend": "cd backend && npm run dev",
     "dev": "concurrently -n backend,app -c cyan,magenta \"npm run backend:dev\" \"npm run app:dev\"",
     "backend:dev": "cd backend && npm run dev",
     "app:dev": "expo start --dev-client",

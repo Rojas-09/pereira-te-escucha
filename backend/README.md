@@ -51,11 +51,26 @@ Este comando automatiza:
 - Crear `backend/.env` desde `backend/.env.example`.
 - Validar conexion a base de datos.
 
+Scripts involucrados (desde la raiz):
+
+- `backend/package.json` (scripts `local:setup` y `dev`)
+
 Luego inicia el backend con:
 
 ```bash
 npm run local:backend
 ```
+
+## Validacion de esquema al arranque
+
+Al iniciar, el backend valida que exista el esquema minimo requerido:
+
+- `requests`
+- `request_status_events`
+- `request_attachments`
+- `automation_jobs`
+
+Si falta una tabla o `automation_jobs.request_id` no tiene restriccion `UNIQUE`/`PRIMARY KEY`, el proceso termina con un error explicito para evitar fallos en runtime.
 
 ## Pruebas
 
