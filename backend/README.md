@@ -21,6 +21,8 @@ Copia `.env.example` a `.env`.
 - `PEREIRA_FORM_URL`: URL del formulario publico.
 - `PLAYWRIGHT_HEADLESS`: `true|false`.
 - `PLAYWRIGHT_TIMEOUT_MS`: timeout total por radicacion.
+- `WORKER_ENABLED`: activa/desactiva el worker interno (`true|false`).
+- `WORKER_POLL_MS`: intervalo de sondeo de jobs pendientes.
 
 ## Instalacion
 
@@ -91,6 +93,8 @@ POST /api/pqrs/submit-anonymous
 Content-Type: multipart/form-data
 ```
 
+Este endpoint es asincrono: valida y encola la solicitud, y responde de inmediato con codigo de seguimiento.
+
 Campos form-data:
 
 - `medioRespuesta`: `cartelera | correo_electronico | correo_fisico`
@@ -101,18 +105,28 @@ Campos form-data:
 - `aceptarTratamiento`: `true|false`
 - `files`: archivos opcionales (0..10)
 
-Respuesta esperada:
+Respuesta esperada (202 Accepted):
 
 ```json
 {
   "ok": true,
+  "code": "ACCEPTED",
   "data": {
-    "consecutive": "11878",
-    "radicado": "20260318-11878-E",
-    "title": "Numero Consecutivo: 11878",
-    "messageBody": "Su solicitud ha sido generada..."
+    "requestId": 123,
+    "trackingCode": "PETE-20260407195500-4821",
+    "status": "recibido",
+    "jobState": "pending",
+    "statusUrl": "/api/pqrs/status/PETE-20260407195500-4821",
+    "pollAfterMs": 5000,
+    "acceptedAt": "2026-04-07T19:55:00.000Z"
   }
 }
+```
+
+La radicacion oficial (consecutivo/radicado) se consulta despues en:
+
+```bash
+GET /api/pqrs/status/:trackingCode
 ```
 
 ## Notas operativas

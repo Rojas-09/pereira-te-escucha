@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  AppState,
   Animated,
   Easing,
   Image,
@@ -77,6 +78,43 @@ const resolveApiBaseUrl = () => {
 };
 
 const API_BASE_URL = resolveApiBaseUrl();
+const SUBMIT_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_SUBMIT_TIMEOUT_MS || 45000);
+const STATUS_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_STATUS_TIMEOUT_MS || 7000);
+const STATUS_POLL_BASE_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_BASE_MS || 5000);
+const STATUS_POLL_MAX_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_MS || 60000);
+const STATUS_POLL_JITTER_PCT = Math.min(
+  0.5,
+  Math.max(0, Number(process.env.EXPO_PUBLIC_STATUS_POLL_JITTER_PCT || 0.2))
+);
+const STATUS_POLL_MAX_ELAPSED_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_ELAPSED_MS || 1800000);
+const STATUS_POLL_MAX_ATTEMPTS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_ATTEMPTS || 40);
+const STATUS_POLL_MAX_CONSECUTIVE_ERRORS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_CONSECUTIVE_ERRORS || 5);
+const STATUS_RESUME_STALE_MS = Number(process.env.EXPO_PUBLIC_STATUS_RESUME_STALE_MS || 10000);
+
+function parseRetryAfterMs(retryAfterHeader: string | null) {
+  if (!retryAfterHeader) {
+    return null;
+  }
+
+  const seconds = Number(retryAfterHeader);
+  if (Number.isFinite(seconds) && seconds > 0) {
+    return Math.round(seconds * 1000);
+  }
+
+  const retryAt = new Date(retryAfterHeader).getTime();
+  if (!Number.isNaN(retryAt)) {
+    return Math.max(0, retryAt - Date.now());
+  }
+
+  return null;
+}
+
+function computeBackoffDelayMs(attempt: number) {
+  const exponent = Math.max(0, attempt - 1);
+  const rawDelay = Math.min(STATUS_POLL_MAX_MS, STATUS_POLL_BASE_MS * (2 ** exponent));
+  const jitterFactor = 1 + ((Math.random() * 2 - 1) * STATUS_POLL_JITTER_PCT);
+  return Math.max(1000, Math.round(rawDelay * jitterFactor));
+}
 
 async function fetchWithTimeout(resource: string, options: RequestInit, timeoutMs = 30000) {
   const controller = new AbortController();
@@ -89,6 +127,19 @@ async function fetchWithTimeout(resource: string, options: RequestInit, timeoutM
     });
   } finally {
     clearTimeout(timer);
+  }
+}
+
+async function readJsonSafe<T>(response: Response): Promise<T | null> {
+  const raw = await response.text();
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return null;
   }
 }
 
@@ -289,12 +340,6 @@ Cordialmente,
 ${args.personalData.fullName || 'Ciudadano(a)'}`;
 }
 
-function generateRadicado(type: string) {
-  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const randomCode = Math.floor(100000 + Math.random() * 900000);
-  return `PQR-${type.slice(0, 3).toUpperCase()}-${stamp}-${randomCode}`;
-}
-
 function formatTrackingStatusLabel(status: string) {
   switch (status) {
     case 'recibido':
@@ -306,6 +351,8 @@ function formatTrackingStatusLabel(status: string) {
     case 'error_temporal':
       return 'Error temporal';
     case 'fallido':
+      return 'Fallido';
+    case 'fallo':
       return 'Fallido';
     default:
       return status;
@@ -374,14 +421,21 @@ export default function App() {
     'Conectando con la oficina de atencion...',
     'Preparando y validando el formulario...',
     'Enviando solicitud de radicacion...',
-    'Confirmando numero de radicado...',
+    'Solicitud recibida. Iniciando seguimiento...',
   ];
 
   const stageOpacity = useRef(submitStages.map(() => new Animated.Value(0.45))).current;
   const stageTranslateY = useRef(submitStages.map(() => new Animated.Value(6))).current;
   const stageCheckScale = useRef(submitStages.map(() => new Animated.Value(1))).current;
   const previousStageStatus = useRef<SubmitStageStatus[]>(submitStageStatus);
-  const statusPollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const statusPollingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const currentStepRef = useRef(currentStep);
+  const trackingCodeRef = useRef(trackingCode);
+  const trackingStatusRef = useRef<string>('');
+  const pollStartMsRef = useRef<number | null>(null);
+  const pollAttemptRef = useRef(0);
+  const pollConsecutiveErrorsRef = useRef(0);
+  const pollLastRequestMsRef = useRef<number>(0);
 
   const setStageActive = (index: number) => {
     setSubmitStageStatus((prev) =>
@@ -406,6 +460,28 @@ export default function App() {
 
   const showAppNotice = (title: string, message: string, tone: 'info' | 'success' | 'error' = 'info') => {
     setAppNotice({ visible: true, title, message, tone });
+  };
+
+  const clearPollingTimer = () => {
+    if (statusPollingRef.current) {
+      clearTimeout(statusPollingRef.current);
+      statusPollingRef.current = null;
+    }
+  };
+
+  const resetPollingCounters = () => {
+    pollStartMsRef.current = Date.now();
+    pollAttemptRef.current = 0;
+    pollConsecutiveErrorsRef.current = 0;
+    pollLastRequestMsRef.current = 0;
+    trackingStatusRef.current = trackingSnapshot?.status || '';
+  };
+
+  const stopAutoPolling = (message?: string) => {
+    clearPollingTimer();
+    if (message) {
+      setTrackingStatusError(message);
+    }
   };
 
   useEffect(() => {
@@ -672,10 +748,17 @@ export default function App() {
     setIsRefreshingStatus(true);
     try {
       const response = await fetchWithTimeout(`${API_BASE_URL}/api/pqrs/status/${encodeURIComponent(code)}`, { method: 'GET' }, timeoutMs);
-      const payload = await response.json();
+
+      // A 304 indicates no state changes; keep current snapshot and clear transient errors.
+      if (response.status === 304) {
+        setTrackingStatusError('');
+        return;
+      }
+
+      const payload = await readJsonSafe<{ ok?: boolean; data?: TrackingSnapshot; message?: string; detail?: string }>(response);
 
       if (!response.ok || !payload?.ok || !payload?.data) {
-        throw new Error(payload?.message || payload?.detail || 'No fue posible consultar el estado actual');
+        throw new Error(payload?.message || payload?.detail || `No fue posible consultar el estado actual (HTTP ${response.status})`);
       }
 
       setTrackingSnapshot(payload.data as TrackingSnapshot);
@@ -714,7 +797,7 @@ export default function App() {
     const activeStatus = trackingSnapshot?.status || '';
     if (shouldContinuePolling(activeStatus)) {
       statusPollingRef.current = setInterval(() => {
-        fetchTrackingStatus(trackingCode, 7000).catch(() => {
+        fetchTrackingStatus(trackingCode, STATUS_TIMEOUT_MS).catch(() => {
           setTrackingStatusError('No fue posible actualizar el estado');
         });
       }, 8000);
@@ -787,7 +870,7 @@ export default function App() {
           method: 'POST',
           body: formData,
         },
-        45000
+        SUBMIT_TIMEOUT_MS
       );
       const stage2Duration = await ensureMinStageDuration(stageStart, 1200);
       setStageDone(2, stage2Duration);
@@ -795,24 +878,30 @@ export default function App() {
       stageStart = Date.now();
       setStageActive(3);
 
-      const payload = await response.json();
+      const payload = await readJsonSafe<{ ok?: boolean; data?: { trackingCode?: string }; message?: string; detail?: string }>(response);
 
       if (!response.ok || !payload?.ok) {
-        throw new Error(payload?.detail || payload?.message || 'No fue posible radicar la solicitud en este intento');
+        throw new Error(payload?.detail || payload?.message || `No fue posible radicar la solicitud en este intento (HTTP ${response.status})`);
       }
 
-      const realCode = payload?.data?.radicado || payload?.data?.consecutive || generateRadicado(selectedType);
-      setRadicadoCode(realCode);
-        setTrackingCode(payload?.data?.trackingCode || '');
-        setTrackingSnapshot(null);
-        setTrackingStatusError('');
-        const stage3Duration = await ensureMinStageDuration(stageStart, 1200);
-        setStageDone(3, stage3Duration);
+      const acceptedTrackingCode = payload?.data?.trackingCode;
+      if (!acceptedTrackingCode) {
+        throw new Error('El backend no retorno trackingCode para seguimiento.');
+      }
+
+      setTrackingCode(acceptedTrackingCode);
+      setTrackingSnapshot(null);
+      setTrackingStatusError('');
+      setRadicadoCode('');
+      const stage3Duration = await ensureMinStageDuration(stageStart, 1200);
+      setStageDone(3, stage3Duration);
       setCurrentStep(5);
     } catch (error) {
       let safeMessage = error instanceof Error ? error.message : 'Error no controlado';
       if (error instanceof Error && error.name === 'AbortError') {
-        safeMessage = 'La radicacion tardo demasiado. Intenta de nuevo en unos segundos.';
+        safeMessage =
+          `No se pudo completar el envio en el tiempo esperado (${Math.round(SUBMIT_TIMEOUT_MS / 1000)}s). ` +
+          `Verifica conectividad con el backend (${API_BASE_URL}) o usa una URL publica temporal para pruebas externas.`;
       } else if (safeMessage.toLowerCase().includes('network request failed')) {
         safeMessage =
           `No se pudo conectar con el backend (${API_BASE_URL}). Verifica EXPO_PUBLIC_API_BASE_URL, que el servidor este accesible desde tu celular y que Android permita trafico HTTP local en builds de desarrollo.`;
@@ -902,7 +991,7 @@ export default function App() {
             multiline
             value={informalContext}
             onChangeText={setInformalContext}
-            placeholder="Ejemplo: Hay muchos huecos en la avenida y cada dia esta peor..."
+            placeholder="Ejemplo: Que vuelta con los mismos huecos de siempre..."
             placeholderTextColor="#8f8f8f"
             style={styles.textArea}
           />
@@ -1063,14 +1152,27 @@ export default function App() {
       );
     }
 
+    const currentStatus = trackingSnapshot?.status || '';
+    const isOfficiallyFiled = currentStatus === 'radicado';
+    const hasFailed = currentStatus === 'fallo' || currentStatus === 'fallido';
+
     return (
       <View style={styles.stepCard}>
-        <Text style={styles.stepTitle}>✅ Radicación completada</Text>
-        <Text style={styles.successTitle}>Tu caso fue registrado correctamente 🎉</Text>
-        <Text style={styles.successCode}>{radicadoCode}</Text>
-        {trackingCode ? <Text style={styles.trackingCodeText}>Tracking interno: {trackingCode}</Text> : null}
+        <Text style={styles.stepTitle}>
+          {isOfficiallyFiled ? '✅ Radicacion completada' : hasFailed ? '⚠️ Radicacion con novedad' : '🕒 Solicitud recibida'}
+        </Text>
+        <Text style={styles.successTitle}>
+          {isOfficiallyFiled
+            ? 'Tu caso ya fue radicado oficialmente.'
+            : hasFailed
+              ? 'Tu solicitud fue recibida, pero la radicacion no se completo.'
+              : 'Tu solicitud fue recibida. Estamos procesando la radicacion.'}
+        </Text>
+        <Text style={styles.successCode}>{trackingCode || radicadoCode}</Text>
+        {trackingCode ? <Text style={styles.trackingCodeText}>Codigo de seguimiento: {trackingCode}</Text> : null}
+        {trackingSnapshot?.radicadoOficial ? <Text style={styles.trackingCodeText}>Radicado oficial: {trackingSnapshot.radicadoOficial}</Text> : null}
         <Text style={styles.stepHint}>
-          Guarda este número para hacer seguimiento. También puedes radicar otro caso desde el botón inferior.
+          Guarda este codigo para seguimiento. Puedes actualizar el estado manualmente o esperar la actualizacion automatica.
         </Text>
 
         <View style={styles.statusPanel}>

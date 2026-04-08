@@ -21,7 +21,12 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 const PEREIRA_FORM_URL = process.env.PEREIRA_FORM_URL || 'https://doc.pereira.gov.co/ws/pqr/index.html';
 const PLAYWRIGHT_HEADLESS = (process.env.PLAYWRIGHT_HEADLESS || 'true').toLowerCase() !== 'false';
 const PLAYWRIGHT_TIMEOUT_MS = Number(process.env.PLAYWRIGHT_TIMEOUT_MS || 90000);
+const WORKER_POLL_MS = Number(process.env.WORKER_POLL_MS || 2500);
+const WORKER_ENABLED = (process.env.WORKER_ENABLED || 'true').toLowerCase() !== 'false';
 const REQUIRED_TABLES = ['requests', 'request_status_events', 'request_attachments', 'automation_jobs'];
+
+let workerLoopTimer = null;
+let workerTickInProgress = false;
 
 // Rate limiting: Protección contra abuso de API
 const generalLimiter = rateLimit({
@@ -58,6 +63,7 @@ const upload = multer({
 });
 
 const app = express();
+app.set('trust proxy', 1);
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -83,6 +89,14 @@ app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'pereira-pqrs-backend' });
 });
 
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: 'pereira-pqrs-backend',
+    hint: 'Usa /health o /api/pqrs/*',
+  });
+});
+
 app.get('/api/pqrs/status/:trackingCode', async (req, res) => {
   const trackingCode = String(req.params.trackingCode || '').trim();
   if (!trackingCode) {
@@ -95,6 +109,12 @@ app.get('/api/pqrs/status/:trackingCode', async (req, res) => {
         id,
         client_tracking_code,
         status,
+        (
+          SELECT job_state
+          FROM automation_jobs
+          WHERE request_id = requests.id
+          LIMIT 1
+        ) AS job_state,
         medio_respuesta,
         tipo_solicitud,
         asunto,
@@ -134,8 +154,10 @@ app.get('/api/pqrs/status/:trackingCode', async (req, res) => {
     return res.status(200).json({
       ok: true,
       data: {
+        requestId: requestData.id,
         trackingCode: requestData.client_tracking_code,
         status: requestData.status,
+        jobState: requestData.job_state,
         medioRespuesta: requestData.medio_respuesta,
         tipoSolicitud: requestData.tipo_solicitud,
         asunto: requestData.asunto,
@@ -207,48 +229,24 @@ app.post('/api/pqrs/submit-anonymous', submitLimiter, upload.array('files', MAX_
     });
   }
 
-  try {
-    await markRequestProcessing(requestId);
+  const statusPath = `/api/pqrs/status/${encodeURIComponent(trackingCode)}`;
+  res.setHeader('Location', statusPath);
+  res.setHeader('Retry-After', '5');
 
-    const result = await submitAnonymousPQRS({
-      formUrl: PEREIRA_FORM_URL,
-      payload,
-      files,
-      headless: PLAYWRIGHT_HEADLESS,
-      timeoutMs: PLAYWRIGHT_TIMEOUT_MS
-    });
-
-    await markRequestSuccessful(requestId, result);
-
-    return res.status(200).json({
-      ok: true,
-      data: {
-        requestId,
-        trackingCode,
-        ...result,
-      }
-    });
-  } catch (error) {
-    req.log.error({ err: error }, 'Failed to submit anonymous PQRS');
-
-    try {
-      if (requestId) {
-        await markRequestFailed(requestId, error);
-      }
-    } catch (dbError) {
-      req.log.error({ err: dbError }, 'Failed to persist failure state');
-    }
-
-    return res.status(502).json({
-      ok: false,
-      code: 'REMOTE_SUBMISSION_FAILED',
-      message: 'No fue posible completar la radicacion en este intento',
-      detail: error.message,
+  return res.status(202).json({
+    ok: true,
+    code: 'ACCEPTED',
+    message: 'Solicitud recibida. La radicacion se procesara en segundo plano.',
+    data: {
+      requestId,
       trackingCode,
-    });
-  } finally {
-    await cleanupFiles(files);
-  }
+      status: 'recibido',
+      jobState: 'pending',
+      statusUrl: statusPath,
+      pollAfterMs: 5000,
+      acceptedAt: new Date().toISOString(),
+    }
+  });
 });
 
 app.use((error, _req, res, _next) => {
@@ -273,12 +271,153 @@ async function startServer() {
     app.listen(PORT, () => {
       // eslint-disable-next-line no-console
       console.log(`PQRS backend listening on port ${PORT}`);
+      if (WORKER_ENABLED) {
+        startAutomationWorker();
+      }
     });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Startup failed: ${error.message}`);
     process.exit(1);
   }
+}
+
+function startAutomationWorker() {
+  if (workerLoopTimer) {
+    return;
+  }
+
+  const runTick = async () => {
+    if (workerTickInProgress) {
+      return;
+    }
+
+    workerTickInProgress = true;
+    try {
+      await processNextPendingJob();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`Worker tick failed: ${error.message}`);
+    } finally {
+      workerTickInProgress = false;
+    }
+  };
+
+  workerLoopTimer = setInterval(() => {
+    runTick().catch(() => {
+      // handled in runTick
+    });
+  }, WORKER_POLL_MS);
+
+  runTick().catch(() => {
+    // handled in runTick
+  });
+
+  // eslint-disable-next-line no-console
+  console.log(`Automation worker started (poll ${WORKER_POLL_MS}ms)`);
+}
+
+async function processNextPendingJob() {
+  const claimed = await claimNextPendingJob();
+  if (!claimed) {
+    return;
+  }
+
+  const { requestId, jobId } = claimed;
+
+  try {
+    const jobData = await loadRequestJobData(requestId);
+    if (!jobData) {
+      throw new Error(`No se encontro informacion para requestId=${requestId}`);
+    }
+
+    await markRequestProcessing(requestId);
+
+    const result = await submitAnonymousPQRS({
+      formUrl: PEREIRA_FORM_URL,
+      payload: jobData.payload,
+      files: jobData.files,
+      headless: PLAYWRIGHT_HEADLESS,
+      timeoutMs: PLAYWRIGHT_TIMEOUT_MS
+    });
+
+    await markRequestSuccessful(requestId, result);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Worker failed for requestId=${requestId}, jobId=${jobId}: ${error.message}`);
+    await markRequestFailed(requestId, error);
+  } finally {
+    await cleanupRequestFiles(requestId);
+  }
+}
+
+async function claimNextPendingJob() {
+  const result = await query(
+    `WITH next_job AS (
+       SELECT id, request_id
+       FROM automation_jobs
+       WHERE queue_name = 'pqrs-radicacion'
+         AND job_state = 'pending'
+       ORDER BY created_at ASC
+       LIMIT 1
+       FOR UPDATE SKIP LOCKED
+     )
+     UPDATE automation_jobs aj
+        SET job_state = 'active',
+            updated_at = NOW()
+       FROM next_job
+      WHERE aj.id = next_job.id
+      RETURNING aj.id AS job_id, aj.request_id`,
+    []
+  );
+
+  if (result.rowCount === 0) {
+    return null;
+  }
+
+  return {
+    jobId: result.rows[0].job_id,
+    requestId: result.rows[0].request_id,
+  };
+}
+
+async function loadRequestJobData(requestId) {
+  const requestResult = await query(
+    `SELECT
+      medio_respuesta,
+      correo,
+      tipo_solicitud,
+      asunto,
+      descripcion_formal
+     FROM requests
+     WHERE id = $1
+     LIMIT 1`,
+    [requestId]
+  );
+
+  if (requestResult.rowCount === 0) {
+    return null;
+  }
+
+  const requestRow = requestResult.rows[0];
+  const attachmentsResult = await query(
+    `SELECT storage_path AS path
+     FROM request_attachments
+     WHERE request_id = $1
+     ORDER BY id ASC`,
+    [requestId]
+  );
+
+  return {
+    payload: {
+      medioRespuesta: requestRow.medio_respuesta,
+      correo: requestRow.correo || '',
+      tipoSolicitud: requestRow.tipo_solicitud,
+      asunto: requestRow.asunto,
+      descripcion: requestRow.descripcion_formal,
+    },
+    files: attachmentsResult.rows,
+  };
 }
 
 async function ensureDatabaseBootstrap() {
@@ -506,6 +645,22 @@ async function markRequestFailed(requestId, error) {
          updated_at = NOW()
      WHERE request_id = $1`,
     [requestId]
+  );
+}
+
+async function cleanupRequestFiles(requestId) {
+  const attachmentsResult = await query(
+    `SELECT storage_path
+     FROM request_attachments
+     WHERE request_id = $1`,
+    [requestId]
+  );
+
+  await Promise.allSettled(
+    attachmentsResult.rows
+      .map((row) => row.storage_path)
+      .filter(Boolean)
+      .map((filePath) => fs.unlink(filePath))
   );
 }
 
