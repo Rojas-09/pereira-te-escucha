@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pq-ia-app",
+    "name": "Pereira Te Escucha",
     "slug": "pq-ia-app",
     "scheme": "pqiaapp",
     "version": "1.0.0",
@@ -37,9 +37,6 @@
     },
     "plugins": [
       "expo-dev-client",
-      "./plugins/withKotlinVersion",
-      "./plugins/withAndroidCleartextTraffic",
-      "./plugins/withDisableBundleCompressionPatch",
       "expo-font",
       [
         "expo-image-picker",
