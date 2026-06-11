@@ -1,175 +1,236 @@
 # Pereira Te Escucha
 
-Aplicacion movil para registrar solicitudes ciudadanas (peticiones, quejas, reclamos, sugerencias y denuncias) de forma simple.
+> Aplicación móvil para registrar solicitudes ciudadanas (PQRD) de forma simple, con radicación automática en el portal oficial de la Alcaldía de Pereira.
 
-## Que hace esta app
+[![Expo SDK](https://img.shields.io/badge/Expo-SDK%2054-000020?logo=expo)](https://expo.dev)
+[![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB?logo=react)](https://reactnative.dev)
+[![Backend](https://img.shields.io/badge/Backend-Node%2FExpress-339933?logo=node.js)](https://nodejs.org)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow)]()
 
-- Permite llenar y enviar una solicitud desde el celular.
-- Permite adjuntar evidencias (como fotos o archivos).
-- Permite usar ubicacion para ubicar el punto del reporte.
-- Se conecta con un backend que procesa y radica la solicitud.
-- El envio es asincrono: primero entrega codigo de seguimiento y luego actualiza el estado de radicacion.
+---
 
-## Para quien esta pensada
+## ¿Qué es esto?
 
-Este proyecto esta escrito para dos tipos de uso:
+**Pereira Te Escucha** es una app móvil (Android/iOS) que permite a cualquier ciudadano de Pereira registrar una petición, queja, reclamo, sugerencia o denuncia (PQRD) directamente desde su celular, sin necesidad de navegar el portal oficial del municipio.
 
-1. Uso funcional: personas que solo quieren entender para que sirve.
-2. Uso tecnico: equipo que necesita ejecutar la app y el backend en desarrollo.
+La app captura el formulario, adjuntos y ubicación geográfica, los envía al backend propio, y un worker automatizado (Playwright) radica la solicitud en el portal oficial de la Alcaldía de Pereira en segundo plano. El ciudadano recibe un código de seguimiento inmediato y puede consultar el estado de su radicación en cualquier momento.
 
-## Setup
+---
 
-### Requisitos basicos
+## Características principales
 
-- Node.js instalado.
-- Docker Desktop instalado (para base de datos local).
-- Android Studio con emulador (si se probara en Android).
+- **Formulario guiado** — campos validados, soporte para modo anónimo y con datos del solicitante.
+- **Adjuntos multimedia** — fotos desde cámara o galería, archivos como evidencia.
+- **Geolocalización** — ubica el punto exacto del reporte en un mapa.
+- **Radicación automática** — Playwright radica en el portal oficial sin intervención manual.
+- **Seguimiento asíncrono** — código de tracking desde el primer segundo; el estado se actualiza cuando el portal responde.
+- **Cola de trabajos interna** — el backend persiste y reintenta si el portal externo falla.
 
-### Arranque local
+---
 
-Desde la carpeta `pq-ia-app`:
+## Stack tecnológico
+
+| Capa | Tecnología |
+|------|------------|
+| App móvil | Expo SDK 54 · React Native 0.81 · TypeScript 5.9 |
+| UI / fuentes | Expo Linear Gradient · Sora (Google Fonts) |
+| Mapas | react-native-maps 1.20 |
+| Backend API | Node.js · Express 4 · ES Modules |
+| Validación | Zod 3.24 |
+| Base de datos | PostgreSQL (pg 8.20) |
+| Automatización | Playwright 1.53 (Chromium) |
+| Seguridad | Helmet · express-rate-limit · sanitización XSS |
+| Logging | pino-http |
+| Builds móviles | EAS Build (Expo Application Services) |
+
+---
+
+## Arquitectura
+
+```
+┌─────────────────┐     multipart/form-data      ┌──────────────────────┐
+│  App Expo        │ ──────────────────────────▶ │  Backend Express      │
+│  (App.tsx)       │                              │  (server.js)          │
+│                  │ ◀────────── trackingCode ─── │                       │
+│  polling         │                              │  ┌──────────────────┐ │
+│  GET /status/:id │ ──────────────────────────▶ │  │  PostgreSQL       │ │
+└─────────────────┘                              │  └──────┬───────────┘ │
+                                                  │         │ worker       │
+                                                  │  ┌──────▼───────────┐ │
+                                                  │  │  Playwright       │ │
+                                                  │  │  (Chromium)       │ │
+                                                  │  └──────┬───────────┘ │
+                                                  └─────────┼─────────────┘
+                                                            │
+                                                  ┌─────────▼─────────────┐
+                                                  │  Portal Oficial        │
+                                                  │  Alcaldía de Pereira   │
+                                                  └───────────────────────┘
+```
+
+Ver diagrama completo con Mermaid en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+---
+
+## Estructura del proyecto
+
+```
+pereira-te-escucha/
+├── App.tsx                  # Entrada principal — UI, polling, lógica de envío
+├── app.json                 # Configuración Expo (permisos, íconos, package)
+├── eas.json                 # Perfiles de build EAS (development/preview/production)
+├── assets/                  # Íconos y splash screen
+├── backend/
+│   ├── src/
+│   │   ├── server.js        # API HTTP + worker + gestión de estados
+│   │   ├── validation.js    # Validación y sanitización de inputs (Zod)
+│   │   ├── pereiraAutomation.js  # Automatización del portal con Playwright
+│   │   └── db.js            # Conexión a PostgreSQL
+│   ├── scripts/
+│   │   └── local-setup.cjs  # Bootstrap local con Docker y esquema de DB
+│   └── .env.example
+└── docs/
+    ├── ARCHITECTURE.md      # Diagrama y descripción de componentes
+    ├── AUDIT.md             # Hallazgos de deuda técnica y vulnerabilidades
+    ├── PRIVACY_POLICY.md    # Política de privacidad (requerida por Play Store)
+    └── ROADMAP_PLAY_STORE.md
+```
+
+---
+
+## Setup local
+
+### Requisitos
+
+- **Node.js** ≥ 20
+- **Docker Desktop** (para PostgreSQL local)
+- **Android Studio** con emulador (para pruebas en Android) o dispositivo físico con Expo Dev Client
+
+### 1. Instalar dependencias
+
+```bash
+# Desde la raíz del proyecto
+npm install
+
+# Instalar dependencias del backend y Playwright
+cd backend && npm install && npx playwright install chromium
+```
+
+### 2. Preparar entorno local (DB + .env)
 
 ```bash
 npm run local:setup
 ```
 
-Este comando prepara automaticamente:
+Este comando:
+- Levanta un contenedor PostgreSQL en Docker
+- Crea el esquema de tablas necesario
+- Genera `backend/.env` a partir del ejemplo
 
-- Base de datos PostgreSQL local en Docker.
-- Esquema minimo de tablas del backend.
-- Archivo de entorno del backend.
-
-Luego iniciar backend:
+### 3. Iniciar servicios
 
 ```bash
+# Terminal 1 — backend
 npm run local:backend
-```
 
-En otra terminal, iniciar la app:
-
-```bash
+# Terminal 2 — app Expo
 npm run app:dev
 ```
 
-Opcionales para desarrollo movil:
+O bien, ambos a la vez:
 
-- `npm run app:dev:tunnel`: expone la app por tunnel.
-- `npm run app:dev:lan`: usa red local como fallback.
-- `npm run app:dev:win`: ejecuta `adb reverse` y luego `LAN` en Windows.
+```bash
+npm run dev
+```
 
-## Arquitectura
+### Variables de entorno
 
-La app esta dividida en dos superficies activas:
+Copia y ajusta los archivos de ejemplo:
 
-- `App.tsx`: cliente Expo/React Native que captura la solicitud, adjuntos y ubicacion.
-- `backend/`: API Node/Express que valida, persiste y automatiza la radicacion.
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
+```
 
-Flujo principal de datos:
+| Variable | Descripción |
+|----------|-------------|
+| `EXPO_PUBLIC_API_BASE_URL` | URL del backend accesible desde el dispositivo |
+| `EXPO_PUBLIC_BACKEND_API_TOKEN` | Token opcional si el backend tiene auth activada |
+| `EXPO_PUBLIC_SUBMIT_TIMEOUT_MS` | Tiempo máximo de espera al radicar (ms) |
+| `DATABASE_URL` | Conexión a PostgreSQL |
+| `PEREIRA_FORM_URL` | URL del formulario oficial de Pereira |
+| `PLAYWRIGHT_TIMEOUT_MS` | Tiempo máximo del proceso de radicación automática |
+| `ALLOWED_ORIGIN` | Origen permitido en CORS (**nunca usar `*` en producción**) |
 
-1. La app resuelve la URL del backend desde `EXPO_PUBLIC_API_BASE_URL`.
-2. El usuario completa la solicitud y la app envía `multipart/form-data` al backend.
-3. El backend valida el payload, guarda la solicitud en PostgreSQL y encola un job.
-4. El worker interno toma el job y usa Playwright para radicar en el portal oficial.
-5. La app consulta el estado por `trackingCode` hasta obtener el consecutivo o radicado final.
+---
 
-Ver diagrama completo en [ARCHITECTURE.md](ARCHITECTURE.md).
+## Comandos de desarrollo
 
-## Flujos principales
+| Comando | Descripción |
+|---------|-------------|
+| `npm run dev` | Backend + app Expo simultáneamente |
+| `npm run local:backend` | Solo el backend |
+| `npm run app:dev` | Expo con dev client |
+| `npm run app:dev:lan` | Expo en modo LAN (fallback recomendado) |
+| `npm run app:dev:tunnel` | Expo por túnel Ngrok |
+| `npm run app:dev:win` | `adb reverse` + LAN (Windows + Android por USB) |
+| `npm run local:setup` | Bootstrap completo del entorno local |
+| `npm run local:setup:fast` | Re-setup rápido (sin reinstalar deps) |
 
-### 1. Envio de solicitud
+---
 
-1. La app resuelve la URL del backend desde `EXPO_PUBLIC_API_BASE_URL` o usa el fallback de desarrollo.
-2. El usuario completa el formulario, adjunta evidencias y envía `multipart/form-data`.
-3. El backend valida el payload, limita anexos y persiste la solicitud en PostgreSQL.
-4. La API responde con `trackingCode` y un `statusUrl` para seguimiento asincrono.
+## Build y publicación (Android / Play Store)
 
-### 2. Radicacion en segundo plano
+```bash
+# Development build
+eas build --profile development --platform android
 
-1. El worker interno toma el job pendiente.
-2. Playwright controla el formulario oficial de Pereira.
-3. El backend guarda consecutivo, radicado, mensaje del portal y eventos de estado.
+# Producción
+eas build --profile production --platform android
+```
 
-### 3. Seguimiento del estado
+Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE.md).
 
-1. La app consulta `GET /api/pqrs/status/:trackingCode`.
-2. El backend devuelve el estado actual y el historial de eventos.
-3. La app mantiene el polling hasta recibir radicado final o error.
+> **Nota:** el build number es administrado automáticamente por EAS (`appVersionSource: remote`). Para actualizar la versión visible al usuario, editar `expo.version` en `app.json` y `version` en `package.json` de forma sincronizada.
 
-## Variables de entorno
+---
 
-Los contratos de configuracion estan documentados en:
+## Documentación adicional
 
-- [pq-ia-app/.env.example](.env.example)
-- [pq-ia-app/backend/.env.example](backend/.env.example)
+| Documento | Contenido |
+|-----------|-----------|
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Diagrama de componentes y flujo de datos |
+| [`docs/AUDIT.md`](docs/AUDIT.md) | Deuda técnica, inconsistencias y vulnerabilidades identificadas |
+| [`docs/PRIVACY_POLICY.md`](docs/PRIVACY_POLICY.md) | Política de privacidad (requerida por Google Play) |
+| [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE.md) | Checklist para publicación en Play Store |
+| [`backend/README.md`](backend/README.md) | Setup y contrato técnico del backend |
+| [`backend/INSPECCION_PEREIRA.md`](backend/INSPECCION_PEREIRA.md) | Análisis técnico del portal oficial de Pereira |
 
-Puntos clave:
+---
 
-- `EXPO_PUBLIC_API_BASE_URL`: URL del backend accesible desde el dispositivo.
-- `EXPO_PUBLIC_BACKEND_API_TOKEN`: token opcional si el backend tiene autenticacion activada.
-- `EXPO_PUBLIC_SUBMIT_TIMEOUT_MS`: tiempo maximo para la radicacion desde la app.
-- `DATABASE_URL`: conexion obligatoria a PostgreSQL para el backend.
-- `PEREIRA_FORM_URL`: formulario oficial usado por Playwright.
-- `PLAYWRIGHT_TIMEOUT_MS`: tiempo maximo del proceso de radicacion.
+## Estado del proyecto
 
-## Comandos importantes
+| Módulo | Estado |
+|--------|--------|
+| App móvil (UI + formulario) | ✅ Funcional |
+| Backend API + validación | ✅ Funcional |
+| Radicación con Playwright | ✅ Funcional (sujeto a cambios del portal externo) |
+| Seguimiento asíncrono | ✅ Funcional |
+| Tests unitarios backend | 🚧 Parcial — solo validación |
+| HTTPS en producción | ⏳ Pendiente |
+| Publicación Play Store | ⏳ Pendiente |
 
-- `npm run local:setup`: prepara entorno local completo.
-- `npm run local:setup:fast`: version rapida (sin reinstalar dependencias).
-- `npm run local:backend`: inicia solo backend.
-- `npm run dev`: inicia backend + app al mismo tiempo.
-- `npm run app:dev`: inicia Expo para development build.
-- `npm run app:dev:lan`: inicia Expo en modo LAN (fallback recomendado cuando falla tunnel).
-- `npm run app:dev:tunnel`: inicia Expo en modo tunnel (Ngrok).
-- `npm run app:dev:win`: ejecuta `adb reverse` + LAN para pruebas en Android por USB.
+---
 
-## Versionado de release
+## Contribuir
 
-- `app.json` (`expo.version`) define la version visible al usuario.
-- `package.json` (`version`) se mantiene alineado con la version de release.
-- `eas.json` usa `appVersionSource: remote`, por lo que EAS maneja internamente el build number para Play Store.
-- Antes de publicar, incrementar `expo.version` y `package.json.version` en el mismo cambio.
+Este proyecto es parte de un trabajo académico de la **Universidad Tecnológica de Pereira**. Si encontrás un bug o tenés una sugerencia, abrí un Issue. PRs bienvenidos con descripción clara del cambio.
 
-## Cleartext en Android (solo desarrollo)
+---
 
-- El plugin `plugins/withAndroidCleartextTraffic.js` queda activo en `app.json`.
-- Permite HTTP en perfiles `development` y `preview`.
-- En `production` queda deshabilitado por defecto.
-- Para casos locales sin perfil EAS, usar `EXPO_PUBLIC_ALLOW_CLEARTEXT=true` solo mientras se prueban endpoints HTTP locales.
+## Licencia
 
-## Variables de entorno de app (Expo)
+MIT © 2024 Juan Andrés Rojas — ver [`LICENSE`](LICENSE) para detalles.
 
-- `EXPO_PUBLIC_API_BASE_URL`: URL del backend accesible desde el dispositivo.
-- `EXPO_PUBLIC_SUBMIT_TIMEOUT_MS`: tiempo maximo de espera al radicar (en ms). Recomendado: mayor que `PLAYWRIGHT_TIMEOUT_MS` del backend.
-
-## Si falla al abrir en Android
-
-- Si aparece error de emulador no encontrado: crear/iniciar un emulador en Android Studio.
-- Si aparece error de Expo Go por SDK: usar development build (no Expo Go).
-- Si falla un build de EAS: revisar logs de la fase `Prepare project`.
-
-## Estructura general del proyecto
-
-- `App.tsx`: interfaz principal de la app movil.
-- `backend/`: API para validar, guardar y procesar solicitudes.
-- `plugins/`: ajustes nativos de Expo/Android.
-- `assets/`: imagenes y recursos visuales.
-
-## Documentos utiles
-
-- [ARCHITECTURE.md](ARCHITECTURE.md): componentes, flujo de datos y dependencias.
-- [AUDIT.md](AUDIT.md): hallazgos de deuda tecnica, inconsistencias y vulnerabilidades.
-- `backend/README.md`: setup y contrato tecnico del backend.
-- `PRIVACY_POLICY.md`: politica de privacidad.
-- `ROADMAP_PLAY_STORE.md`: pendientes para publicacion.
-
-## Artefactos raiz historicos
-
-Estos archivos existen en la raiz del repositorio y forman parte de la superficie historica del portal, no de la app Expo actual:
-
-- `index-pereira.html`
-- `pereira-index.js`
-- `pereira-define.js`
-
-## Nota
-
-Este proyecto esta en evolucion. Si algo no funciona a la primera, revisar logs y ejecutar los comandos de inicio rapido en el orden indicado.
+> **Aviso:** este proyecto no tiene afiliación oficial con la Alcaldía de Pereira. Automatiza el portal público de PQRD con fines académicos y de accesibilidad ciudadana.
