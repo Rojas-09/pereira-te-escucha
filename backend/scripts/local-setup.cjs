@@ -4,8 +4,8 @@ const path = require('path');
 
 const repoRoot = path.resolve(process.cwd(), '..');
 const backendDir = process.cwd();
-const dbUser = 'pqia';
-const dbPassword = 'PQIA_dev_123';
+const dbUser = process.env.DB_USER || 'pqia';
+const dbPassword = process.env.DB_PASSWORD || 'PQIA_dev_123';
 const dbName = 'pqrs_db';
 const containerName = 'pqia-postgres';
 const dbPort = '5432';
@@ -112,4 +112,4 @@ for (const statement of schemaStatements) {
   run('docker', ['exec', containerName, 'psql', '-U', dbUser, '-d', dbName, '-c', statement], { cwd: repoRoot });
 }
 
-console.log(`DATABASE_URL activo: ${databaseUrl}`);
+console.log(`DATABASE_URL activo: ${databaseUrl.replace(/\/\/[^:]+:/, '//****:')}`);

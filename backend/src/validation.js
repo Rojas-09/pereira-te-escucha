@@ -19,8 +19,8 @@ const requestSchema = z.object({
   correo: z.string().email().optional().or(z.literal('')),
   tipoSolicitud: z.enum(['peticion', 'queja', 'reclamo', 'sugerencia', 'denuncia']),
   asunto: z.string().min(5).max(255).transform(sanitizeText),
-  descripcion: z.string().min(20).transform(sanitizeText),
-  aceptarTratamiento: z.coerce.boolean().default(true)
+  descripcion: z.string().min(1).transform(sanitizeText),
+  aceptarTratamiento: z.boolean().or(z.literal('true')).refine(v => v === true || v === 'true', { message: 'aceptarTratamiento debe ser true' })
 });
 
 export function validateBody(input) {
@@ -105,4 +105,10 @@ export function mapToHumanValues(data) {
     medioRespuestaLabel: MEDIO_RESPUESTA_LABEL[data.medioRespuesta],
     tipoSolicitudLabel: TIPO_SOLICITUD_LABEL[data.tipoSolicitud]
   };
+}
+
+export function buildTrackingCode() {
+  const timestamp = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
+  const suffix = Math.floor(1000 + Math.random() * 9000);
+  return `PETE-${timestamp}-${suffix}`;
 }

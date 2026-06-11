@@ -18,6 +18,7 @@ Copia `.env.example` a `.env`.
 - `PORT`: puerto del backend (default 3001).
 - `DATABASE_URL`: cadena de conexion PostgreSQL (obligatoria).
 - `ALLOWED_ORIGIN`: origen permitido para CORS (`*` para desarrollo).
+- `BACKEND_API_TOKEN`: **obligatorio en producción** para proteger los endpoints `/api/pqrs/*`. Sin esta variable, el backend no iniciará en modo producción.
 - `PEREIRA_FORM_URL`: URL del formulario publico.
 - `PLAYWRIGHT_HEADLESS`: `true|false`.
 - `PLAYWRIGHT_TIMEOUT_MS`: timeout total por radicacion.

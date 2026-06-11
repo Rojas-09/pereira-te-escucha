@@ -8,16 +8,19 @@
 - [ ] Configurar `eas.json` para builds de producción
 - [ ] Actualizar `app.json`:
   - [ ] `package` único (ej: `com.pereira.pqrsapp`)
-  - [ ] `versionCode` y `version` correctos
+  - [ ] `version` correcta (visible para usuarios)
   - [ ] Íconos y splash optimizados
+- [ ] Alinear `package.json.version` con `app.json.expo.version`
+- [ ] Confirmar estrategia de build number en EAS (`appVersionSource: remote`)
 
 ### 2. Documentación Legal 📄
 
-- [ ] **Política de Privacidad** (REQUERIDO por Google)
+- [x] **Política de Privacidad** (REQUERIDO por Google)
   - Explicar qué datos recolectas
   - Cómo usas la ubicación
   - Qué haces con las fotos
-  - Hospedada en URL pública
+  - Documento base: `PRIVACY_POLICY.md`
+  - Pendiente: publicarla en URL pública
 
 - [ ] **Términos de Servicio** (opcional pero recomendado)
 
@@ -35,6 +38,7 @@
 
 - [ ] Firmar con keystore (EAS lo hace automático)
 - [ ] Configurar permisos en `app.json`:
+
   ```json
   "android": {
     "package": "com.pereira.pqrsapp",
@@ -93,6 +97,7 @@ eas build --platform android --profile production
 ## 🛠️ Comandos Útiles
 
 ### Desarrollo Local
+
 ```bash
 # Frontend con Expo Go
 npm start
@@ -102,20 +107,29 @@ cd backend && npm run dev
 ```
 
 ### Build Development
+
 ```bash
 eas build --profile development --platform android
 ```
 
 ### Build Producción
+
 ```bash
 eas build --profile production --platform android
 ```
 
 ### Actualizar versión
+
 ```bash
-# En app.json cambiar:
-"version": "1.0.1",          # Usuario ve
-"versionCode": 2,            # Google Play usa internamente
+# 1) En app.json cambiar expo.version
+"version": "1.0.1"
+
+# 2) En package.json alinear version
+"version": "1.0.1"
+
+# 3) Build number:
+# Con appVersionSource=remote, EAS administra internamente
+# la numeracion usada por Play Store en cada build.
 ```
 
 ---

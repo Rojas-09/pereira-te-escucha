@@ -78,6 +78,7 @@ const resolveApiBaseUrl = () => {
 };
 
 const API_BASE_URL = resolveApiBaseUrl();
+const BACKEND_API_TOKEN = process.env.EXPO_PUBLIC_BACKEND_API_TOKEN?.trim() || '';
 const SUBMIT_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_SUBMIT_TIMEOUT_MS || 45000);
 const STATUS_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_STATUS_TIMEOUT_MS || 7000);
 const STATUS_POLL_BASE_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_BASE_MS || 5000);
@@ -141,6 +142,14 @@ async function readJsonSafe<T>(response: Response): Promise<T | null> {
   } catch {
     return null;
   }
+}
+
+function buildBackendHeaders() {
+  const headers: Record<string, string> = {};
+  if (BACKEND_API_TOKEN) {
+    headers.Authorization = `Bearer ${BACKEND_API_TOKEN}`;
+  }
+  return headers;
 }
 
 function formalizeContext(input: string) {
@@ -742,17 +751,28 @@ export default function App() {
 
   const fetchTrackingStatus = async (code: string, timeoutMs = 10000) => {
     if (!code) {
-      return;
+      return { ok: false, terminal: true, statusChanged: false, retryAfterMs: null as number | null };
     }
 
+    pollLastRequestMsRef.current = Date.now();
     setIsRefreshingStatus(true);
     try {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/api/pqrs/status/${encodeURIComponent(code)}`, { method: 'GET' }, timeoutMs);
+      const response = await fetchWithTimeout(
+        `${API_BASE_URL}/api/pqrs/status/${encodeURIComponent(code)}`,
+        { method: 'GET', headers: buildBackendHeaders() },
+        timeoutMs
+      );
 
       // A 304 indicates no state changes; keep current snapshot and clear transient errors.
       if (response.status === 304) {
         setTrackingStatusError('');
-        return;
+        return { ok: true, terminal: false, statusChanged: false, retryAfterMs: null as number | null };
+      }
+
+      if (response.status === 429 || response.status === 503) {
+        const retryAfterMs = parseRetryAfterMs(response.headers.get('retry-after'));
+        setTrackingStatusError('Mucho trafico en seguimiento. Reintentando automaticamente.');
+        return { ok: false, terminal: false, statusChanged: false, retryAfterMs };
       }
 
       const payload = await readJsonSafe<{ ok?: boolean; data?: TrackingSnapshot; message?: string; detail?: string }>(response);
@@ -761,55 +781,171 @@ export default function App() {
         throw new Error(payload?.message || payload?.detail || `No fue posible consultar el estado actual (HTTP ${response.status})`);
       }
 
+      const previousStatus = trackingStatusRef.current;
+      const nextStatus = payload.data.status || '';
+      const statusChanged = previousStatus !== nextStatus;
+      trackingStatusRef.current = nextStatus;
+
       setTrackingSnapshot(payload.data as TrackingSnapshot);
       setTrackingStatusError('');
+
+      return {
+        ok: true,
+        terminal: !shouldContinuePolling(nextStatus),
+        statusChanged,
+        retryAfterMs: null as number | null,
+      };
     } catch (error) {
       const safeMessage = error instanceof Error ? error.message : 'No fue posible consultar el estado';
       setTrackingStatusError(safeMessage);
+      return { ok: false, terminal: false, statusChanged: false, retryAfterMs: null as number | null };
     } finally {
       setIsRefreshingStatus(false);
     }
   };
 
   useEffect(() => {
+    currentStepRef.current = currentStep;
+  }, [currentStep]);
+
+  useEffect(() => {
+    trackingCodeRef.current = trackingCode;
+  }, [trackingCode]);
+
+  useEffect(() => {
+    trackingStatusRef.current = trackingSnapshot?.status || '';
+  }, [trackingSnapshot?.status]);
+
+  useEffect(() => {
     return () => {
-      if (statusPollingRef.current) {
-        clearInterval(statusPollingRef.current);
-        statusPollingRef.current = null;
-      }
+      clearPollingTimer();
     };
   }, []);
 
   useEffect(() => {
-    if (statusPollingRef.current) {
-      clearInterval(statusPollingRef.current);
-      statusPollingRef.current = null;
-    }
+    clearPollingTimer();
 
     if (currentStep !== 5 || !trackingCode) {
       return;
     }
 
-    fetchTrackingStatus(trackingCode).catch(() => {
-      setTrackingStatusError('No fue posible consultar el estado');
-    });
-
     const activeStatus = trackingSnapshot?.status || '';
-    if (shouldContinuePolling(activeStatus)) {
-      statusPollingRef.current = setInterval(() => {
-        fetchTrackingStatus(trackingCode, STATUS_TIMEOUT_MS).catch(() => {
-          setTrackingStatusError('No fue posible actualizar el estado');
-        });
-      }, 8000);
+    if (activeStatus && !shouldContinuePolling(activeStatus)) {
+      return;
     }
 
-    return () => {
-      if (statusPollingRef.current) {
-        clearInterval(statusPollingRef.current);
-        statusPollingRef.current = null;
-      }
+    resetPollingCounters();
+
+    const scheduleNextPoll = (delayMs: number) => {
+      clearPollingTimer();
+      statusPollingRef.current = setTimeout(async () => {
+        if (currentStepRef.current !== 5 || !trackingCodeRef.current) {
+          clearPollingTimer();
+          return;
+        }
+
+        const elapsedMs = Date.now() - (pollStartMsRef.current || Date.now());
+        if (elapsedMs > STATUS_POLL_MAX_ELAPSED_MS) {
+          stopAutoPolling('Seguimiento automatico pausado. Puedes actualizar manualmente el estado.');
+          return;
+        }
+
+        if (pollAttemptRef.current >= STATUS_POLL_MAX_ATTEMPTS) {
+          stopAutoPolling('Se alcanzo el limite de consultas automaticas. Usa Actualizar estado para continuar.');
+          return;
+        }
+
+        pollAttemptRef.current += 1;
+        const pollResult = await fetchTrackingStatus(trackingCodeRef.current, STATUS_TIMEOUT_MS);
+
+        if (pollResult.terminal) {
+          clearPollingTimer();
+          return;
+        }
+
+        if (!pollResult.ok) {
+          pollConsecutiveErrorsRef.current += 1;
+          if (pollConsecutiveErrorsRef.current >= STATUS_POLL_MAX_CONSECUTIVE_ERRORS) {
+            stopAutoPolling('Seguimiento automatico pausado por errores de red. Reintenta manualmente.');
+            return;
+          }
+        } else {
+          pollConsecutiveErrorsRef.current = 0;
+          if (pollResult.statusChanged) {
+            pollAttemptRef.current = 0;
+          }
+        }
+
+        const nextDelayMs = pollResult.retryAfterMs || computeBackoffDelayMs(pollAttemptRef.current + 1);
+        scheduleNextPoll(nextDelayMs);
+      }, delayMs);
     };
-  }, [currentStep, trackingCode, trackingSnapshot?.status]);
+
+    fetchTrackingStatus(trackingCode, STATUS_TIMEOUT_MS)
+      .then((initialResult) => {
+        if (initialResult.terminal) {
+          clearPollingTimer();
+          return;
+        }
+
+        const initialDelayMs = initialResult.retryAfterMs || computeBackoffDelayMs(1);
+        scheduleNextPoll(initialDelayMs);
+      })
+      .catch(() => {
+        setTrackingStatusError('No fue posible consultar el estado');
+      });
+
+    return () => {
+      clearPollingTimer();
+    };
+  }, [currentStep, trackingCode]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState !== 'active') {
+        clearPollingTimer();
+        return;
+      }
+
+      if (currentStepRef.current !== 5 || !trackingCodeRef.current) {
+        return;
+      }
+
+      if (!shouldContinuePolling(trackingStatusRef.current || '')) {
+        return;
+      }
+
+      const staleMs = Date.now() - (pollLastRequestMsRef.current || 0);
+      if (staleMs < STATUS_RESUME_STALE_MS) {
+        return;
+      }
+
+      fetchTrackingStatus(trackingCodeRef.current, STATUS_TIMEOUT_MS)
+        .then((result) => {
+          if (result.terminal) {
+            clearPollingTimer();
+            return;
+          }
+
+          const delayMs = result.retryAfterMs || computeBackoffDelayMs(Math.max(1, pollAttemptRef.current + 1));
+          clearPollingTimer();
+          statusPollingRef.current = setTimeout(() => {
+            if (currentStepRef.current === 5 && trackingCodeRef.current) {
+              fetchTrackingStatus(trackingCodeRef.current, STATUS_TIMEOUT_MS).catch(() => {
+                setTrackingStatusError('No fue posible actualizar el estado');
+              });
+            }
+          }, delayMs);
+        })
+        .catch(() => {
+          setTrackingStatusError('No fue posible consultar el estado al volver a la app');
+        });
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const handleSend = async () => {
     setIsSubmitting(true);
@@ -820,7 +956,11 @@ export default function App() {
       let stageStart = Date.now();
 
       setStageActive(0);
-      const healthResponse = await fetchWithTimeout(`${API_BASE_URL}/health`, { method: 'GET' }, 5000);
+      const healthResponse = await fetchWithTimeout(
+        `${API_BASE_URL}/health`,
+        { method: 'GET', headers: buildBackendHeaders() },
+        5000
+      );
       if (!healthResponse.ok) {
         throw new Error(`El backend de radicacion no esta disponible en ${API_BASE_URL}.`);
       }
@@ -868,6 +1008,7 @@ export default function App() {
         `${API_BASE_URL}/api/pqrs/submit-anonymous`,
         {
           method: 'POST',
+          headers: buildBackendHeaders(),
           body: formData,
         },
         SUBMIT_TIMEOUT_MS
@@ -1229,7 +1370,7 @@ export default function App() {
           style={styles.restartButton}
           onPress={() => {
             if (statusPollingRef.current) {
-              clearInterval(statusPollingRef.current);
+              clearTimeout(statusPollingRef.current);
               statusPollingRef.current = null;
             }
             setCurrentStep(1);
