@@ -23,134 +23,22 @@ import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
 import { useFonts, Sora_400Regular, Sora_600SemiBold, Sora_700Bold } from '@expo-google-fonts/sora';
+import * as Sentry from '@sentry/react-native';
 
-const PQRD_TYPES = ['Peticion', 'Queja', 'Reclamo', 'Denuncia', 'Sugerencia'];
+import { API_BASE_URL, BACKEND_API_TOKEN, SUBMIT_TIMEOUT_MS, STATUS_TIMEOUT_MS, STATUS_POLL_BASE_MS, STATUS_POLL_MAX_MS, STATUS_POLL_JITTER_PCT, STATUS_POLL_MAX_ELAPSED_MS, STATUS_POLL_MAX_ATTEMPTS, STATUS_POLL_MAX_CONSECUTIVE_ERRORS, STATUS_RESUME_STALE_MS, PQRD_TYPES, SENTRY_DSN } from './src/config/env';
+import { LocationPoint, PersonalData, ResponseMedium, SubmitStageStatus, TrackingEvent, TrackingSnapshot } from './src/types';
+import { fetchWithTimeout, readJsonSafe, buildBackendHeaders } from './src/services/api';
+import { formatAddressFromReverseGeocode, formatTrackingStatusLabel, formatStatusDate, parseRetryAfterMs, shouldContinuePolling, computeBackoffDelayMs } from './src/utils/formatters';
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  environment: __DEV__ ? 'development' : 'production',
+  enabled: !__DEV__,
+  tracesSampleRate: 0.2,
+  attachScreenshot: true,
+});
+
 const TOTAL_STEPS = 5;
-
-type LocationPoint = {
-  latitude: number;
-  longitude: number;
-};
-
-type PersonalData = {
-  fullName: string;
-  idNumber: string;
-  email: string;
-  phone: string;
-};
-
-type ResponseMedium = 'cartelera' | 'correo_electronico' | 'correo_fisico';
-type SubmitStageStatus = 'pending' | 'active' | 'done';
-
-type TrackingEvent = {
-  to_status: string;
-  reason: string | null;
-  detail: string | null;
-  created_at: string;
-};
-
-type TrackingSnapshot = {
-  trackingCode: string;
-  status: string;
-  consecutivoOficial?: string | null;
-  radicadoOficial?: string | null;
-  portalMessage?: string | null;
-  lastErrorCode?: string | null;
-  lastErrorMessage?: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-  events: TrackingEvent[];
-};
-
-const trimTrailingSlashes = (url: string) => url.replace(/\/+$/, '');
-
-const resolveApiBaseUrl = () => {
-  const configuredUrl = process.env.EXPO_PUBLIC_API_BASE_URL?.trim();
-  if (configuredUrl) {
-    return trimTrailingSlashes(configuredUrl);
-  }
-
-  if (__DEV__) {
-    return Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://localhost:3001';
-  }
-
-  return 'https://api.pereira-pqrs.com';
-};
-
-const API_BASE_URL = resolveApiBaseUrl();
-const BACKEND_API_TOKEN = process.env.EXPO_PUBLIC_BACKEND_API_TOKEN?.trim() || '';
-const SUBMIT_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_SUBMIT_TIMEOUT_MS || 45000);
-const STATUS_TIMEOUT_MS = Number(process.env.EXPO_PUBLIC_STATUS_TIMEOUT_MS || 7000);
-const STATUS_POLL_BASE_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_BASE_MS || 5000);
-const STATUS_POLL_MAX_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_MS || 60000);
-const STATUS_POLL_JITTER_PCT = Math.min(
-  0.5,
-  Math.max(0, Number(process.env.EXPO_PUBLIC_STATUS_POLL_JITTER_PCT || 0.2))
-);
-const STATUS_POLL_MAX_ELAPSED_MS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_ELAPSED_MS || 1800000);
-const STATUS_POLL_MAX_ATTEMPTS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_ATTEMPTS || 40);
-const STATUS_POLL_MAX_CONSECUTIVE_ERRORS = Number(process.env.EXPO_PUBLIC_STATUS_POLL_MAX_CONSECUTIVE_ERRORS || 5);
-const STATUS_RESUME_STALE_MS = Number(process.env.EXPO_PUBLIC_STATUS_RESUME_STALE_MS || 10000);
-
-function parseRetryAfterMs(retryAfterHeader: string | null) {
-  if (!retryAfterHeader) {
-    return null;
-  }
-
-  const seconds = Number(retryAfterHeader);
-  if (Number.isFinite(seconds) && seconds > 0) {
-    return Math.round(seconds * 1000);
-  }
-
-  const retryAt = new Date(retryAfterHeader).getTime();
-  if (!Number.isNaN(retryAt)) {
-    return Math.max(0, retryAt - Date.now());
-  }
-
-  return null;
-}
-
-function computeBackoffDelayMs(attempt: number) {
-  const exponent = Math.max(0, attempt - 1);
-  const rawDelay = Math.min(STATUS_POLL_MAX_MS, STATUS_POLL_BASE_MS * (2 ** exponent));
-  const jitterFactor = 1 + ((Math.random() * 2 - 1) * STATUS_POLL_JITTER_PCT);
-  return Math.max(1000, Math.round(rawDelay * jitterFactor));
-}
-
-async function fetchWithTimeout(resource: string, options: RequestInit, timeoutMs = 30000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    return await fetch(resource, {
-      ...options,
-      signal: controller.signal,
-    });
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-async function readJsonSafe<T>(response: Response): Promise<T | null> {
-  const raw = await response.text();
-  if (!raw) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return null;
-  }
-}
-
-function buildBackendHeaders() {
-  const headers: Record<string, string> = {};
-  if (BACKEND_API_TOKEN) {
-    headers.Authorization = `Bearer ${BACKEND_API_TOKEN}`;
-  }
-  return headers;
-}
 
 function formalizeContext(input: string) {
   const sanitized = input
@@ -291,20 +179,6 @@ function formalizeContext(input: string) {
   ].join(' ');
 }
 
-function formatAddressFromReverseGeocode(result: Location.LocationGeocodedAddress | null) {
-  if (!result) {
-    return 'Direccion no disponible para este punto.';
-  }
-
-  const parts = [result.street, result.streetNumber, result.district, result.city, result.region]
-    .filter(Boolean)
-    .join(', ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return parts || 'Direccion no disponible para este punto.';
-}
-
 function buildFormalLetter(args: {
   type: string;
   informalContext: string;
@@ -349,49 +223,7 @@ Cordialmente,
 ${args.personalData.fullName || 'Ciudadano(a)'}`;
 }
 
-function formatTrackingStatusLabel(status: string) {
-  switch (status) {
-    case 'recibido':
-      return 'Recibido';
-    case 'en_proceso':
-      return 'En proceso';
-    case 'radicado':
-      return 'Radicado';
-    case 'error_temporal':
-      return 'Error temporal';
-    case 'fallido':
-      return 'Fallido';
-    case 'fallo':
-      return 'Fallido';
-    default:
-      return status;
-  }
-}
-
-function shouldContinuePolling(status: string) {
-  return status === 'recibido' || status === 'en_proceso' || status === 'error_temporal';
-}
-
-function formatStatusDate(value?: string) {
-  if (!value) {
-    return '';
-  }
-
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) {
-    return '';
-  }
-
-  return parsed.toLocaleString('es-CO', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
-
-export default function App() {
+function App() {
   const [fontsLoaded] = useFonts({
     Sora_400Regular,
     Sora_600SemiBold,
@@ -651,6 +483,11 @@ export default function App() {
   const onMapPress = (event: MapPressEvent) => {
     const point = event.nativeEvent.coordinate;
     setSelectedPoint({ latitude: point.latitude, longitude: point.longitude });
+    Sentry.addBreadcrumb({
+      category: 'ui',
+      message: 'User selected location on map',
+      level: 'info',
+    });
   };
 
   const onAndroidMapMessage = (event: WebViewMessageEvent) => {
@@ -759,7 +596,7 @@ export default function App() {
     try {
       const response = await fetchWithTimeout(
         `${API_BASE_URL}/api/pqrs/status/${encodeURIComponent(code)}`,
-        { method: 'GET', headers: buildBackendHeaders() },
+        { method: 'GET', headers: buildBackendHeaders(BACKEND_API_TOKEN) },
         timeoutMs
       );
 
@@ -876,7 +713,7 @@ export default function App() {
           }
         }
 
-        const nextDelayMs = pollResult.retryAfterMs || computeBackoffDelayMs(pollAttemptRef.current + 1);
+        const nextDelayMs = pollResult.retryAfterMs || computeBackoffDelayMs(pollAttemptRef.current + 1, STATUS_POLL_BASE_MS, STATUS_POLL_MAX_MS, STATUS_POLL_JITTER_PCT);
         scheduleNextPoll(nextDelayMs);
       }, delayMs);
     };
@@ -888,7 +725,7 @@ export default function App() {
           return;
         }
 
-        const initialDelayMs = initialResult.retryAfterMs || computeBackoffDelayMs(1);
+        const initialDelayMs = initialResult.retryAfterMs || computeBackoffDelayMs(1, STATUS_POLL_BASE_MS, STATUS_POLL_MAX_MS, STATUS_POLL_JITTER_PCT);
         scheduleNextPoll(initialDelayMs);
       })
       .catch(() => {
@@ -927,7 +764,7 @@ export default function App() {
             return;
           }
 
-          const delayMs = result.retryAfterMs || computeBackoffDelayMs(Math.max(1, pollAttemptRef.current + 1));
+          const delayMs = result.retryAfterMs || computeBackoffDelayMs(Math.max(1, pollAttemptRef.current + 1), STATUS_POLL_BASE_MS, STATUS_POLL_MAX_MS, STATUS_POLL_JITTER_PCT);
           clearPollingTimer();
           statusPollingRef.current = setTimeout(() => {
             if (currentStepRef.current === 5 && trackingCodeRef.current) {
@@ -958,7 +795,7 @@ export default function App() {
       setStageActive(0);
       const healthResponse = await fetchWithTimeout(
         `${API_BASE_URL}/health`,
-        { method: 'GET', headers: buildBackendHeaders() },
+        { method: 'GET', headers: buildBackendHeaders(BACKEND_API_TOKEN) },
         5000
       );
       if (!healthResponse.ok) {
@@ -1008,7 +845,7 @@ export default function App() {
         `${API_BASE_URL}/api/pqrs/submit-anonymous`,
         {
           method: 'POST',
-          headers: buildBackendHeaders(),
+          headers: buildBackendHeaders(BACKEND_API_TOKEN),
           body: formData,
         },
         SUBMIT_TIMEOUT_MS
@@ -1030,6 +867,12 @@ export default function App() {
         throw new Error('El backend no retorno trackingCode para seguimiento.');
       }
 
+      Sentry.addBreadcrumb({
+        category: 'submission',
+        message: `PQRD submitted: ${selectedType}`,
+        level: 'info',
+      });
+
       setTrackingCode(acceptedTrackingCode);
       setTrackingSnapshot(null);
       setTrackingStatusError('');
@@ -1047,6 +890,15 @@ export default function App() {
         safeMessage =
           `No se pudo conectar con el backend (${API_BASE_URL}). Verifica EXPO_PUBLIC_API_BASE_URL, que el servidor este accesible desde tu celular y que Android permita trafico HTTP local en builds de desarrollo.`;
       }
+      Sentry.captureMessage('PQRD submission failed', {
+        level: 'warning',
+        extra: {
+          errorMessage: safeMessage,
+          apiUrl: API_BASE_URL,
+          selectedType,
+        },
+      });
+
       showAppNotice('No se pudo radicar', safeMessage, 'error');
     } finally {
       setIsSubmitting(false);
@@ -1989,3 +1841,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+
+export default Sentry.wrap(App);
