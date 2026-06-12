@@ -1,5 +1,5 @@
 import { pool, query } from './db.js';
-import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS } from './config.js';
+import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS, WORKER_MAX_RETRIES, WORKER_RETRY_BASE_MS } from './config.js';
 import { submitAnonymousPQRS } from './pereiraAutomation.js';
 
 let workerLoopTimer = null;
@@ -67,7 +67,7 @@ export async function processNextPendingJob() {
     await markRequestSuccessful(requestId, result);
   } catch (error) {
     console.error(`Worker failed for requestId=${requestId}, jobId=${jobId}: ${error.message}`);
-    await markRequestFailed(requestId, error);
+    await handleJobFailure(requestId, error);
   } finally {
     await cleanupRequestFiles(requestId);
   }
@@ -80,6 +80,7 @@ async function claimNextPendingJob() {
        FROM automation_jobs
        WHERE queue_name = 'pqrs-radicacion'
          AND job_state = 'pending'
+         AND (scheduled_at IS NULL OR scheduled_at <= NOW())
        ORDER BY created_at ASC
        LIMIT 1
        FOR UPDATE SKIP LOCKED
@@ -201,8 +202,46 @@ async function markRequestSuccessful(requestId, result) {
   );
 }
 
-async function markRequestFailed(requestId, error) {
+export async function handleJobFailure(requestId, error) {
   const message = String(error?.message || 'Fallo no controlado').slice(0, 1000);
+
+  const jobResult = await query(
+    `SELECT retry_count FROM automation_jobs WHERE request_id = $1`,
+    [requestId]
+  );
+
+  const currentRetries = jobResult.rows[0]?.retry_count ?? 0;
+  const nextRetryCount = currentRetries + 1;
+
+  if (nextRetryCount < WORKER_MAX_RETRIES) {
+    const delayMs = WORKER_RETRY_BASE_MS * (2 ** (nextRetryCount - 1));
+    const scheduledAt = new Date(Date.now() + delayMs).toISOString();
+    const logDetail = `Reintento ${nextRetryCount}/${WORKER_MAX_RETRIES} programado para +${delayMs}ms: ${message}`;
+
+    await query(
+      `UPDATE automation_jobs
+       SET job_state = 'pending',
+           retry_count = $2,
+           scheduled_at = $3,
+           updated_at = NOW()
+       WHERE request_id = $1`,
+      [requestId, nextRetryCount, scheduledAt]
+    );
+
+    await query(
+      `INSERT INTO request_status_events (request_id, from_status, to_status, reason, detail)
+       VALUES ($1, 'en_proceso', 'error_temporal', 'automation_retry', $2)`,
+      [requestId, logDetail]
+    );
+
+    console.log(`Worker scheduled retry ${nextRetryCount} for requestId=${requestId} in ${delayMs}ms`);
+  } else {
+    await markRequestFailed(requestId, error, message);
+  }
+}
+
+async function markRequestFailed(requestId, error, messageOverride) {
+  const message = messageOverride || String(error?.message || 'Fallo no controlado').slice(0, 1000);
 
   await query(
     `UPDATE requests
@@ -222,7 +261,7 @@ async function markRequestFailed(requestId, error) {
       to_status,
       reason,
       detail
-    ) VALUES ($1, 'en_proceso', 'fallo', 'automation_error', $2)`,
+    ) VALUES ($1, 'en_proceso', 'fallo', 'automation_failed', $2)`,
     [requestId, message]
   );
 
