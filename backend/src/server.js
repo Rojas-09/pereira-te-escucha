@@ -25,8 +25,8 @@ if (NODE_ENV === 'production') {
   if (!BACKEND_API_TOKEN) {
     throw new Error('BACKEND_API_TOKEN es obligatorio en produccion. Define la variable en .env antes de iniciar.');
   }
-  if (!process.env.DB_PASSWORD) {
-    throw new Error('DB_PASSWORD es obligatorio en produccion. Define la variable en .env antes de iniciar.');
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL es obligatorio en produccion. Define la variable en .env antes de iniciar.');
   }
   if (!ALLOWED_ORIGIN || ALLOWED_ORIGIN === '*') {
     throw new Error('ALLOWED_ORIGIN debe ser un origen específico (no *) en producción. Define la variable en .env antes de iniciar.');
