@@ -42,3 +42,14 @@ jobs:
       - run: npm test
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/test
+
+  deploy:
+    needs: test-backend
+    if: github.ref == 'refs/heads/Development' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        run: |
+          curl -s "$RENDER_DEPLOY_HOOK" | head -c 200
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
