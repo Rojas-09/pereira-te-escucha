@@ -1,6 +1,7 @@
 import { pool, query } from './db.js';
 import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS, WORKER_MAX_RETRIES, WORKER_RETRY_BASE_MS } from './config.js';
 import { submitAnonymousPQRS } from './pereiraAutomation.js';
+import { logger } from './services/logger.js';
 
 let workerLoopTimer = null;
 let workerTickInProgress = false;
@@ -21,7 +22,7 @@ export function startAutomationWorker() {
     try {
       await processNextPendingJob();
     } catch (error) {
-      console.error(`Worker tick failed: ${error.message}`);
+      logger.error(error, 'Worker tick failed');
     } finally {
       workerTickInProgress = false;
     }
@@ -37,7 +38,7 @@ export function startAutomationWorker() {
     // handled in runTick
   });
 
-  console.log(`Automation worker started (poll ${WORKER_POLL_MS}ms)`);
+  logger.info({ pollMs: WORKER_POLL_MS }, 'Automation worker started');
 }
 
 export async function processNextPendingJob() {
@@ -66,7 +67,7 @@ export async function processNextPendingJob() {
 
     await markRequestSuccessful(requestId, result);
   } catch (error) {
-    console.error(`Worker failed for requestId=${requestId}, jobId=${jobId}: ${error.message}`);
+    logger.error({ requestId, jobId, err: error.message }, 'Worker failed for job');
     await handleJobFailure(requestId, error);
   } finally {
     await cleanupRequestFiles(requestId);
@@ -234,7 +235,7 @@ export async function handleJobFailure(requestId, error) {
       [requestId, logDetail]
     );
 
-    console.log(`Worker scheduled retry ${nextRetryCount} for requestId=${requestId} in ${delayMs}ms`);
+    logger.info({ requestId, retryCount: nextRetryCount, delayMs }, 'Worker scheduled retry');
   } else {
     await markRequestFailed(requestId, error, message);
   }

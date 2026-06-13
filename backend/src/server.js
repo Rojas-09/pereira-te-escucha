@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/node';
 import { createApp } from './app.js';
 import { startAutomationWorker } from './worker.js';
 import { ensureDatabaseBootstrap } from './services/database.service.js';
+import { logger } from './services/logger.js';
 import {
   ALLOWED_ORIGIN,
   BACKEND_API_TOKEN,
@@ -35,7 +36,7 @@ if (NODE_ENV === 'production') {
 const app = createApp(BACKEND_API_TOKEN);
 
 app.listen(PORT, async () => {
-  console.log(`PQRS backend listening on port ${PORT}`);
+  logger.info({ port: PORT }, 'PQRS backend started');
 
   try {
     await ensureDatabaseBootstrap();
@@ -43,7 +44,7 @@ app.listen(PORT, async () => {
       startAutomationWorker();
     }
   } catch (error) {
-    console.error(`Startup failed: ${error.message}`);
+    logger.error(error, 'Backend startup failed');
     process.exit(1);
   }
 });

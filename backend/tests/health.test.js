@@ -16,3 +16,10 @@ test('GET /health returns content-type application/json', async () => {
   const res = await request(app).get('/health');
   assert.match(res.headers['content-type'], /json/);
 });
+
+test('GET /health returns db status field', async () => {
+  const app = createApp('test-token');
+  const res = await request(app).get('/health');
+  assert.equal(res.body.ok, true);
+  assert.ok(typeof res.body.db === 'string');
+});
