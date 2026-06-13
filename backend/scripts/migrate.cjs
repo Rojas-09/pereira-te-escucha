@@ -55,6 +55,7 @@ const schemaStatements = [
     queue_name TEXT NOT NULL,
     job_state TEXT NOT NULL,
     retry_count INTEGER NOT NULL DEFAULT 0,
+    scheduled_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (request_id)
