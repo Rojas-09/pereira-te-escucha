@@ -25,7 +25,7 @@
         "EXPO_PUBLIC_API_BASE_URL": "https://pereira-pqrs-backend.onrender.com",
         "EXPO_PUBLIC_BACKEND_API_TOKEN": "5529ed26e131f5c5a13ce19b563d9b4f630f34690794abd61970ece08fafa426",
         "EXPO_PUBLIC_SUBMIT_TIMEOUT_MS": "60000",
-        "EXPO_PUBLIC_SENTRY_DSN": ""
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ba0f671771a8bdf9d2389c01cbbf8c9e@o4511556049108992.ingest.us.sentry.io/4511556072833024"
       }
     }
   },
