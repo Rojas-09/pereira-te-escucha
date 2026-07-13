@@ -231,6 +231,6 @@ Este proyecto es parte de un trabajo académico de la **Universidad Tecnológica
 
 ## Licencia
 
-MIT © 2024 Juan Andrés Rojas — ver [`LICENSE`](LICENSE) para detalles.
+MIT © 2026 Juan Andrés Rojas — ver [`LICENSE`](LICENSE) para detalles.
 
 > **Aviso:** este proyecto no tiene afiliación oficial con la Alcaldía de Pereira. Automatiza el portal público de PQRD con fines académicos y de accesibilidad ciudadana.

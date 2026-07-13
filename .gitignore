@@ -38,6 +38,9 @@ yarn-error.*
 !.env.example
 password.md
 
+# audit docs
+Auditoria del estado actual.md
+
 # backend debug artifacts
 backend/failure-*.png
 backend/*.log

@@ -66,7 +66,6 @@ export default function createPqrsRouter(services = {}) {
         ok: false,
         code: 'DATABASE_READ_FAILED',
         message: 'No fue posible consultar el estado de la solicitud',
-        detail: error.message,
       });
     }
   });
@@ -109,7 +108,6 @@ export default function createPqrsRouter(services = {}) {
         ok: false,
         code: 'DATABASE_WRITE_FAILED',
         message: 'No fue posible guardar la solicitud en base de datos',
-        detail: error.message,
       });
     }
 
