@@ -44,10 +44,15 @@ export default function createPqrsRouter(services = {}) {
   } = services;
   const router = Router();
 
+  const TRACKING_CODE_RE = /^PETE-\d{14}-[a-f0-9]{8}$/;
+
   router.get('/status/:trackingCode', async (req, res) => {
     const trackingCode = String(req.params.trackingCode || '').trim();
     if (!trackingCode) {
       return res.status(400).json({ ok: false, code: 'INVALID_TRACKING_CODE', message: 'trackingCode es requerido' });
+    }
+    if (!TRACKING_CODE_RE.test(trackingCode)) {
+      return res.status(400).json({ ok: false, code: 'INVALID_TRACKING_CODE', message: 'trackingCode no tiene el formato esperado (PETE-{timestamp}-{hash})' });
     }
 
     try {
