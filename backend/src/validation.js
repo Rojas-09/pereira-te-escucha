@@ -116,6 +116,11 @@ export async function validateFiles(files = []) {
               message: `El contenido del archivo (${detectedType.mime}) no coincide con la extension declarada (${ext})`,
             });
           }
+        } else {
+          errors.push({
+            path: `files.${index}`,
+            message: `No fue posible reconocer el tipo real del archivo ${file.originalname}. El formato no esta soportado o el archivo esta corrupto.`,
+          });
         }
       } catch (contentError) {
         errors.push({
