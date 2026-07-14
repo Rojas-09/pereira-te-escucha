@@ -1,15 +1,13 @@
 import dotenv from 'dotenv';
 import * as Sentry from '@sentry/node';
 import { createApp } from './app.js';
-import { startAutomationWorker } from './worker.js';
 import { ensureDatabaseBootstrap } from './services/database.service.js';
 import { logger } from './services/logger.js';
 import {
   ALLOWED_ORIGIN,
   BACKEND_API_TOKEN,
   NODE_ENV,
-  PORT,
-  WORKER_ENABLED
+  PORT
 } from './config.js';
 
 dotenv.config();
@@ -40,9 +38,6 @@ app.listen(PORT, async () => {
 
   try {
     await ensureDatabaseBootstrap();
-    if (WORKER_ENABLED) {
-      startAutomationWorker();
-    }
   } catch (error) {
     logger.error(error, 'Backend startup failed');
     process.exit(1);

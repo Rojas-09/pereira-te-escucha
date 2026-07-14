@@ -7,6 +7,7 @@
     "local:setup": "node scripts/local-setup.cjs",
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
+    "worker": "node src/worker-entry.js",
     "check": "node -e \"console.log('ok')\"",
     "test": "DATABASE_URL=postgresql://test:test@localhost:5432/test node --test 'src/**/*.test.js' 'tests/**/*.test.js'",
     "test:unit": "DATABASE_URL=postgresql://test:test@localhost:5432/test node --test 'src/**/*.test.js'",
