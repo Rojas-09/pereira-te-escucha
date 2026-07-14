@@ -1,0 +1,9 @@
+node_modules/
+.git
+*.md
+.env
+.env.*
+!.env.example
+failure-*.png
+*.log
+tests/

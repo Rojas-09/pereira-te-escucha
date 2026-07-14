@@ -1,6 +1,4 @@
-FROM node:20-slim
-
-RUN npx playwright install chromium --with-deps
+FROM node:22-alpine
 
 WORKDIR /app
 

@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER:-pqrs_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pqrs_pass}
+      POSTGRES_DB: pqrs_db
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U ${DB_USER:-pqrs_user} -d pqrs_db
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.api
+    ports:
+      - "${API_PORT:-3001}:3001"
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://${DB_USER:-pqrs_user}:${DB_PASSWORD:-pqrs_pass}@postgres:5432/pqrs_db
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-*}
+      BACKEND_API_TOKEN: ${BACKEND_API_TOKEN:-dev-token}
+      NODE_ENV: ${NODE_ENV:-production}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-pqrs_user}:${DB_PASSWORD:-pqrs_pass}@postgres:5432/pqrs_db
+      PEREIRA_FORM_URL: ${PEREIRA_FORM_URL:-https://doc.pereira.gov.co/ws/pqr/index.html}
+      PLAYWRIGHT_HEADLESS: "true"
+      PLAYWRIGHT_TIMEOUT_MS: ${PLAYWRIGHT_TIMEOUT_MS:-90000}
+      WORKER_POLL_MS: ${WORKER_POLL_MS:-2500}
+      NODE_ENV: ${NODE_ENV:-production}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
