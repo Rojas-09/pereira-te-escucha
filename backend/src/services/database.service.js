@@ -45,8 +45,7 @@ export async function ensureDatabaseBootstrap() {
 }
 
 export async function queryTrackingStatus(trackingCode) {
-  const queryModule = await import('../db.js');
-  const requestResult = await queryModule.query(
+  const requestResult = await query(
     `SELECT
       id,
       client_tracking_code,
@@ -78,7 +77,7 @@ export async function queryTrackingStatus(trackingCode) {
 
   const r = requestResult.rows[0];
 
-  const eventsResult = await queryModule.query(
+  const eventsResult = await query(
     `SELECT to_status, reason, detail, created_at
      FROM request_status_events
      WHERE request_id = $1

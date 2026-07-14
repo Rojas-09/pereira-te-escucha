@@ -13,6 +13,7 @@ if (!databaseUrl) {
 
 export const pool = new Pool({
   connectionString: databaseUrl,
+  max: 10,
 });
 
 export async function query(text, params) {
