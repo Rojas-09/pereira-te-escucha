@@ -11,19 +11,39 @@ Backend Node.js para radicar PQRSD anonimas en el formulario oficial de Pereira 
   - Maximo 27 MB por archivo.
   - Tipos permitidos: XLS, DOC, PDF, JPG, JPEG, XLSX, DOCX, PNG, TIFF, TIF, GIF, PPT, PPTX.
 
+## Arquitectura de procesos
+
+El backend tiene **dos entry points separados**:
+
+| Proceso | Entry point | Funcion |
+|---------|------------|---------|
+| API | `src/server.js` | Sirve endpoints HTTP, valida, persiste en DB |
+| Worker | `src/worker-entry.js` | Sondea jobs pendientes, ejecuta Playwright |
+
+En desarrollo local se inician juntos via `npm run dev`. En produccion con Docker se despliegan como contenedores independientes (`Dockerfile.api` y `Dockerfile.worker`).
+
 ## Variables de entorno
 
 Copia `.env.example` a `.env`.
 
-- `PORT`: puerto del backend (default 3001).
+### Compartidas (api + worker)
+
 - `DATABASE_URL`: cadena de conexion PostgreSQL (obligatoria).
+- `NODE_ENV`: `development` | `production`.
+
+### Solo API (`server.js`)
+
+- `PORT`: puerto del backend (default 3001).
 - `ALLOWED_ORIGIN`: origen permitido para CORS (usar `*` solo en desarrollo).
   > **⚠️ PRODUCCIÓN:** `ALLOWED_ORIGIN` **debe** ser un origen específico (ej. `https://pereira-te-escucha.com`). El valor `*` solo está permitido en desarrollo local.
 - `BACKEND_API_TOKEN`: **obligatorio en producción** para proteger los endpoints `/api/pqrs/*`. Sin esta variable, el backend no iniciará en modo producción.
+- `SENTRY_DSN`: DSN de Sentry para errores en producción.
+
+### Solo Worker (`worker-entry.js`)
+
 - `PEREIRA_FORM_URL`: URL del formulario publico.
 - `PLAYWRIGHT_HEADLESS`: `true|false`.
 - `PLAYWRIGHT_TIMEOUT_MS`: timeout total por radicacion.
-- `WORKER_ENABLED`: activa/desactiva el worker interno (`true|false`).
 - `WORKER_POLL_MS`: intervalo de sondeo de jobs pendientes.
 
 ## Instalacion
@@ -36,13 +56,40 @@ npx playwright install chromium
 
 ## Ejecucion
 
+### Local (api + worker)
+
 ```bash
 npm run dev
 ```
 
-## Flujo local rapido (Windows + Docker)
+### Solo API
 
-Desde la raiz de `pq-ia-app`:
+```bash
+npm start
+```
+
+### Solo Worker
+
+```bash
+npm run worker
+```
+
+## Despliegue con Docker
+
+Desde la raiz del proyecto:
+
+```bash
+docker compose up -d
+```
+
+Levanta tres contenedores:
+- `postgres`: PostgreSQL 16 Alpine.
+- `api`: backend Express (`Dockerfile.api`) — solo sirve HTTP.
+- `worker`: worker de automatizacion (`Dockerfile.worker`) — solo ejecuta Playwright.
+
+## Flujo local rapido
+
+Desde la raiz del proyecto:
 
 ```bash
 npm run local:setup
@@ -54,10 +101,6 @@ Este comando automatiza:
 - Crear base de datos y esquema minimo requerido.
 - Crear `backend/.env` desde `backend/.env.example`.
 - Validar conexion a base de datos.
-
-Scripts involucrados (desde la raiz):
-
-- `backend/package.json` (scripts `local:setup` y `dev`)
 
 Luego inicia el backend con:
 

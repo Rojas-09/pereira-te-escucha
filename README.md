@@ -6,7 +6,7 @@
 [![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB?logo=react)](https://reactnative.dev)
 [![Backend](https://img.shields.io/badge/Backend-Node%2FExpress-339933?logo=node.js)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow)]()
+[![Estado](https://img.shields.io/badge/Estado-Activo-brightgreen)]()
 
 ---
 
@@ -51,22 +51,26 @@ La app captura el formulario, adjuntos y ubicación geográfica, los envía al b
 ```
 ┌─────────────────┐     multipart/form-data      ┌──────────────────────┐
 │  App Expo        │ ──────────────────────────▶ │  Backend Express      │
-│  (App.tsx)       │                              │  (server.js)          │
-│                  │ ◀────────── trackingCode ─── │                       │
-│  polling         │                              │  ┌──────────────────┐ │
-│  GET /status/:id │ ──────────────────────────▶ │  │  PostgreSQL       │ │
-└─────────────────┘                              │  └──────┬───────────┘ │
-                                                  │         │ worker       │
-                                                  │  ┌──────▼───────────┐ │
-                                                  │  │  Playwright       │ │
-                                                  │  │  (Chromium)       │ │
-                                                  │  └──────┬───────────┘ │
-                                                  └─────────┼─────────────┘
-                                                            │
-                                                  ┌─────────▼─────────────┐
-                                                  │  Portal Oficial        │
-                                                  │  Alcaldía de Pereira   │
-                                                  └───────────────────────┘
+│  (App.tsx         │                              │  (server.js)          │
+│   + componentes) │                              └──────────┬───────────┘
+│                  │ ◀────────── trackingCode ───            │
+│  polling         │                              ┌──────────▼───────────┐
+│  GET /status/:id │ ──────────────────────────▶ │  PostgreSQL           │
+└─────────────────┘                              └──────────┬───────────┘
+                                                            │ worker
+                                                   ┌──────────▼───────────┐
+                                                   │  Worker Autonomo     │
+                                                   │  (worker-entry.js)   │
+                                                   │  ┌────────────────┐  │
+                                                   │  │  Playwright     │  │
+                                                   │  │  (Chromium)     │  │
+                                                   │  └──────┬─────────┘  │
+                                                   └─────────┼────────────┘
+                                                             │
+                                                   ┌─────────▼─────────────┐
+                                                   │  Portal Oficial        │
+                                                   │  Alcaldía de Pereira   │
+                                                   └───────────────────────┘
 ```
 
 Ver diagrama completo con Mermaid en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
@@ -79,22 +83,35 @@ Ver diagrama completo con Mermaid en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.
 pereira-te-escucha/
 ├── App.tsx                  # Entrada principal — UI, polling, lógica de envío
 ├── app.json                 # Configuración Expo (permisos, íconos, package)
-├── eas.json                 # Perfiles de build EAS (development/preview/production)
+├── eas.json                 # Perfiles de build EAS
+├── docker-compose.yml       # Despliegue con api + worker en contenedores separados
 ├── assets/                  # Íconos y splash screen
+├── src/
+│   ├── components/          # 6 componentes de paso (StepEvidence, StepLocation, etc.)
+│   └── styles.ts            # Estilos globales y tema
 ├── backend/
 │   ├── src/
-│   │   ├── server.js        # API HTTP + worker + gestión de estados
-│   │   ├── validation.js    # Validación y sanitización de inputs (Zod)
+│   │   ├── server.js        # API HTTP (sin worker)
+│   │   ├── worker-entry.js  # Entry point separado del worker
+│   │   ├── worker.js        # Cola, reintentos y radicación
+│   │   ├── validation.js    # Validación y sanitización (Zod)
 │   │   ├── pereiraAutomation.js  # Automatización del portal con Playwright
-│   │   └── db.js            # Conexión a PostgreSQL
+│   │   ├── db.js            # Conexión a PostgreSQL
+│   │   └── routes/
+│   │       └── health.js    # Healthcheck de API, DB y Playwright
 │   ├── scripts/
 │   │   └── local-setup.cjs  # Bootstrap local con Docker y esquema de DB
-│   └── .env.example
+│   ├── Dockerfile.api       # Dockerfile para el contenedor api
+│   ├── Dockerfile.worker    # Dockerfile para el contenedor worker
+│   ├── .env.example
+│   └── .dockerignore
 └── docs/
     ├── ARCHITECTURE.md      # Diagrama y descripción de componentes
-    ├── AUDIT.md             # Hallazgos de deuda técnica y vulnerabilidades
-    ├── PRIVACY_POLICY.md    # Política de privacidad (requerida por Play Store)
-    └── ROADMAP_PLAY_STORE.md
+    ├── AUDIT.md             # Hallazgos de deuda técnica
+    ├── PRIVACY_POLICY.md    # Política de privacidad (Play Store)
+    ├── ROADMAP_PLAY_STORE.md
+    ├── TERMS_OF_SERVICE.md
+    └── USER_FLOW.md
 ```
 
 ---
@@ -203,7 +220,9 @@ Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Diagrama de componentes y flujo de datos |
 | [`docs/AUDIT.md`](docs/AUDIT.md) | Deuda técnica, inconsistencias y vulnerabilidades identificadas |
 | [`docs/PRIVACY_POLICY.md`](docs/PRIVACY_POLICY.md) | Política de privacidad (requerida por Google Play) |
+| [`docs/TERMS_OF_SERVICE.md`](docs/TERMS_OF_SERVICE.md) | Términos de servicio |
 | [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE.md) | Checklist para publicación en Play Store |
+| [`docs/USER_FLOW.md`](docs/USER_FLOW.md) | Flujo de usuario por la app |
 | [`backend/README.md`](backend/README.md) | Setup y contrato técnico del backend |
 | [`backend/INSPECCION_PEREIRA.md`](backend/INSPECCION_PEREIRA.md) | Análisis técnico del portal oficial de Pereira |
 
@@ -215,11 +234,11 @@ Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE
 |--------|--------|
 | App móvil (UI + formulario) | ✅ Funcional |
 | Backend API + validación | ✅ Funcional |
-| Radicación con Playwright | ✅ Funcional (sujeto a cambios del portal externo) |
+| Radicación con Playwright | ✅ Funcional |
 | Seguimiento asíncrono | ✅ Funcional |
-| Tests unitarios backend | 🚧 Parcial — solo validación |
-| HTTPS en producción | ⏳ Pendiente |
-| Publicación Play Store | ⏳ Pendiente |
+| Docker (api + worker separados) | ✅ Listo |
+| Tests unitarios backend | 🚧 Parcial |
+| Publicación Play Store | ⏳ Pendiente (subir a Google Console) |
 
 ---
 
