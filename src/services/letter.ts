@@ -18,6 +18,35 @@ export function formalizeContext(input: string): string {
     [/\bbasurra\b/gi, 'basura'],
   ];
 
+  const slangReplacements: Array<[RegExp, string]> = [
+    [/\bparce(?:ro?)?\b/gi, ''],
+    [/\bhueco\b/gi, 'depresion en la via'],
+    [/\bhuecos\b/gi, 'depresiones en la via'],
+    [/\bque\s+vuelta\b/gi, 'situacion'],
+    [/(?:que\s+)?es\s+lo\s+(?:que\s+)?suced\w+\b/gi, 'lo que ocurre'],
+    [/\bbien\s+mal[oa]\b/gi, 'deficiente'],
+    [/\bno\s+sirve\b/gi, 'no funciona adecuadamente'],
+    [/\bno\s+prende\b/gi, 'no enciende'],
+    [/\btocaria\b/gi, 'seria necesario'],
+    [/\bput[ao](?:s)?\b/gi, ''],
+    [/\bweb[ao]n?(?:s)?\b/gi, ''],
+    [/\bm[ei]erd[ao]\b/gi, ''],
+    [/\bcarechimba\b/gi, ''],
+    [/\bhp?\b/gi, ''],
+  ];
+
+  const applyFormalLanguage = (text: string): string => {
+    let result = text;
+    slangReplacements.forEach(([pattern, replacement]) => {
+      result = result.replace(pattern, replacement);
+    });
+    return result
+      .replace(/\s{2,}/g, ' ')
+      .replace(/\s+([,;.!?])/g, '$1')
+      .replace(/^[,;\s]+|[,;\s]+$/g, '')
+      .trim();
+  };
+
   let corrected = sanitized;
   typoFixes.forEach(([pattern, value]) => {
     corrected = corrected.replace(pattern, value);
@@ -120,12 +149,15 @@ export function formalizeContext(input: string): string {
     new Set([...locationDetails, ...impactDetails, ...requestDetails, ...evidenceDetails])
   );
 
+  const formalSentences = factualSentences.map((item) => {
+    const cleaned = item.replace(/[.!?]+$/g, '').trim();
+    return applyFormalLanguage(cleaned);
+  }).filter(Boolean);
+
   const factualBlock =
-    factualSentences.length > 0
-      ? `En particular, el ciudadano reporta que: ${factualSentences
-          .map((item) => item.replace(/[.!?]+$/g, '').trim())
-          .join('; ')}.`
-      : `En particular, se describe la siguiente situacion: ${corrected.replace(/[.!?]+$/g, '')}.`;
+    formalSentences.length > 0
+      ? `En particular, el ciudadano reporta que: ${formalSentences.join('; ')}.`
+      : `En particular, se describe la siguiente situacion: ${applyFormalLanguage(corrected.replace(/[.!?]+$/g, ''))}.`;
 
   return [
     `De acuerdo con el reporte ciudadano, ${intent.finding}.`,
