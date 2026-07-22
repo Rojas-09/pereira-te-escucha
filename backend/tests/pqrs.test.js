@@ -4,7 +4,7 @@ import request from 'supertest';
 import { createApp } from '../src/app.js';
 
 const MOCK_TOKEN = 'test-token-123';
-const MOCK_TRACKING = 'PETE-TEST-00000000000000-9999';
+const MOCK_TRACKING = 'PETE-00000000000000-a1b2c3d4';
 
 function makeMockServices() {
   const calls = { persist: [], query: [], cleanup: [] };
@@ -63,7 +63,7 @@ test('GET /api/pqrs/status/:trackingCode returns 404 for unknown code', async ()
   const { services } = makeMockServices();
   const app = createApp(MOCK_TOKEN, { pqrsServices: services });
   const res = await request(app)
-    .get('/api/pqrs/status/UNKNOWN-CODE')
+    .get('/api/pqrs/status/PETE-00000000000000-ffffffff')
     .set('Authorization', `Bearer ${MOCK_TOKEN}`);
   assert.equal(res.status, 404);
   assert.equal(res.body.ok, false);
