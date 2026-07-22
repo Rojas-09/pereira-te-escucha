@@ -237,7 +237,7 @@ Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE
 | Radicación con Playwright | ✅ Funcional |
 | Seguimiento asíncrono | ✅ Funcional |
 | Docker (api + worker separados) | ✅ Listo |
-| Tests unitarios backend | 🚧 Parcial |
+| Tests backend (45 tests) | ✅ 24 unit + 21 integración |
 | Publicación Play Store | ⏳ Pendiente (subir a Google Console) |
 
 ---
