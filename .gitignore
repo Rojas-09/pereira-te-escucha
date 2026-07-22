@@ -53,3 +53,4 @@ backend/*.log
 # generated native folders
 /ios
 /android
+docs/AUDIT.md
