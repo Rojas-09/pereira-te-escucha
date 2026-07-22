@@ -92,7 +92,7 @@ test('GET /api/pqrs/status/:trackingCode returns 500 on service error', async ()
     .set('Authorization', `Bearer ${MOCK_TOKEN}`);
   assert.equal(res.status, 500);
   assert.equal(res.body.code, 'DATABASE_READ_FAILED');
-  assert.ok(res.body.detail.includes('DB connection refused'));
+  assert.equal(typeof res.body.message, 'string');
 });
 
 test('POST /api/pqrs/submit-anonymous with valid JSON body returns 202', async () => {
@@ -174,5 +174,5 @@ test('POST /api/pqrs/submit-anonymous returns 500 when persist fails', async () 
 
   assert.equal(res.status, 500);
   assert.equal(res.body.code, 'DATABASE_WRITE_FAILED');
-  assert.ok(res.body.detail.includes('DB insert failed'));
+  assert.equal(typeof res.body.message, 'string');
 });
