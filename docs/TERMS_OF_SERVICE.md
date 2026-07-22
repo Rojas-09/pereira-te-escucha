@@ -48,7 +48,7 @@ Estos términos se rigen por las leyes de la República de Colombia. Cualquier c
 Para preguntas sobre estos términos:
 - **Correo:** juan.rojas7@utp.edu.co
 - **Desarrollador:** Juan Andrés Rojas
-- **Institución:** Universidad Tecnológica de Pereira (proyecto académico)
+- **Propósito:** Proyecto con fines exploratorios y educativos
 
 ---
 

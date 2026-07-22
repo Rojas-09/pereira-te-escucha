@@ -244,7 +244,7 @@ Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE
 
 ## Contribuir
 
-Este proyecto es parte de un trabajo académico de la **Universidad Tecnológica de Pereira**. Si encontrás un bug o tenés una sugerencia, abrí un Issue. PRs bienvenidos con descripción clara del cambio.
+Este proyecto es un desarrollo con fines exploratorios y educativos. Si encontrás un bug o tenés una sugerencia, abrí un Issue. PRs bienvenidos con descripción clara del cambio.
 
 ---
 
