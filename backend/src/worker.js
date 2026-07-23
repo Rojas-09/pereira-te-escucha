@@ -1,53 +1,17 @@
-import { pool, query } from './db.js';
-import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS, WORKER_MAX_RETRIES, WORKER_RETRY_BASE_MS } from './config.js';
+import { Worker } from 'bullmq';
+import { query } from './db.js';
+import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS } from './config.js';
 import { submitAnonymousPQRS } from './pereiraAutomation.js';
 import { logger } from './services/logger.js';
 
-let workerLoopTimer = null;
-let workerTickInProgress = false;
+const REDIS_URL = process.env.REDIS_URL;
+const connection = REDIS_URL
+  ? { url: REDIS_URL }
+  : { host: '127.0.0.1', port: 6379 };
 
-export function startAutomationWorker() {
-  if (workerLoopTimer) {
-    return;
-  }
-
-  const WORKER_POLL_MS = Number(process.env.WORKER_POLL_MS || 2500);
-
-  const runTick = async () => {
-    if (workerTickInProgress) {
-      return;
-    }
-
-    workerTickInProgress = true;
-    try {
-      await processNextPendingJob();
-    } catch (error) {
-      logger.error(error, 'Worker tick failed');
-    } finally {
-      workerTickInProgress = false;
-    }
-  };
-
-  workerLoopTimer = setInterval(() => {
-    runTick().catch(() => {
-      // handled in runTick
-    });
-  }, WORKER_POLL_MS);
-
-  runTick().catch(() => {
-    // handled in runTick
-  });
-
-  logger.info({ pollMs: WORKER_POLL_MS }, 'Automation worker started');
-}
-
-export async function processNextPendingJob() {
-  const claimed = await claimNextPendingJob();
-  if (!claimed) {
-    return;
-  }
-
-  const { requestId, jobId } = claimed;
+async function processJob(job) {
+  const { requestId } = job.data;
+  logger.info({ requestId, attempt: job.attemptsMade }, 'Processing job');
 
   try {
     const jobData = await loadRequestJobData(requestId);
@@ -62,47 +26,46 @@ export async function processNextPendingJob() {
       payload: jobData.payload,
       files: jobData.files,
       headless: PLAYWRIGHT_HEADLESS,
-      timeoutMs: PLAYWRIGHT_TIMEOUT_MS
+      timeoutMs: PLAYWRIGHT_TIMEOUT_MS,
     });
 
     await markRequestSuccessful(requestId, result);
   } catch (error) {
-    logger.error({ requestId, jobId, err: error.message }, 'Worker failed for job');
-    await handleJobFailure(requestId, error);
+    logger.error({ requestId, attempt: job.attemptsMade, err: error.message }, 'Job attempt failed');
+
+    await query(
+      `INSERT INTO request_status_events (request_id, from_status, to_status, reason, detail)
+       VALUES ($1, 'en_proceso', 'error_temporal', 'automation_retry', $2)`,
+      [requestId, `Intento ${job.attemptsMade + 1} fallido: ${String(error.message).slice(0, 500)}`]
+    );
+
+    throw error;
   } finally {
     await cleanupRequestFiles(requestId);
   }
 }
 
-async function claimNextPendingJob() {
-  const result = await query(
-    `WITH next_job AS (
-       SELECT id, request_id
-       FROM automation_jobs
-       WHERE queue_name = 'pqrs-radicacion'
-         AND job_state = 'pending'
-         AND (scheduled_at IS NULL OR scheduled_at <= NOW())
-       ORDER BY created_at ASC
-       LIMIT 1
-       FOR UPDATE SKIP LOCKED
-     )
-     UPDATE automation_jobs aj
-        SET job_state = 'active',
-            updated_at = NOW()
-       FROM next_job
-      WHERE aj.id = next_job.id
-      RETURNING aj.id AS job_id, aj.request_id`,
-    []
-  );
+export function setupWorker() {
+  const worker = new Worker('pqrs-radicacion', processJob, {
+    connection,
+    concurrency: 1,
+  });
 
-  if (result.rowCount === 0) {
-    return null;
-  }
+  worker.on('failed', async (job, error) => {
+    const { requestId } = job.data;
+    logger.error({ requestId, err: error.message, attempts: job.attemptsMade }, 'Job failed after all retries');
+    await markRequestFailed(requestId, error, `Fallo tras ${job.attemptsMade} intentos`);
+  });
 
-  return {
-    jobId: result.rows[0].job_id,
-    requestId: result.rows[0].request_id,
-  };
+  worker.on('error', (error) => {
+    logger.error(error, 'Worker connection error');
+  });
+
+  worker.on('ready', () => {
+    logger.info('BullMQ worker connected to Redis, waiting for jobs');
+  });
+
+  return worker;
 }
 
 async function loadRequestJobData(requestId) {
@@ -162,13 +125,6 @@ async function markRequestProcessing(requestId) {
     ) VALUES ($1, 'recibido', 'en_proceso', 'automation_start', 'Inicio de automatizacion Playwright')`,
     [requestId]
   );
-
-  await query(
-    `UPDATE automation_jobs
-     SET job_state = 'active', updated_at = NOW()
-     WHERE request_id = $1`,
-    [requestId]
-  );
 }
 
 async function markRequestSuccessful(requestId, result) {
@@ -194,55 +150,10 @@ async function markRequestSuccessful(requestId, result) {
     ) VALUES ($1, 'en_proceso', 'radicado', 'automation_success', $2)`,
     [requestId, result.messageBody || 'Radicacion completada']
   );
-
-  await query(
-    `UPDATE automation_jobs
-     SET job_state = 'completed', updated_at = NOW()
-     WHERE request_id = $1`,
-    [requestId]
-  );
 }
 
-export async function handleJobFailure(requestId, error) {
-  const message = String(error?.message || 'Fallo no controlado').slice(0, 1000);
-
-  const jobResult = await query(
-    `SELECT retry_count FROM automation_jobs WHERE request_id = $1`,
-    [requestId]
-  );
-
-  const currentRetries = jobResult.rows[0]?.retry_count ?? 0;
-  const nextRetryCount = currentRetries + 1;
-
-  if (nextRetryCount < WORKER_MAX_RETRIES) {
-    const delayMs = WORKER_RETRY_BASE_MS * (2 ** (nextRetryCount - 1));
-    const scheduledAt = new Date(Date.now() + delayMs).toISOString();
-    const logDetail = `Reintento ${nextRetryCount}/${WORKER_MAX_RETRIES} programado para +${delayMs}ms: ${message}`;
-
-    await query(
-      `UPDATE automation_jobs
-       SET job_state = 'pending',
-           retry_count = $2,
-           scheduled_at = $3,
-           updated_at = NOW()
-       WHERE request_id = $1`,
-      [requestId, nextRetryCount, scheduledAt]
-    );
-
-    await query(
-      `INSERT INTO request_status_events (request_id, from_status, to_status, reason, detail)
-       VALUES ($1, 'en_proceso', 'error_temporal', 'automation_retry', $2)`,
-      [requestId, logDetail]
-    );
-
-    logger.info({ requestId, retryCount: nextRetryCount, delayMs }, 'Worker scheduled retry');
-  } else {
-    await markRequestFailed(requestId, error, message);
-  }
-}
-
-async function markRequestFailed(requestId, error, messageOverride) {
-  const message = messageOverride || String(error?.message || 'Fallo no controlado').slice(0, 1000);
+async function markRequestFailed(requestId, error, detailMessage) {
+  const message = detailMessage || String(error?.message || 'Fallo no controlado').slice(0, 1000);
 
   await query(
     `UPDATE requests
@@ -265,15 +176,6 @@ async function markRequestFailed(requestId, error, messageOverride) {
     ) VALUES ($1, 'en_proceso', 'fallo', 'automation_failed', $2)`,
     [requestId, message]
   );
-
-  await query(
-    `UPDATE automation_jobs
-     SET job_state = 'failed',
-         retry_count = retry_count + 1,
-         updated_at = NOW()
-     WHERE request_id = $1`,
-    [requestId]
-  );
 }
 
 async function cleanupRequestFiles(requestId) {
@@ -290,12 +192,4 @@ async function cleanupRequestFiles(requestId) {
       .filter(Boolean)
       .map((filePath) => import('node:fs/promises').then(fs => fs.unlink(filePath)))
   );
-}
-
-export function stopAutomationWorker() {
-  if (workerLoopTimer) {
-    clearInterval(workerLoopTimer);
-    workerLoopTimer = null;
-  }
-  workerTickInProgress = false;
 }

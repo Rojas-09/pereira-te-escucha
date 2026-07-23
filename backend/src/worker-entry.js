@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { startAutomationWorker, stopAutomationWorker } from './worker.js';
+import { setupWorker } from './worker.js';
 import { ensureDatabaseBootstrap } from './services/database.service.js';
 import { logger } from './services/logger.js';
 
@@ -15,11 +15,11 @@ async function main() {
 
   logger.info('Worker process started');
 
-  startAutomationWorker();
+  const worker = setupWorker();
 
-  const shutdown = () => {
+  const shutdown = async () => {
     logger.info('Shutting down worker...');
-    stopAutomationWorker();
+    await worker.close();
     process.exit(0);
   };
 

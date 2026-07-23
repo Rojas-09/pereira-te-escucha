@@ -1,4 +1,14 @@
 services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   postgres:
     image: postgres:16-alpine
     environment:
@@ -24,12 +34,15 @@ services:
     environment:
       PORT: 3001
       DATABASE_URL: postgresql://${DB_USER:-pqrs_user}:${DB_PASSWORD:-pqrs_pass}@postgres:5432/pqrs_db
+      REDIS_URL: redis://redis:6379
       ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-*}
       BACKEND_API_TOKEN: ${BACKEND_API_TOKEN:-dev-token}
       NODE_ENV: ${NODE_ENV:-production}
       SENTRY_DSN: ${SENTRY_DSN:-}
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   worker:
@@ -38,13 +51,15 @@ services:
       dockerfile: Dockerfile.worker
     environment:
       DATABASE_URL: postgresql://${DB_USER:-pqrs_user}:${DB_PASSWORD:-pqrs_pass}@postgres:5432/pqrs_db
+      REDIS_URL: redis://redis:6379
       PEREIRA_FORM_URL: ${PEREIRA_FORM_URL:-https://doc.pereira.gov.co/ws/pqr/index.html}
       PLAYWRIGHT_HEADLESS: "true"
       PLAYWRIGHT_TIMEOUT_MS: ${PLAYWRIGHT_TIMEOUT_MS:-90000}
-      WORKER_POLL_MS: ${WORKER_POLL_MS:-2500}
       NODE_ENV: ${NODE_ENV:-production}
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
 volumes:

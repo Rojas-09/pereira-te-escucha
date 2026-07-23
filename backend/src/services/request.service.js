@@ -3,6 +3,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { computeFileHash } from './hash.service.js';
+import getQueue from '../queue.js';
+import { logger } from './logger.js';
 
 export function buildTrackingCode() {
   const timestamp = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
@@ -77,22 +79,14 @@ export async function persistReceivedRequest({ trackingCode, payload, files }) {
       }
     }
 
-    await client.query(
-      `INSERT INTO automation_jobs (
-        request_id,
-        queue_name,
-        job_state,
-        retry_count
-      ) VALUES ($1, 'pqrs-radicacion', 'pending', 0)
-      ON CONFLICT (request_id)
-      DO UPDATE SET
-        job_state = EXCLUDED.job_state,
-        retry_count = automation_jobs.retry_count,
-        updated_at = NOW()`,
-      [requestId]
-    );
-
     await client.query('COMMIT');
+
+    try {
+      await getQueue().add('submit', { requestId });
+    } catch (queueError) {
+      logger.error({ requestId, err: queueError.message }, 'Failed to enqueue job');
+    }
+
     return requestId;
   } catch (error) {
     await client.query('ROLLBACK');

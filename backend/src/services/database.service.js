@@ -50,12 +50,13 @@ export async function queryTrackingStatus(trackingCode) {
       id,
       client_tracking_code,
       status,
-      (
-        SELECT job_state
-        FROM automation_jobs
-        WHERE request_id = requests.id
-        LIMIT 1
-      ) AS job_state,
+      CASE requests.status
+        WHEN 'recibido' THEN 'pending'
+        WHEN 'en_proceso' THEN 'active'
+        WHEN 'radicado' THEN 'completed'
+        WHEN 'fallo' THEN 'failed'
+        ELSE 'unknown'
+      END AS job_state,
       medio_respuesta,
       tipo_solicitud,
       asunto,
