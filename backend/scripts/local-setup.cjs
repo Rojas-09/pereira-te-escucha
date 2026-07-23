@@ -1,3 +1,6 @@
+// DEPRECATED: usa 'npm run dev:infra' (docker compose) en vez de este script.
+// Este script solo levanta PostgreSQL, no Redis. Para el flujo completo
+// con worker BullMQ se requiere Redis via docker-compose.
 const { execFileSync, execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -101,12 +104,11 @@ if (databaseExists !== '1') {
   });
 }
 
-const schemaStatements = [
-  `CREATE TABLE IF NOT EXISTS requests (id BIGSERIAL PRIMARY KEY, client_tracking_code TEXT NOT NULL UNIQUE, status TEXT NOT NULL, medio_respuesta TEXT NOT NULL, correo TEXT, tipo_solicitud TEXT NOT NULL, asunto TEXT NOT NULL, descripcion_original TEXT NOT NULL, descripcion_formal TEXT NOT NULL, consecutivo_oficial TEXT, radicado_oficial TEXT, portal_message TEXT, attempts INTEGER NOT NULL DEFAULT 0, last_error_code TEXT, last_error_message TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
-  `CREATE TABLE IF NOT EXISTS request_status_events (id BIGSERIAL PRIMARY KEY, request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE, from_status TEXT, to_status TEXT NOT NULL, reason TEXT NOT NULL, detail TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
-  `CREATE TABLE IF NOT EXISTS request_attachments (id BIGSERIAL PRIMARY KEY, request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE, original_name TEXT NOT NULL, mime_type TEXT NOT NULL, extension TEXT, size_bytes BIGINT NOT NULL, storage_path TEXT NOT NULL, sha256 TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
-  `CREATE TABLE IF NOT EXISTS automation_jobs (id BIGSERIAL PRIMARY KEY, request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE, queue_name TEXT NOT NULL, job_state TEXT NOT NULL, retry_count INTEGER NOT NULL DEFAULT 0, scheduled_at TIMESTAMPTZ, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), UNIQUE (request_id));`,
-];
+  const schemaStatements = [
+    `CREATE TABLE IF NOT EXISTS requests (id BIGSERIAL PRIMARY KEY, client_tracking_code TEXT NOT NULL UNIQUE, status TEXT NOT NULL, medio_respuesta TEXT NOT NULL, correo TEXT, tipo_solicitud TEXT NOT NULL, asunto TEXT NOT NULL, descripcion_original TEXT NOT NULL, descripcion_formal TEXT NOT NULL, consecutivo_oficial TEXT, radicado_oficial TEXT, portal_message TEXT, attempts INTEGER NOT NULL DEFAULT 0, last_error_code TEXT, last_error_message TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
+    `CREATE TABLE IF NOT EXISTS request_status_events (id BIGSERIAL PRIMARY KEY, request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE, from_status TEXT, to_status TEXT NOT NULL, reason TEXT NOT NULL, detail TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
+    `CREATE TABLE IF NOT EXISTS request_attachments (id BIGSERIAL PRIMARY KEY, request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE, original_name TEXT NOT NULL, mime_type TEXT NOT NULL, extension TEXT, size_bytes BIGINT NOT NULL, storage_path TEXT NOT NULL, sha256 TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`,
+  ];
 
 for (const statement of schemaStatements) {
   run('docker', ['exec', containerName, 'psql', '-U', dbUser, '-d', dbName, '-c', statement], { cwd: repoRoot });

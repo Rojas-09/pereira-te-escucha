@@ -39,7 +39,8 @@ La app captura el formulario, adjuntos y ubicación geográfica, los envía al b
 | Backend API | Node.js · Express 4 · ES Modules |
 | Validación | Zod 3.24 |
 | Base de datos | PostgreSQL (pg 8.20) |
-| Automatización | Playwright 1.53 (Chromium) |
+| Automatización | Playwright 1.61 (Chromium) |
+| Cola de trabajos | Redis + BullMQ |
 | Seguridad | Helmet · express-rate-limit · sanitización XSS |
 | Logging | pino-http |
 | Builds móviles | EAS Build (Expo Application Services) |
@@ -49,28 +50,29 @@ La app captura el formulario, adjuntos y ubicación geográfica, los envía al b
 ## Arquitectura
 
 ```
-┌─────────────────┐     multipart/form-data      ┌──────────────────────┐
-│  App Expo        │ ──────────────────────────▶ │  Backend Express      │
-│  (App.tsx         │                              │  (server.js)          │
-│   + componentes) │                              └──────────┬───────────┘
-│                  │ ◀────────── trackingCode ───            │
-│  polling         │                              ┌──────────▼───────────┐
-│  GET /status/:id │ ──────────────────────────▶ │  PostgreSQL           │
-└─────────────────┘                              └──────────┬───────────┘
-                                                            │ worker
-                                                   ┌──────────▼───────────┐
-                                                   │  Worker Autonomo     │
-                                                   │  (worker-entry.js)   │
-                                                   │  ┌────────────────┐  │
-                                                   │  │  Playwright     │  │
-                                                   │  │  (Chromium)     │  │
-                                                   │  └──────┬─────────┘  │
-                                                   └─────────┼────────────┘
-                                                             │
-                                                   ┌─────────▼─────────────┐
-                                                   │  Portal Oficial        │
-                                                   │  Alcaldía de Pereira   │
-                                                   └───────────────────────┘
+┌─────────────────┐     multipart/form-data      ┌──────────────────────────┐
+│  App Expo        │ ──────────────────────────▶ │  Backend Express          │
+│  (App.tsx         │                              │  (server.js)              │
+│   + componentes) │                              └────┬─────────┬───────────┘
+│                  │ ◀────────── trackingCode ───      │         │
+│  polling         │                         ┌────────▼──┐  ┌────▼──────────┐
+│  GET /status/:id │ ───────────────────────▶ │ PostgreSQL│  │  Redis        │
+└─────────────────┘                         └────────┬──┘  │  (BullMQ)     │
+                                                      │     └────┬──────────┘
+                                                      │ worker   │ job
+                                                      │ ┌────────▼──────────┐
+                                                      │ │  Worker Autonomo   │
+                                                      │ │  (worker-entry.js) │
+                                                      │ │  ┌──────────────┐  │
+                                                      │ │  │  Playwright   │  │
+                                                      │ │  │  (Chromium)   │  │
+                                                      │ │  └──────┬───────┘  │
+                                                      │ └─────────┼──────────┘
+                                                      │           │
+                                                      │ ┌─────────▼───────────┐
+                                                      │ │  Portal Oficial      │
+                                                      │ │  Alcaldía de Pereira │
+                                                      │ └─────────────────────┘
 ```
 
 Ver diagrama completo con Mermaid en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
@@ -84,29 +86,38 @@ pereira-te-escucha/
 ├── App.tsx                  # Entrada principal — UI, polling, lógica de envío
 ├── app.json                 # Configuración Expo (permisos, íconos, package)
 ├── eas.json                 # Perfiles de build EAS
-├── docker-compose.yml       # Despliegue con api + worker en contenedores separados
+├── docker-compose.yml       # Orquestación: Redis + PostgreSQL + api + worker
+├── PRIVACY_POLICY.md        # Política de privacidad (Play Store)
 ├── assets/                  # Íconos y splash screen
 ├── src/
 │   ├── components/          # 6 componentes de paso (StepEvidence, StepLocation, etc.)
+│   ├── config/env.ts        # Variables de entorno de la app
+│   ├── services/            # API, tracking, generación de carta
+│   ├── types/               # Tipos TypeScript
+│   ├── utils/               # Formateo y helpers
 │   └── styles.ts            # Estilos globales y tema
 ├── backend/
 │   ├── src/
-│   │   ├── server.js        # API HTTP (sin worker)
-│   │   ├── worker-entry.js  # Entry point separado del worker
-│   │   ├── worker.js        # Cola, reintentos y radicación
+│   │   ├── server.js        # API HTTP (Express)
+│   │   ├── worker-entry.js  # Entry point del worker BullMQ
+│   │   ├── worker.js        # Worker BullMQ (procesa jobs con Playwright)
+│   │   ├── queue.js         # Cola BullMQ con backoff exponencial
 │   │   ├── validation.js    # Validación y sanitización (Zod)
 │   │   ├── pereiraAutomation.js  # Automatización del portal con Playwright
 │   │   ├── db.js            # Conexión a PostgreSQL
-│   │   └── routes/
-│   │       └── health.js    # Healthcheck de API, DB y Playwright
+│   │   ├── app.js           # Creación de la app Express
+│   │   ├── config.js        # Config centralizada de env vars
+│   │   ├── routes/          # Rutas Express (health, pqrs, index)
+│   │   ├── services/        # BD services, logger, hash
+│   │   └── middleware/      # Auth y error handler
 │   ├── scripts/
-│   │   └── local-setup.cjs  # Bootstrap local con Docker y esquema de DB
+│   │   └── local-setup.cjs  # [DEPRECATED] Usar docker compose
 │   ├── Dockerfile.api       # Dockerfile para el contenedor api
 │   ├── Dockerfile.worker    # Dockerfile para el contenedor worker
 │   ├── .env.example
 │   └── .dockerignore
 └── docs/
-    ├── ARCHITECTURE.md      # Diagrama y descripción de componentes
+    ├── ARCHITECTURE.md      # Diagrama + descripción con Redis/BullMQ
     ├── AUDIT.md             # Hallazgos de deuda técnica
     ├── PRIVACY_POLICY.md    # Política de privacidad (Play Store)
     ├── ROADMAP_PLAY_STORE.md
@@ -121,49 +132,17 @@ pereira-te-escucha/
 ### Requisitos
 
 - **Node.js** ≥ 20
-- **Docker Desktop** (para PostgreSQL local)
-- **Android Studio** con emulador (para pruebas en Android) o dispositivo físico con Expo Dev Client
+- **Docker** (para PostgreSQL + Redis)
+- **Dispositivo físico** con Expo Dev Client o **Android Studio** con emulador
 
 ### 1. Instalar dependencias
 
 ```bash
-# Desde la raíz del proyecto
 npm install
-
-# Instalar dependencias del backend y Playwright
 cd backend && npm install && npx playwright install chromium
 ```
 
-### 2. Preparar entorno local (DB + .env)
-
-```bash
-npm run local:setup
-```
-
-Este comando:
-- Levanta un contenedor PostgreSQL en Docker
-- Crea el esquema de tablas necesario
-- Genera `backend/.env` a partir del ejemplo
-
-### 3. Iniciar servicios
-
-```bash
-# Terminal 1 — backend
-npm run local:backend
-
-# Terminal 2 — app Expo
-npm run app:dev
-```
-
-O bien, ambos a la vez:
-
-```bash
-npm run dev
-```
-
-### Variables de entorno
-
-Copia y ajusta los archivos de ejemplo:
+### 2. Variables de entorno
 
 ```bash
 cp .env.example .env
@@ -172,13 +151,42 @@ cp backend/.env.example backend/.env
 
 | Variable | Descripción |
 |----------|-------------|
-| `EXPO_PUBLIC_API_BASE_URL` | URL del backend accesible desde el dispositivo |
-| `EXPO_PUBLIC_BACKEND_API_TOKEN` | Token opcional si el backend tiene auth activada |
-| `EXPO_PUBLIC_SUBMIT_TIMEOUT_MS` | Tiempo máximo de espera al radicar (ms) |
+| `EXPO_PUBLIC_API_BASE_URL` | URL del backend desde el dispositivo (ej: `http://192.168.100.12:3001`) |
+| `EXPO_PUBLIC_BACKEND_API_TOKEN` | Token opcional |
+| `EXPO_PUBLIC_SUBMIT_TIMEOUT_MS` | Timeout de envío (ms) |
 | `DATABASE_URL` | Conexión a PostgreSQL |
-| `PEREIRA_FORM_URL` | URL del formulario oficial de Pereira |
-| `PLAYWRIGHT_TIMEOUT_MS` | Tiempo máximo del proceso de radicación automática |
-| `ALLOWED_ORIGIN` | Origen permitido en CORS (**nunca usar `*` en producción**) |
+| `REDIS_URL` | Conexión a Redis (default `redis://127.0.0.1:6379`) |
+| `PEREIRA_FORM_URL` | URL del formulario oficial |
+| `PLAYWRIGHT_TIMEOUT_MS` | Timeout de radicación (ms) |
+| `ALLOWED_ORIGIN` | CORS (**nunca `*` en producción**) |
+
+### 3. Iniciar PostgreSQL + Redis
+
+```bash
+npm run dev:infra
+# = docker compose up -d postgres redis
+```
+
+### 4. Iniciar backend
+
+```bash
+# Terminal 1 — API
+npm run dev:api
+
+# Terminal 2 — Worker (procesa los jobs)
+npm run dev:worker
+
+# O ambos en una terminal:
+npm run dev:backend
+```
+
+### 5. Iniciar app en el celular
+
+```bash
+npm run app:dev:lan
+```
+
+Escaneá el QR con Expo Go o abrí con el dev client.
 
 ---
 
@@ -186,14 +194,16 @@ cp backend/.env.example backend/.env
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Backend + app Expo simultáneamente |
-| `npm run local:backend` | Solo el backend |
-| `npm run app:dev` | Expo con dev client |
-| `npm run app:dev:lan` | Expo en modo LAN (fallback recomendado) |
+| `npm run dev:infra` | Levanta PostgreSQL + Redis en Docker |
+| `npm run dev:backend` | API + Worker simultáneamente |
+| `npm run dev:api` | Solo la API Express |
+| `npm run dev:worker` | Solo el Worker (BullMQ + Playwright) |
+| `npm run app:dev:lan` | Expo en modo LAN (recomendado) |
 | `npm run app:dev:tunnel` | Expo por túnel Ngrok |
-| `npm run app:dev:win` | `adb reverse` + LAN (Windows + Android por USB) |
-| `npm run local:setup` | Bootstrap completo del entorno local |
-| `npm run local:setup:fast` | Re-setup rápido (sin reinstalar deps) |
+| `npm run dev` | API + app Expo (sin worker) |
+| `npm run docker:up` | docker compose up -d (todo) |
+| `npm run docker:down` | docker compose down |
+| `npm run local:setup` | [DEPRECATED] Bootstrap legacy solo PostgreSQL |
 
 ---
 
@@ -236,7 +246,8 @@ Ver checklist completo en [`docs/ROADMAP_PLAY_STORE.md`](docs/ROADMAP_PLAY_STORE
 | Backend API + validación | ✅ Funcional |
 | Radicación con Playwright | ✅ Funcional |
 | Seguimiento asíncrono | ✅ Funcional |
-| Docker (api + worker separados) | ✅ Listo |
+| Docker (Redis + PostgreSQL + api + worker) | ✅ Listo |
+| Cola de trabajos BullMQ | ✅ Listo |
 | Tests backend (45 tests) | ✅ 24 unit + 21 integración |
 | Publicación Play Store | ⏳ Pendiente (subir a Google Console) |
 

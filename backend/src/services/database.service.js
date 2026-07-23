@@ -1,7 +1,7 @@
 import { query } from '../db.js';
 
 export async function ensureDatabaseBootstrap() {
-  const REQUIRED_TABLES = ['requests', 'request_status_events', 'request_attachments', 'automation_jobs'];
+  const REQUIRED_TABLES = ['requests', 'request_status_events', 'request_attachments'];
   const missingTablesResult = await query(
     `SELECT required.table_name
      FROM unnest($1::text[]) AS required(table_name)
@@ -16,30 +16,6 @@ export async function ensureDatabaseBootstrap() {
     const missingTables = missingTablesResult.rows.map((row) => row.table_name).join(', ');
     throw new Error(
       `Schema incompleto. Faltan tablas: ${missingTables}. Ejecuta primero el setup local o la migracion de base de datos.`
-    );
-  }
-
-  const requestIdConstraintResult = await query(
-    `SELECT EXISTS (
-       SELECT 1
-       FROM pg_constraint c
-       JOIN pg_class rel ON rel.oid = c.conrelid
-       JOIN pg_namespace ns ON ns.oid = rel.relnamespace
-       JOIN unnest(c.conkey) AS k(attnum) ON true
-       JOIN pg_attribute a
-         ON a.attrelid = rel.oid
-        AND a.attnum = k.attnum
-        WHERE ns.nspname = 'public'
-          AND rel.relname = 'automation_jobs'
-          AND c.contype IN ('u', 'p')
-        GROUP BY c.oid
-        HAVING bool_or(a.attname = 'request_id')
-      ) AS has_constraint`
-  );
-
-  if (!requestIdConstraintResult.rows[0]?.has_constraint) {
-    throw new Error(
-      'Schema invalido. automation_jobs.request_id requiere una restriccion UNIQUE o PRIMARY KEY para soportar ON CONFLICT.'
     );
   }
 }

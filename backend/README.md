@@ -1,4 +1,4 @@
-# Backend Fase 2 - Radicacion Anonima Pereira
+# Backend - Radicacion Anonima Pereira
 
 Backend Node.js para radicar PQRSD anonimas en el formulario oficial de Pereira mediante automatizacion web.
 
@@ -11,16 +11,37 @@ Backend Node.js para radicar PQRSD anonimas en el formulario oficial de Pereira 
   - Maximo 27 MB por archivo.
   - Tipos permitidos: XLS, DOC, PDF, JPG, JPEG, XLSX, DOCX, PNG, TIFF, TIF, GIF, PPT, PPTX.
 
-## Arquitectura de procesos
+## Arquitectura
 
-El backend tiene **dos entry points separados**:
+```
+App Expo ──multipart──▶ API (server.js) ──INSERT DB──▶ PostgreSQL
+                            │                              ▲
+                            ▼                              │
+                      Redis/BullMQ ──job──▶ Worker (worker-entry.js)
+                                               │
+                                               ▼
+                                         Playwright ──▶ Portal Pereira
+```
+
+La API recibe la solicitud, la persiste en PostgreSQL y **encola un job en Redis via BullMQ**. El worker consume jobs de la cola, ejecuta Playwright y actualiza el estado en PostgreSQL.
+
+### Procesos
 
 | Proceso | Entry point | Funcion |
 |---------|------------|---------|
-| API | `src/server.js` | Sirve endpoints HTTP, valida, persiste en DB |
-| Worker | `src/worker-entry.js` | Sondea jobs pendientes, ejecuta Playwright |
+| API | `src/server.js` | Endpoints HTTP, validacion, persistencia |
+| Worker | `src/worker-entry.js` | Consume cola BullMQ, ejecuta Playwright |
 
-En desarrollo local se inician juntos via `npm run dev`. En produccion con Docker se despliegan como contenedores independientes (`Dockerfile.api` y `Dockerfile.worker`).
+### Cola de trabajos
+
+- `src/queue.js`: cola BullMQ con backoff exponencial y reintentos.
+- `src/worker.js`: Worker de BullMQ que procesa cada job.
+- El estado (`jobState`) se deriva de `requests.status` via CASE - no hay tabla `automation_jobs`.
+
+## Requisitos
+
+- Node.js >= 20
+- Docker (para PostgreSQL + Redis en desarrollo)
 
 ## Variables de entorno
 
@@ -28,23 +49,22 @@ Copia `.env.example` a `.env`.
 
 ### Compartidas (api + worker)
 
-- `DATABASE_URL`: cadena de conexion PostgreSQL (obligatoria).
+- `DATABASE_URL`: conexion PostgreSQL.
+- `REDIS_URL`: conexion Redis (default `redis://127.0.0.1:6379`).
 - `NODE_ENV`: `development` | `production`.
 
-### Solo API (`server.js`)
+### Solo API
 
-- `PORT`: puerto del backend (default 3001).
-- `ALLOWED_ORIGIN`: origen permitido para CORS (usar `*` solo en desarrollo).
-  > **⚠️ PRODUCCIÓN:** `ALLOWED_ORIGIN` **debe** ser un origen específico (ej. `https://pereira-te-escucha.com`). El valor `*` solo está permitido en desarrollo local.
-- `BACKEND_API_TOKEN`: **obligatorio en producción** para proteger los endpoints `/api/pqrs/*`. Sin esta variable, el backend no iniciará en modo producción.
-- `SENTRY_DSN`: DSN de Sentry para errores en producción.
+- `PORT`: puerto (default 3001).
+- `ALLOWED_ORIGIN`: CORS (nunca `*` en produccion).
+- `BACKEND_API_TOKEN`: obligatorio en produccion.
+- `SENTRY_DSN`: DSN de Sentry.
 
-### Solo Worker (`worker-entry.js`)
+### Solo Worker
 
-- `PEREIRA_FORM_URL`: URL del formulario publico.
+- `PEREIRA_FORM_URL`: URL del formulario oficial.
 - `PLAYWRIGHT_HEADLESS`: `true|false`.
-- `PLAYWRIGHT_TIMEOUT_MS`: timeout total por radicacion.
-- `WORKER_POLL_MS`: intervalo de sondeo de jobs pendientes.
+- `PLAYWRIGHT_TIMEOUT_MS`: timeout por radicacion.
 
 ## Instalacion
 
@@ -54,70 +74,53 @@ npm install
 npx playwright install chromium
 ```
 
-## Ejecucion
+## Ejecucion (desarrollo)
 
-### Local (api + worker)
+### 1. Infraestructura (PostgreSQL + Redis)
 
 ```bash
+# Desde la raiz del proyecto:
+npm run dev:infra
+# (= docker compose up -d postgres redis)
+```
+
+### 2. Backend
+
+```bash
+# Solo API
 npm run dev
-```
 
-### Solo API
-
-```bash
-npm start
-```
-
-### Solo Worker
-
-```bash
+# Solo Worker (otra terminal)
 npm run worker
+
+# O ambos a la vez (desde la raiz):
+npm run dev:backend
 ```
 
-## Despliegue con Docker
+### 3. App (otra terminal)
 
-Desde la raiz del proyecto:
+```bash
+npm run app:dev:lan
+```
+
+## Despliegue con Docker (produccion)
 
 ```bash
 docker compose up -d
 ```
 
-Levanta tres contenedores:
+Levanta 4 contenedores:
+- `redis`: Redis 7 Alpine.
 - `postgres`: PostgreSQL 16 Alpine.
-- `api`: backend Express (`Dockerfile.api`) — solo sirve HTTP.
-- `worker`: worker de automatizacion (`Dockerfile.worker`) — solo ejecuta Playwright.
-
-## Flujo local rapido
-
-Desde la raiz del proyecto:
-
-```bash
-npm run local:setup
-```
-
-Este comando automatiza:
-
-- Levantar PostgreSQL en Docker.
-- Crear base de datos y esquema minimo requerido.
-- Crear `backend/.env` desde `backend/.env.example`.
-- Validar conexion a base de datos.
-
-Luego inicia el backend con:
-
-```bash
-npm run local:backend
-```
+- `api`: backend Express.
+- `worker`: worker con Playwright + Chromium.
 
 ## Validacion de esquema al arranque
 
-Al iniciar, el backend valida que exista el esquema minimo requerido:
-
+Al iniciar, valida que existan las tablas:
 - `requests`
 - `request_status_events`
 - `request_attachments`
-- `automation_jobs`
-
-Si falta una tabla o `automation_jobs.request_id` no tiene restriccion `UNIQUE`/`PRIMARY KEY`, el proceso termina con un error explicito para evitar fallos en runtime.
 
 ## Pruebas
 
@@ -129,6 +132,7 @@ Healthcheck:
 
 ```bash
 GET /health
+GET /health/playwright
 ```
 
 ## Endpoint principal
@@ -138,9 +142,7 @@ POST /api/pqrs/submit-anonymous
 Content-Type: multipart/form-data
 ```
 
-Este endpoint es asincrono: valida y encola la solicitud, y responde de inmediato con codigo de seguimiento.
-
-Campos form-data:
+Campos:
 
 - `medioRespuesta`: `cartelera | correo_electronico | correo_fisico`
 - `correo`: requerido si `medioRespuesta=correo_electronico`
@@ -150,7 +152,7 @@ Campos form-data:
 - `aceptarTratamiento`: `true|false`
 - `files`: archivos opcionales (0..10)
 
-Respuesta esperada (202 Accepted):
+Respuesta (202):
 
 ```json
 {
@@ -168,7 +170,7 @@ Respuesta esperada (202 Accepted):
 }
 ```
 
-La radicacion oficial (consecutivo/radicado) se consulta despues en:
+Consulta de estado:
 
 ```bash
 GET /api/pqrs/status/:trackingCode
@@ -176,6 +178,7 @@ GET /api/pqrs/status/:trackingCode
 
 ## Notas operativas
 
-- Este backend usa Playwright para controlar el formulario real.
-- Si el sitio cambia selectores o reglas, hay que actualizar `src/pereiraAutomation.js`.
-- En emulador Android, la app React Native usa `http://10.0.2.2:3001` para llegar al backend local.
+- Playwright controla el formulario real del portal de Pereira.
+- Si el sitio cambia selectores, hay que actualizar `src/pereiraAutomation.js`.
+- En emulador Android, la app usa `http://10.0.2.2:3001`.
+- Redis debe estar corriendo para que el worker funcione.
