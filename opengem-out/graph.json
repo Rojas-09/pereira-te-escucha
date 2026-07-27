@@ -1,0 +1,5307 @@
+{
+  "meta": {
+    "version": "1",
+    "rootDir": "/home/juancho/Documentos/Desarrollo/PereiraTeescucha",
+    "indexedAt": "2026-07-24T16:11:49.099Z",
+    "nodeCount": 332,
+    "edgeCount": 461,
+    "communityCount": 33
+  },
+  "nodes": [
+    {
+      "id": ".expo/README.md#.expo/README.md",
+      "name": ".expo/README.md",
+      "kind": "module",
+      "file": ".expo/README.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 0
+    },
+    {
+      "id": "App.tsx#App.tsx",
+      "name": "App.tsx",
+      "kind": "module",
+      "file": "App.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#App",
+      "name": "App",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 53,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#showAppNotice",
+      "name": "showAppNotice",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 90,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#clearPollingTimer",
+      "name": "clearPollingTimer",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 94,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#resetPollingCounters",
+      "name": "resetPollingCounters",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 101,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#stopAutoPolling",
+      "name": "stopAutoPolling",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 109,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#onMapPress",
+      "name": "onMapPress",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 166,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#onAndroidMapMessage",
+      "name": "onAndroidMapMessage",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 172,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#onPickPhoto",
+      "name": "onPickPhoto",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 181,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#handleRewrite",
+      "name": "handleRewrite",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 201,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#setSubmitStageActive",
+      "name": "setSubmitStageActive",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 206,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#setSubmitStageDone",
+      "name": "setSubmitStageDone",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 210,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#wait",
+      "name": "wait",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 214,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#ensureMinStageDuration",
+      "name": "ensureMinStageDuration",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 215,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#scheduleNextPoll",
+      "name": "scheduleNextPoll",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 247,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#handleSend",
+      "name": "handleSend",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 297,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#renderStep",
+      "name": "renderStep",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 359,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "App.tsx#handleRestart",
+      "name": "handleRestart",
+      "kind": "function",
+      "file": "App.tsx",
+      "line": 376,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "README.md#README.md",
+      "name": "README.md",
+      "kind": "module",
+      "file": "README.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Pereira Te Escucha",
+      "name": "Pereira Te Escucha",
+      "kind": "section",
+      "file": "README.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#¿Qué es esto?",
+      "name": "¿Qué es esto?",
+      "kind": "section",
+      "file": "README.md",
+      "line": 13,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Características principales",
+      "name": "Características principales",
+      "kind": "section",
+      "file": "README.md",
+      "line": 21,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Stack tecnológico",
+      "name": "Stack tecnológico",
+      "kind": "section",
+      "file": "README.md",
+      "line": 32,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Arquitectura",
+      "name": "Arquitectura",
+      "kind": "section",
+      "file": "README.md",
+      "line": 50,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "README.md#Estructura del proyecto",
+      "name": "Estructura del proyecto",
+      "kind": "section",
+      "file": "README.md",
+      "line": 82,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Setup local",
+      "name": "Setup local",
+      "kind": "section",
+      "file": "README.md",
+      "line": 130,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Requisitos",
+      "name": "Requisitos",
+      "kind": "section",
+      "file": "README.md",
+      "line": 132,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#1. Instalar dependencias",
+      "name": "1. Instalar dependencias",
+      "kind": "section",
+      "file": "README.md",
+      "line": 138,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#2. Variables de entorno",
+      "name": "2. Variables de entorno",
+      "kind": "section",
+      "file": "README.md",
+      "line": 145,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#3. Iniciar PostgreSQL + Redis",
+      "name": "3. Iniciar PostgreSQL + Redis",
+      "kind": "section",
+      "file": "README.md",
+      "line": 163,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#= docker compose up -d postgres redis",
+      "name": "= docker compose up -d postgres redis",
+      "kind": "section",
+      "file": "README.md",
+      "line": 167,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#4. Iniciar backend",
+      "name": "4. Iniciar backend",
+      "kind": "section",
+      "file": "README.md",
+      "line": 170,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Terminal 1 — API",
+      "name": "Terminal 1 — API",
+      "kind": "section",
+      "file": "README.md",
+      "line": 173,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Terminal 2 — Worker (procesa los jobs)",
+      "name": "Terminal 2 — Worker (procesa los jobs)",
+      "kind": "section",
+      "file": "README.md",
+      "line": 176,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#O ambos en una terminal:",
+      "name": "O ambos en una terminal:",
+      "kind": "section",
+      "file": "README.md",
+      "line": 179,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#5. Iniciar app en el celular",
+      "name": "5. Iniciar app en el celular",
+      "kind": "section",
+      "file": "README.md",
+      "line": 183,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Comandos de desarrollo",
+      "name": "Comandos de desarrollo",
+      "kind": "section",
+      "file": "README.md",
+      "line": 193,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Build y publicación (Android / Play Store)",
+      "name": "Build y publicación (Android / Play Store)",
+      "kind": "section",
+      "file": "README.md",
+      "line": 210,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Development build",
+      "name": "Development build",
+      "kind": "section",
+      "file": "README.md",
+      "line": 213,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Producción",
+      "name": "Producción",
+      "kind": "section",
+      "file": "README.md",
+      "line": 216,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Documentación adicional",
+      "name": "Documentación adicional",
+      "kind": "section",
+      "file": "README.md",
+      "line": 226,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "README.md#Estado del proyecto",
+      "name": "Estado del proyecto",
+      "kind": "section",
+      "file": "README.md",
+      "line": 241,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Contribuir",
+      "name": "Contribuir",
+      "kind": "section",
+      "file": "README.md",
+      "line": 256,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "README.md#Licencia",
+      "name": "Licencia",
+      "kind": "section",
+      "file": "README.md",
+      "line": 262,
+      "language": "markdown",
+      "community": 2
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#backend/INSPECCION_PEREIRA.md",
+      "name": "backend/INSPECCION_PEREIRA.md",
+      "kind": "module",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "name": "Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Hallazgos clave",
+      "name": "Hallazgos clave",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Reglas de campos (segun JS oficial)",
+      "name": "Reglas de campos (segun JS oficial)",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 12,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Con anonimo activado",
+      "name": "Con anonimo activado",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 16,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Sin anonimo",
+      "name": "Sin anonimo",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 25,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Reglas de anexos en cliente",
+      "name": "Reglas de anexos en cliente",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 31,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Endpoints observados",
+      "name": "Endpoints observados",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 39,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/INSPECCION_PEREIRA.md#Implicacion para Fase 2",
+      "name": "Implicacion para Fase 2",
+      "kind": "section",
+      "file": "backend/INSPECCION_PEREIRA.md",
+      "line": 47,
+      "language": "markdown",
+      "community": 5
+    },
+    {
+      "id": "backend/README.md#backend/README.md",
+      "name": "backend/README.md",
+      "kind": "module",
+      "file": "backend/README.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "name": "Backend - Radicacion Anonima Pereira",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Lo que valida",
+      "name": "Lo que valida",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 5,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Arquitectura",
+      "name": "Arquitectura",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 14,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Procesos",
+      "name": "Procesos",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 28,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Cola de trabajos",
+      "name": "Cola de trabajos",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 35,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Requisitos",
+      "name": "Requisitos",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 41,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Variables de entorno",
+      "name": "Variables de entorno",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 46,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Compartidas (api + worker)",
+      "name": "Compartidas (api + worker)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 50,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Solo API",
+      "name": "Solo API",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 56,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Solo Worker",
+      "name": "Solo Worker",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 63,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Instalacion",
+      "name": "Instalacion",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 69,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Ejecucion (desarrollo)",
+      "name": "Ejecucion (desarrollo)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 77,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#1. Infraestructura (PostgreSQL + Redis)",
+      "name": "1. Infraestructura (PostgreSQL + Redis)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 79,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Desde la raiz del proyecto:",
+      "name": "Desde la raiz del proyecto:",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 82,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#(= docker compose up -d postgres redis)",
+      "name": "(= docker compose up -d postgres redis)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 84,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#2. Backend",
+      "name": "2. Backend",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 87,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Solo API (2)",
+      "name": "Solo API (2)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 90,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Solo Worker (otra terminal)",
+      "name": "Solo Worker (otra terminal)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 93,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "name": "O ambos a la vez (desde la raiz):",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 96,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#3. App (otra terminal)",
+      "name": "3. App (otra terminal)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 100,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Despliegue con Docker (produccion)",
+      "name": "Despliegue con Docker (produccion)",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 106,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Validacion de esquema al arranque",
+      "name": "Validacion de esquema al arranque",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 118,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Pruebas",
+      "name": "Pruebas",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 125,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Endpoint principal",
+      "name": "Endpoint principal",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 138,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/README.md#Notas operativas",
+      "name": "Notas operativas",
+      "kind": "section",
+      "file": "backend/README.md",
+      "line": 179,
+      "language": "markdown",
+      "community": 6
+    },
+    {
+      "id": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "name": "backend/scripts/local-setup.cjs",
+      "kind": "module",
+      "file": "backend/scripts/local-setup.cjs",
+      "line": 0,
+      "language": "javascript",
+      "community": 7
+    },
+    {
+      "id": "backend/scripts/local-setup.cjs#run",
+      "name": "run",
+      "kind": "function",
+      "file": "backend/scripts/local-setup.cjs",
+      "line": 21,
+      "language": "javascript",
+      "community": 7
+    },
+    {
+      "id": "backend/scripts/local-setup.cjs#capture",
+      "name": "capture",
+      "kind": "function",
+      "file": "backend/scripts/local-setup.cjs",
+      "line": 22,
+      "language": "javascript",
+      "community": 7
+    },
+    {
+      "id": "backend/scripts/local-setup.cjs#runPm",
+      "name": "runPm",
+      "kind": "function",
+      "file": "backend/scripts/local-setup.cjs",
+      "line": 24,
+      "language": "javascript",
+      "community": 7
+    },
+    {
+      "id": "backend/scripts/local-setup.cjs#sleep",
+      "name": "sleep",
+      "kind": "function",
+      "file": "backend/scripts/local-setup.cjs",
+      "line": 34,
+      "language": "javascript",
+      "community": 7
+    },
+    {
+      "id": "backend/scripts/migrate.cjs#backend/scripts/migrate.cjs",
+      "name": "backend/scripts/migrate.cjs",
+      "kind": "module",
+      "file": "backend/scripts/migrate.cjs",
+      "line": 0,
+      "language": "javascript",
+      "community": 8
+    },
+    {
+      "id": "backend/src/app.js#backend/src/app.js",
+      "name": "backend/src/app.js",
+      "kind": "module",
+      "file": "backend/src/app.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/app.js#createApp",
+      "name": "createApp",
+      "kind": "function",
+      "file": "backend/src/app.js",
+      "line": 13,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/config.js#backend/src/config.js",
+      "name": "backend/src/config.js",
+      "kind": "module",
+      "file": "backend/src/config.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 10
+    },
+    {
+      "id": "backend/src/constants.js#backend/src/constants.js",
+      "name": "backend/src/constants.js",
+      "kind": "module",
+      "file": "backend/src/constants.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 11
+    },
+    {
+      "id": "backend/src/db.js#backend/src/db.js",
+      "name": "backend/src/db.js",
+      "kind": "module",
+      "file": "backend/src/db.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/db.js#query",
+      "name": "query",
+      "kind": "function",
+      "file": "backend/src/db.js",
+      "line": 19,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/middleware/auth.js#backend/src/middleware/auth.js",
+      "name": "backend/src/middleware/auth.js",
+      "kind": "module",
+      "file": "backend/src/middleware/auth.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/middleware/auth.js#requireBackendAuth",
+      "name": "requireBackendAuth",
+      "kind": "function",
+      "file": "backend/src/middleware/auth.js",
+      "line": 1,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/middleware/error-handler.js#backend/src/middleware/error-handler.js",
+      "name": "backend/src/middleware/error-handler.js",
+      "kind": "module",
+      "file": "backend/src/middleware/error-handler.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 13
+    },
+    {
+      "id": "backend/src/middleware/error-handler.js#errorHandler",
+      "name": "errorHandler",
+      "kind": "function",
+      "file": "backend/src/middleware/error-handler.js",
+      "line": 3,
+      "language": "javascript",
+      "community": 13
+    },
+    {
+      "id": "backend/src/pereiraAutomation.js#backend/src/pereiraAutomation.js",
+      "name": "backend/src/pereiraAutomation.js",
+      "kind": "module",
+      "file": "backend/src/pereiraAutomation.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/pereiraAutomation.js#escapeRegex",
+      "name": "escapeRegex",
+      "kind": "function",
+      "file": "backend/src/pereiraAutomation.js",
+      "line": 3,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "name": "submitAnonymousPQRS",
+      "kind": "function",
+      "file": "backend/src/pereiraAutomation.js",
+      "line": 7,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/pereiraAutomation.js#setCheckedBySelector",
+      "name": "setCheckedBySelector",
+      "kind": "function",
+      "file": "backend/src/pereiraAutomation.js",
+      "line": 99,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/queue.js#backend/src/queue.js",
+      "name": "backend/src/queue.js",
+      "kind": "module",
+      "file": "backend/src/queue.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/queue.js#getQueue",
+      "name": "getQueue",
+      "kind": "function",
+      "file": "backend/src/queue.js",
+      "line": 5,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/routes/health.js#backend/src/routes/health.js",
+      "name": "backend/src/routes/health.js",
+      "kind": "module",
+      "file": "backend/src/routes/health.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/routes/health.js#createHealthRouter",
+      "name": "createHealthRouter",
+      "kind": "function",
+      "file": "backend/src/routes/health.js",
+      "line": 5,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/routes/index.js#backend/src/routes/index.js",
+      "name": "backend/src/routes/index.js",
+      "kind": "module",
+      "file": "backend/src/routes/index.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/routes/index.js#createRootRouter",
+      "name": "createRootRouter",
+      "kind": "function",
+      "file": "backend/src/routes/index.js",
+      "line": 3,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/src/routes/pqrs.js#backend/src/routes/pqrs.js",
+      "name": "backend/src/routes/pqrs.js",
+      "kind": "module",
+      "file": "backend/src/routes/pqrs.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "name": "createPqrsRouter",
+      "kind": "function",
+      "file": "backend/src/routes/pqrs.js",
+      "line": 38,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/server.js#backend/src/server.js",
+      "name": "backend/src/server.js",
+      "kind": "module",
+      "file": "backend/src/server.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/services/database.service.js#backend/src/services/database.service.js",
+      "name": "backend/src/services/database.service.js",
+      "kind": "module",
+      "file": "backend/src/services/database.service.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/services/database.service.js#ensureDatabaseBootstrap",
+      "name": "ensureDatabaseBootstrap",
+      "kind": "function",
+      "file": "backend/src/services/database.service.js",
+      "line": 3,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/services/database.service.js#queryTrackingStatus",
+      "name": "queryTrackingStatus",
+      "kind": "function",
+      "file": "backend/src/services/database.service.js",
+      "line": 23,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/services/hash.service.js#backend/src/services/hash.service.js",
+      "name": "backend/src/services/hash.service.js",
+      "kind": "module",
+      "file": "backend/src/services/hash.service.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/services/hash.service.js#computeFileHash",
+      "name": "computeFileHash",
+      "kind": "function",
+      "file": "backend/src/services/hash.service.js",
+      "line": 4,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/services/logger.js#backend/src/services/logger.js",
+      "name": "backend/src/services/logger.js",
+      "kind": "module",
+      "file": "backend/src/services/logger.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 15
+    },
+    {
+      "id": "backend/src/services/request.service.js#backend/src/services/request.service.js",
+      "name": "backend/src/services/request.service.js",
+      "kind": "module",
+      "file": "backend/src/services/request.service.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/services/request.service.js#buildTrackingCode",
+      "name": "buildTrackingCode",
+      "kind": "function",
+      "file": "backend/src/services/request.service.js",
+      "line": 9,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/services/request.service.js#persistReceivedRequest",
+      "name": "persistReceivedRequest",
+      "kind": "function",
+      "file": "backend/src/services/request.service.js",
+      "line": 15,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/services/request.service.js#cleanupFiles",
+      "name": "cleanupFiles",
+      "kind": "function",
+      "file": "backend/src/services/request.service.js",
+      "line": 99,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.js#backend/src/validation.js",
+      "name": "backend/src/validation.js",
+      "kind": "module",
+      "file": "backend/src/validation.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.js#sanitizeText",
+      "name": "sanitizeText",
+      "kind": "function",
+      "file": "backend/src/validation.js",
+      "line": 7,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.js#validateBody",
+      "name": "validateBody",
+      "kind": "function",
+      "file": "backend/src/validation.js",
+      "line": 41,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.js#validateFiles",
+      "name": "validateFiles",
+      "kind": "function",
+      "file": "backend/src/validation.js",
+      "line": 64,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.js#mapToHumanValues",
+      "name": "mapToHumanValues",
+      "kind": "function",
+      "file": "backend/src/validation.js",
+      "line": 141,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "name": "backend/src/validation.test.js",
+      "kind": "module",
+      "file": "backend/src/validation.test.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 14
+    },
+    {
+      "id": "backend/src/worker-entry.js#backend/src/worker-entry.js",
+      "name": "backend/src/worker-entry.js",
+      "kind": "module",
+      "file": "backend/src/worker-entry.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker-entry.js#main",
+      "name": "main",
+      "kind": "function",
+      "file": "backend/src/worker-entry.js",
+      "line": 8,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker-entry.js#shutdown",
+      "name": "shutdown",
+      "kind": "function",
+      "file": "backend/src/worker-entry.js",
+      "line": 20,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#backend/src/worker.js",
+      "name": "backend/src/worker.js",
+      "kind": "module",
+      "file": "backend/src/worker.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#processJob",
+      "name": "processJob",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 12,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#setupWorker",
+      "name": "setupWorker",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 48,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#loadRequestJobData",
+      "name": "loadRequestJobData",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 71,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#markRequestProcessing",
+      "name": "markRequestProcessing",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 110,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#markRequestSuccessful",
+      "name": "markRequestSuccessful",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 130,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#markRequestFailed",
+      "name": "markRequestFailed",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 155,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/src/worker.js#cleanupRequestFiles",
+      "name": "cleanupRequestFiles",
+      "kind": "function",
+      "file": "backend/src/worker.js",
+      "line": 181,
+      "language": "javascript",
+      "community": 12
+    },
+    {
+      "id": "backend/tests/health.test.js#backend/tests/health.test.js",
+      "name": "backend/tests/health.test.js",
+      "kind": "module",
+      "file": "backend/tests/health.test.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "name": "backend/tests/pqrs.test.js",
+      "kind": "module",
+      "file": "backend/tests/pqrs.test.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "backend/tests/pqrs.test.js#makeMockServices",
+      "name": "makeMockServices",
+      "kind": "function",
+      "file": "backend/tests/pqrs.test.js",
+      "line": 9,
+      "language": "javascript",
+      "community": 9
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "name": "docs/ARCHITECTURE.md",
+      "kind": "module",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "name": "Arquitectura del proyecto",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Componentes",
+      "name": "Componentes",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Flujo de datos",
+      "name": "Flujo de datos",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 18,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Lectura del flujo",
+      "name": "Lectura del flujo",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 42,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Cola de trabajos (Redis + BullMQ)",
+      "name": "Cola de trabajos (Redis + BullMQ)",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 51,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Despliegue con Docker",
+      "name": "Despliegue con Docker",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 60,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Desarrollo local (sin Docker para api/worker)",
+      "name": "Desarrollo local (sin Docker para api/worker)",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 72,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Infraestructura (PostgreSQL + Redis)",
+      "name": "Infraestructura (PostgreSQL + Redis)",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 75,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Terminal 1 — API",
+      "name": "Terminal 1 — API",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 78,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Terminal 2 — Worker",
+      "name": "Terminal 2 — Worker",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 81,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#O ambas a la vez:",
+      "name": "O ambas a la vez:",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 84,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Configuracion",
+      "name": "Configuracion",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 88,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/ARCHITECTURE.md#Superficie historica",
+      "name": "Superficie historica",
+      "kind": "section",
+      "file": "docs/ARCHITECTURE.md",
+      "line": 98,
+      "language": "markdown",
+      "community": 3
+    },
+    {
+      "id": "docs/AUDIT.md#docs/AUDIT.md",
+      "name": "docs/AUDIT.md",
+      "kind": "module",
+      "file": "docs/AUDIT.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/AUDIT.md#Auditoria del estado actual",
+      "name": "Auditoria del estado actual",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Alcance",
+      "name": "Alcance",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Hallazgos originales y resolucion",
+      "name": "Hallazgos originales y resolucion",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 9,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Deuda tecnica",
+      "name": "Deuda tecnica",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 11,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Inconsistencias",
+      "name": "Inconsistencias",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 23,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Vulnerabilidades y riesgos",
+      "name": "Vulnerabilidades y riesgos",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 36,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "name": "Trazabilidad completa de cambios",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 54,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Seguridad",
+      "name": "Seguridad",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 56,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Refactor",
+      "name": "Refactor",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 78,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Infraestructura",
+      "name": "Infraestructura",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 92,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Documentacion",
+      "name": "Documentacion",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 103,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#CI / Testing",
+      "name": "CI / Testing",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 116,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Skills OpenCode",
+      "name": "Skills OpenCode",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 126,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Estado actual",
+      "name": "Estado actual",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 135,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Testing",
+      "name": "Testing",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 137,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Seguridad (2)",
+      "name": "Seguridad (2)",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 142,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Infraestructura (2)",
+      "name": "Infraestructura (2)",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 150,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Pendiente (manual)",
+      "name": "Pendiente (manual)",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 155,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/AUDIT.md#Lectura ejecutiva",
+      "name": "Lectura ejecutiva",
+      "kind": "section",
+      "file": "docs/AUDIT.md",
+      "line": 163,
+      "language": "markdown",
+      "community": 16
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#docs/Auditoria del estado actual.md",
+      "name": "docs/Auditoria del estado actual.md",
+      "kind": "module",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "name": "Auditoría del estado actual",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#Alcance",
+      "name": "Alcance",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#✅ Resuelto desde la auditoría anterior",
+      "name": "✅ Resuelto desde la auditoría anterior",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 9,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🔴 Seguridad — Crítico",
+      "name": "🔴 Seguridad — Crítico",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 33,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~1. Token de producción sin rotación en `.env.production`~~ ✅ ROTADO",
+      "name": "~~1. Token de producción sin rotación en `.env.production`~~ ✅ ROTADO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 35,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~2. Detalles de error expuestos al cliente~~ ✅ OCULTO",
+      "name": "~~2. Detalles de error expuestos al cliente~~ ✅ OCULTO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 39,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🟡 Seguridad — Medio",
+      "name": "🟡 Seguridad — Medio",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 45,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~3. Sin validación de trackingCode en endpoint público~~ ✅ VALIDADO",
+      "name": "~~3. Sin validación de trackingCode en endpoint público~~ ✅ VALIDADO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 47,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~4. Magic number validation: silent pass si `fileTypeFromFile` retorna null~~ ✅ RECHAZADO",
+      "name": "~~4. Magic number validation: silent pass si `fileTypeFromFile` retorna null~~ ✅ RECHAZADO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 51,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#5. `ALLOWED_ORIGIN=*` en `.env` de desarrollo",
+      "name": "5. `ALLOWED_ORIGIN=*` en `.env` de desarrollo",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 55,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🔵 Código Muerto / No Usado",
+      "name": "🔵 Código Muerto / No Usado",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 61,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~6. `src/hooks/useLocationPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "name": "~~6. `src/hooks/useLocationPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 63,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~7. `src/hooks/usePhotoPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "name": "~~7. `src/hooks/usePhotoPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 67,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🟠 Refactorización Pendiente — Parcial",
+      "name": "🟠 Refactorización Pendiente — Parcial",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 73,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~8. `App.tsx` — monolito de ~1610 líneas~~ ✅ REFACTORIZADO",
+      "name": "~~8. `App.tsx` — monolito de ~1610 líneas~~ ✅ REFACTORIZADO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 75,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~9. Import dinámico innecesario en `database.service.js`~~ ✅ CORREGIDO",
+      "name": "~~9. Import dinámico innecesario en `database.service.js`~~ ✅ CORREGIDO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 90,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~10. Backend sin `.gitignore` propio~~ ✅ CORREGIDO",
+      "name": "~~10. Backend sin `.gitignore` propio~~ ✅ CORREGIDO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 94,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🟢 Escalabilidad",
+      "name": "🟢 Escalabilidad",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 100,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~11. Worker bloqueante en el mismo proceso~~ ✅ EXTRAÍDO A PROCESO SEPARADO",
+      "name": "~~11. Worker bloqueante en el mismo proceso~~ ✅ EXTRAÍDO A PROCESO SEPARADO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 102,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~12. Pool de conexiones sin límite explícito~~ ✅ CORREGIDO",
+      "name": "~~12. Pool de conexiones sin límite explícito~~ ✅ CORREGIDO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 113,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#~~13. Sin health check para Playwright~~ ✅ CORREGIDO",
+      "name": "~~13. Sin health check para Playwright~~ ✅ CORREGIDO",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 117,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#🐳 Docker",
+      "name": "🐳 Docker",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 123,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#14. Contenerización",
+      "name": "14. Contenerización",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 125,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#💚 Prácticas Correctas (no tocar)",
+      "name": "💚 Prácticas Correctas (no tocar)",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 135,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#📊 Resumen Ejecutivo",
+      "name": "📊 Resumen Ejecutivo",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 158,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/Auditoria del estado actual.md#Prioridad sugerida",
+      "name": "Prioridad sugerida",
+      "kind": "section",
+      "file": "docs/Auditoria del estado actual.md",
+      "line": 171,
+      "language": "markdown",
+      "community": 17
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#docs/PRIVACY_POLICY.md",
+      "name": "docs/PRIVACY_POLICY.md",
+      "kind": "module",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "name": "Politica de Privacidad - Pereira Te Escucha",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#1. Quienes somos",
+      "name": "1. Quienes somos",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 5,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#2. Datos que tratamos",
+      "name": "2. Datos que tratamos",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 9,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#3. Finalidad del tratamiento",
+      "name": "3. Finalidad del tratamiento",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 19,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#4. Base de legitimacion y consentimiento",
+      "name": "4. Base de legitimacion y consentimiento",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 28,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#5. Comparticion de datos",
+      "name": "5. Comparticion de datos",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 35,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#6. Retencion de datos",
+      "name": "6. Retencion de datos",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 44,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#7. Seguridad",
+      "name": "7. Seguridad",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 52,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#8. Derechos del titular",
+      "name": "8. Derechos del titular",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 56,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#9. Permisos de la aplicacion",
+      "name": "9. Permisos de la aplicacion",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 62,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#10. Menores de edad",
+      "name": "10. Menores de edad",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 69,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#11. Cambios a esta politica",
+      "name": "11. Cambios a esta politica",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 73,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/PRIVACY_POLICY.md#12. Contacto",
+      "name": "12. Contacto",
+      "kind": "section",
+      "file": "docs/PRIVACY_POLICY.md",
+      "line": 77,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "name": "docs/ROADMAP_PLAY_STORE.md",
+      "kind": "module",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Roadmap para Publicar en Play Store",
+      "name": "Roadmap para Publicar en Play Store",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "name": "🎯 Checklist Pre-Publicación",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#1. Configuración Básica ⚙️",
+      "name": "1. Configuración Básica ⚙️",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 5,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#2. Documentación Legal 📄",
+      "name": "2. Documentación Legal 📄",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 16,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#3. Seguridad y Calidad ✅",
+      "name": "3. Seguridad y Calidad ✅",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 27,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#4. Configuración Android 📱",
+      "name": "4. Configuración Android 📱",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 37,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#5. Assets de Play Store 🎨",
+      "name": "5. Assets de Play Store 🎨",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 55,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#6. Backend en Producción 🌐",
+      "name": "6. Backend en Producción 🌐",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 65,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#7. Build y Publicación 🚀",
+      "name": "7. Build y Publicación 🚀",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 73,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#1. Build de producción",
+      "name": "1. Build de producción",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 76,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#2. Descargar el .aab generado",
+      "name": "2. Descargar el .aab generado",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 79,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#3. Subir a Play Console",
+      "name": "3. Subir a Play Console",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 81,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#- Ir a \"Producción\" > \"Crear versión\"",
+      "name": "- Ir a \"Producción\" > \"Crear versión\"",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 82,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#- Subir el .aab",
+      "name": "- Subir el .aab",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 83,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#- Completar datos del listing",
+      "name": "- Completar datos del listing",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 84,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#- Enviar para revisión",
+      "name": "- Enviar para revisión",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 85,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#8. Post-Publicación 📊",
+      "name": "8. Post-Publicación 📊",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 88,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#🛠️ Comandos Útiles",
+      "name": "🛠️ Comandos Útiles",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 97,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Desarrollo Local",
+      "name": "Desarrollo Local",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 99,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Frontend con Expo Go",
+      "name": "Frontend con Expo Go",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 102,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Backend",
+      "name": "Backend",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 105,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Build Development",
+      "name": "Build Development",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 109,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Build Producción",
+      "name": "Build Producción",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 115,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Actualizar versión",
+      "name": "Actualizar versión",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 121,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#1) En app.json cambiar expo.version",
+      "name": "1) En app.json cambiar expo.version",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 124,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#2) En package.json alinear version",
+      "name": "2) En package.json alinear version",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 127,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#3) Build number:",
+      "name": "3) Build number:",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 130,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#Con appVersionSource=remote, EAS administra internamente",
+      "name": "Con appVersionSource=remote, EAS administra internamente",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 131,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#la numeracion usada por Play Store en cada build.",
+      "name": "la numeracion usada por Play Store en cada build.",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 132,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#⚠️ Puntos Críticos",
+      "name": "⚠️ Puntos Críticos",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 137,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/ROADMAP_PLAY_STORE.md#📚 Recursos",
+      "name": "📚 Recursos",
+      "kind": "section",
+      "file": "docs/ROADMAP_PLAY_STORE.md",
+      "line": 146,
+      "language": "markdown",
+      "community": 18
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#docs/TERMS_OF_SERVICE.md",
+      "name": "docs/TERMS_OF_SERVICE.md",
+      "kind": "module",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "name": "Términos de Servicio — Pereira Te Escucha",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#1. Aceptación de términos",
+      "name": "1. Aceptación de términos",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 5,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#2. Descripción del servicio",
+      "name": "2. Descripción del servicio",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 8,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#3. Naturaleza del servicio",
+      "name": "3. Naturaleza del servicio",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 11,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#4. Responsabilidades del usuario",
+      "name": "4. Responsabilidades del usuario",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 17,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#5. Limitación de responsabilidad",
+      "name": "5. Limitación de responsabilidad",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 24,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#6. Propiedad intelectual",
+      "name": "6. Propiedad intelectual",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 32,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#7. Privacidad",
+      "name": "7. Privacidad",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 35,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#8. Modificaciones del servicio",
+      "name": "8. Modificaciones del servicio",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 38,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#9. Legislación aplicable",
+      "name": "9. Legislación aplicable",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 44,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/TERMS_OF_SERVICE.md#10. Contacto",
+      "name": "10. Contacto",
+      "kind": "section",
+      "file": "docs/TERMS_OF_SERVICE.md",
+      "line": 47,
+      "language": "markdown",
+      "community": 19
+    },
+    {
+      "id": "docs/USER_FLOW.md#docs/USER_FLOW.md",
+      "name": "docs/USER_FLOW.md",
+      "kind": "module",
+      "file": "docs/USER_FLOW.md",
+      "line": 0,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "name": "Diagrama de Flujo de Usuario (User Journey)",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 1,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Descripción general",
+      "name": "Descripción general",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 3,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujo principal del usuario",
+      "name": "Flujo principal del usuario",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 7,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Detalle paso a paso",
+      "name": "Detalle paso a paso",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 58,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Paso 1: Seleccionar ubicación",
+      "name": "Paso 1: Seleccionar ubicación",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 60,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Paso 2: Tipo de solicitud y mensaje ciudadano",
+      "name": "Paso 2: Tipo de solicitud y mensaje ciudadano",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 72,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Paso 3: Evidencias y datos personales",
+      "name": "Paso 3: Evidencias y datos personales",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 89,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Paso 4: Envío y reescritura formal",
+      "name": "Paso 4: Envío y reescritura formal",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 103,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Paso 5: Seguimiento del estado",
+      "name": "Paso 5: Seguimiento del estado",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 118,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujo técnico detallado",
+      "name": "Flujo técnico detallado",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 134,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujo de datos",
+      "name": "Flujo de datos",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 136,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Timeline de estados",
+      "name": "Timeline de estados",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 150,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Estados de error y recuperación",
+      "name": "Estados de error y recuperación",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 164,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Errores en tiempo de envío",
+      "name": "Errores en tiempo de envío",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 166,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Errores en tiempo de seguimiento",
+      "name": "Errores en tiempo de seguimiento",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 172,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Accesibilidad y usabilidad",
+      "name": "Accesibilidad y usabilidad",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 178,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Indicadores de progreso",
+      "name": "Indicadores de progreso",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 180,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Retroalimentación al usuario",
+      "name": "Retroalimentación al usuario",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 185,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Navegación",
+      "name": "Navegación",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 191,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujo técnico de backend",
+      "name": "Flujo técnico de backend",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 197,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#API Endpoints",
+      "name": "API Endpoints",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 199,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujo de automatización del worker",
+      "name": "Flujo de automatización del worker",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 235,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Diagrama de secuencias (User Journey)",
+      "name": "Diagrama de secuencias (User Journey)",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 253,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Métricas y análisis",
+      "name": "Métricas y análisis",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 284,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Eventos de seguimiento",
+      "name": "Eventos de seguimiento",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 286,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#KPIs de usuario",
+      "name": "KPIs de usuario",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 292,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Documentación relacionada",
+      "name": "Documentación relacionada",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 298,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Notas de implementación",
+      "name": "Notas de implementación",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 306,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Consideraciones de diseño",
+      "name": "Consideraciones de diseño",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 308,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Flujos edge case",
+      "name": "Flujos edge case",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 316,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "docs/USER_FLOW.md#Consideraciones de internacionalización",
+      "name": "Consideraciones de internacionalización",
+      "kind": "section",
+      "file": "docs/USER_FLOW.md",
+      "line": 324,
+      "language": "markdown",
+      "community": 4
+    },
+    {
+      "id": "index.ts#index.ts",
+      "name": "index.ts",
+      "kind": "module",
+      "file": "index.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 20
+    },
+    {
+      "id": "plugins/withAndroidCleartextTraffic.js#plugins/withAndroidCleartextTraffic.js",
+      "name": "plugins/withAndroidCleartextTraffic.js",
+      "kind": "module",
+      "file": "plugins/withAndroidCleartextTraffic.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 21
+    },
+    {
+      "id": "plugins/withDisableBundleCompressionPatch.js#plugins/withDisableBundleCompressionPatch.js",
+      "name": "plugins/withDisableBundleCompressionPatch.js",
+      "kind": "module",
+      "file": "plugins/withDisableBundleCompressionPatch.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 22
+    },
+    {
+      "id": "plugins/withKotlinVersion.js#plugins/withKotlinVersion.js",
+      "name": "plugins/withKotlinVersion.js",
+      "kind": "module",
+      "file": "plugins/withKotlinVersion.js",
+      "line": 0,
+      "language": "javascript",
+      "community": 23
+    },
+    {
+      "id": "plugins/withKotlinVersion.js#setGradleProperty",
+      "name": "setGradleProperty",
+      "kind": "function",
+      "file": "plugins/withKotlinVersion.js",
+      "line": 3,
+      "language": "javascript",
+      "community": 23
+    },
+    {
+      "id": "src/components/AppNotice.tsx#src/components/AppNotice.tsx",
+      "name": "src/components/AppNotice.tsx",
+      "kind": "module",
+      "file": "src/components/AppNotice.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 24
+    },
+    {
+      "id": "src/components/AppNotice.tsx#AppNotice",
+      "name": "AppNotice",
+      "kind": "function",
+      "file": "src/components/AppNotice.tsx",
+      "line": 10,
+      "language": "tsx",
+      "community": 24
+    },
+    {
+      "id": "src/components/StepEvidence.tsx#src/components/StepEvidence.tsx",
+      "name": "src/components/StepEvidence.tsx",
+      "kind": "module",
+      "file": "src/components/StepEvidence.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 25
+    },
+    {
+      "id": "src/components/StepEvidence.tsx#StepEvidence",
+      "name": "StepEvidence",
+      "kind": "function",
+      "file": "src/components/StepEvidence.tsx",
+      "line": 13,
+      "language": "tsx",
+      "community": 25
+    },
+    {
+      "id": "src/components/StepLocation.tsx#src/components/StepLocation.tsx",
+      "name": "src/components/StepLocation.tsx",
+      "kind": "module",
+      "file": "src/components/StepLocation.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 26
+    },
+    {
+      "id": "src/components/StepLocation.tsx#StepLocation",
+      "name": "StepLocation",
+      "kind": "function",
+      "file": "src/components/StepLocation.tsx",
+      "line": 18,
+      "language": "tsx",
+      "community": 26
+    },
+    {
+      "id": "src/components/StepMessage.tsx#src/components/StepMessage.tsx",
+      "name": "src/components/StepMessage.tsx",
+      "kind": "module",
+      "file": "src/components/StepMessage.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 27
+    },
+    {
+      "id": "src/components/StepMessage.tsx#StepMessage",
+      "name": "StepMessage",
+      "kind": "function",
+      "file": "src/components/StepMessage.tsx",
+      "line": 15,
+      "language": "tsx",
+      "community": 27
+    },
+    {
+      "id": "src/components/StepReview.tsx#src/components/StepReview.tsx",
+      "name": "src/components/StepReview.tsx",
+      "kind": "module",
+      "file": "src/components/StepReview.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 28
+    },
+    {
+      "id": "src/components/StepReview.tsx#StepReview",
+      "name": "StepReview",
+      "kind": "function",
+      "file": "src/components/StepReview.tsx",
+      "line": 18,
+      "language": "tsx",
+      "community": 28
+    },
+    {
+      "id": "src/components/StepStatus.tsx#src/components/StepStatus.tsx",
+      "name": "src/components/StepStatus.tsx",
+      "kind": "module",
+      "file": "src/components/StepStatus.tsx",
+      "line": 0,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "src/components/StepStatus.tsx#StepStatus",
+      "name": "StepStatus",
+      "kind": "function",
+      "file": "src/components/StepStatus.tsx",
+      "line": 15,
+      "language": "tsx",
+      "community": 1
+    },
+    {
+      "id": "src/config/env.ts#src/config/env.ts",
+      "name": "src/config/env.ts",
+      "kind": "module",
+      "file": "src/config/env.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 29
+    },
+    {
+      "id": "src/config/env.ts#trimTrailingSlashes",
+      "name": "trimTrailingSlashes",
+      "kind": "function",
+      "file": "src/config/env.ts",
+      "line": 3,
+      "language": "typescript",
+      "community": 29
+    },
+    {
+      "id": "src/services/api.ts#src/services/api.ts",
+      "name": "src/services/api.ts",
+      "kind": "module",
+      "file": "src/services/api.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/services/api.ts#fetchWithTimeout",
+      "name": "fetchWithTimeout",
+      "kind": "function",
+      "file": "src/services/api.ts",
+      "line": 1,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/services/api.ts#readJsonSafe",
+      "name": "readJsonSafe",
+      "kind": "function",
+      "file": "src/services/api.ts",
+      "line": 16,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/services/api.ts#buildBackendHeaders",
+      "name": "buildBackendHeaders",
+      "kind": "function",
+      "file": "src/services/api.ts",
+      "line": 22,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/services/letter.ts#src/services/letter.ts",
+      "name": "src/services/letter.ts",
+      "kind": "module",
+      "file": "src/services/letter.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/letter.ts#formalizeContext",
+      "name": "formalizeContext",
+      "kind": "function",
+      "file": "src/services/letter.ts",
+      "line": 5,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/letter.ts#applyFormalLanguage",
+      "name": "applyFormalLanguage",
+      "kind": "function",
+      "file": "src/services/letter.ts",
+      "line": 38,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/letter.ts#normalizeSentence",
+      "name": "normalizeSentence",
+      "kind": "function",
+      "file": "src/services/letter.ts",
+      "line": 65,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/letter.ts#pickSentencesByKeywords",
+      "name": "pickSentencesByKeywords",
+      "kind": "function",
+      "file": "src/services/letter.ts",
+      "line": 71,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/letter.ts#buildFormalLetter",
+      "name": "buildFormalLetter",
+      "kind": "function",
+      "file": "src/services/letter.ts",
+      "line": 170,
+      "language": "typescript",
+      "community": 30
+    },
+    {
+      "id": "src/services/tracking.ts#src/services/tracking.ts",
+      "name": "src/services/tracking.ts",
+      "kind": "module",
+      "file": "src/services/tracking.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/services/tracking.ts#fetchTrackingStatus",
+      "name": "fetchTrackingStatus",
+      "kind": "function",
+      "file": "src/services/tracking.ts",
+      "line": 15,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/styles.ts#src/styles.ts",
+      "name": "src/styles.ts",
+      "kind": "module",
+      "file": "src/styles.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 31
+    },
+    {
+      "id": "src/types/index.ts#src/types/index.ts",
+      "name": "src/types/index.ts",
+      "kind": "module",
+      "file": "src/types/index.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 32
+    },
+    {
+      "id": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "name": "src/utils/formatters.ts",
+      "kind": "module",
+      "file": "src/utils/formatters.ts",
+      "line": 0,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#formatAddressFromReverseGeocode",
+      "name": "formatAddressFromReverseGeocode",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 3,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#formatTrackingStatusLabel",
+      "name": "formatTrackingStatusLabel",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 19,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#formatStatusDate",
+      "name": "formatStatusDate",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 30,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#parseRetryAfterMs",
+      "name": "parseRetryAfterMs",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 40,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#computeBackoffDelayMs",
+      "name": "computeBackoffDelayMs",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 49,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#generateSubjectFromMessage",
+      "name": "generateSubjectFromMessage",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 61,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#mapTypeToApi",
+      "name": "mapTypeToApi",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 67,
+      "language": "typescript",
+      "community": 1
+    },
+    {
+      "id": "src/utils/formatters.ts#shouldContinuePolling",
+      "name": "shouldContinuePolling",
+      "kind": "function",
+      "file": "src/utils/formatters.ts",
+      "line": 76,
+      "language": "typescript",
+      "community": 1
+    }
+  ],
+  "edges": [
+    {
+      "source": "App.tsx#App.tsx",
+      "target": "App.tsx#App",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#showAppNotice",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#resetPollingCounters",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#stopAutoPolling",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#stopAutoPolling",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/utils/formatters.ts#formatAddressFromReverseGeocode",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#onMapPress",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#onAndroidMapMessage",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#onPickPhoto",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#onPickPhoto",
+      "target": "App.tsx#showAppNotice",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#onPickPhoto",
+      "target": "App.tsx#showAppNotice",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#onPickPhoto",
+      "target": "App.tsx#showAppNotice",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#handleRewrite",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#handleRewrite",
+      "target": "src/services/letter.ts#buildFormalLetter",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleRewrite",
+      "target": "App.tsx#showAppNotice",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#setSubmitStageActive",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#setSubmitStageDone",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#wait",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#ensureMinStageDuration",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#ensureMinStageDuration",
+      "target": "App.tsx#wait",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/utils/formatters.ts#shouldContinuePolling",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#resetPollingCounters",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#scheduleNextPoll",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#stopAutoPolling",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#stopAutoPolling",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#stopAutoPolling",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "App.tsx#scheduleNextPoll",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#scheduleNextPoll",
+      "target": "src/utils/formatters.ts#computeBackoffDelayMs",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#scheduleNextPoll",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/utils/formatters.ts#computeBackoffDelayMs",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/utils/formatters.ts#shouldContinuePolling",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/utils/formatters.ts#computeBackoffDelayMs",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#handleSend",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/services/api.ts#fetchWithTimeout",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/services/api.ts#buildBackendHeaders",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageDone",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageActive",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/utils/formatters.ts#mapTypeToApi",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/utils/formatters.ts#generateSubjectFromMessage",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageDone",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageActive",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/services/api.ts#fetchWithTimeout",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "src/services/api.ts#buildBackendHeaders",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageDone",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageActive",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#setSubmitStageDone",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#handleSend",
+      "target": "App.tsx#showAppNotice",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#renderStep",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#handleRestart",
+      "kind": "contains"
+    },
+    {
+      "source": "App.tsx#handleRestart",
+      "target": "App.tsx#clearPollingTimer",
+      "kind": "calls"
+    },
+    {
+      "source": "App.tsx#App",
+      "target": "App.tsx#renderStep",
+      "kind": "calls"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#Pereira Te Escucha",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#¿Qué es esto?",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#Características principales",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#Stack tecnológico",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#Arquitectura",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Arquitectura",
+      "target": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#Estructura del proyecto",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Pereira Te Escucha",
+      "target": "README.md#Setup local",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Setup local",
+      "target": "README.md#Requisitos",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Setup local",
+      "target": "README.md#1. Instalar dependencias",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Setup local",
+      "target": "README.md#2. Variables de entorno",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Setup local",
+      "target": "README.md#3. Iniciar PostgreSQL + Redis",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#= docker compose up -d postgres redis",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#= docker compose up -d postgres redis",
+      "target": "README.md#4. Iniciar backend",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#Terminal 1 — API",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#Terminal 2 — Worker (procesa los jobs)",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#O ambos en una terminal:",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#O ambos en una terminal:",
+      "target": "README.md#5. Iniciar app en el celular",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#O ambos en una terminal:",
+      "target": "README.md#Comandos de desarrollo",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#O ambos en una terminal:",
+      "target": "README.md#Build y publicación (Android / Play Store)",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#Development build",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#README.md",
+      "target": "README.md#Producción",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Producción",
+      "target": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Producción",
+      "target": "README.md#Documentación adicional",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/AUDIT.md#docs/AUDIT.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/PRIVACY_POLICY.md#docs/PRIVACY_POLICY.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/TERMS_OF_SERVICE.md#docs/TERMS_OF_SERVICE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "docs/USER_FLOW.md#docs/USER_FLOW.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "backend/README.md#backend/README.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Documentación adicional",
+      "target": "backend/INSPECCION_PEREIRA.md#backend/INSPECCION_PEREIRA.md",
+      "kind": "imports"
+    },
+    {
+      "source": "README.md#Producción",
+      "target": "README.md#Estado del proyecto",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Producción",
+      "target": "README.md#Contribuir",
+      "kind": "contains"
+    },
+    {
+      "source": "README.md#Producción",
+      "target": "README.md#Licencia",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#backend/INSPECCION_PEREIRA.md",
+      "target": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "target": "backend/INSPECCION_PEREIRA.md#Hallazgos clave",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "target": "backend/INSPECCION_PEREIRA.md#Reglas de campos (segun JS oficial)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Reglas de campos (segun JS oficial)",
+      "target": "backend/INSPECCION_PEREIRA.md#Con anonimo activado",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Reglas de campos (segun JS oficial)",
+      "target": "backend/INSPECCION_PEREIRA.md#Sin anonimo",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "target": "backend/INSPECCION_PEREIRA.md#Reglas de anexos en cliente",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "target": "backend/INSPECCION_PEREIRA.md#Endpoints observados",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/INSPECCION_PEREIRA.md#Inspeccion tecnica - https://doc.pereira.gov.co/ws/pqr/index.html",
+      "target": "backend/INSPECCION_PEREIRA.md#Implicacion para Fase 2",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Lo que valida",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Arquitectura",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Arquitectura",
+      "target": "backend/README.md#Procesos",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Arquitectura",
+      "target": "backend/README.md#Cola de trabajos",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Requisitos",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Variables de entorno",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Variables de entorno",
+      "target": "backend/README.md#Compartidas (api + worker)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Variables de entorno",
+      "target": "backend/README.md#Solo API",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Variables de entorno",
+      "target": "backend/README.md#Solo Worker",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Instalacion",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Backend - Radicacion Anonima Pereira",
+      "target": "backend/README.md#Ejecucion (desarrollo)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#Ejecucion (desarrollo)",
+      "target": "backend/README.md#1. Infraestructura (PostgreSQL + Redis)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#Desde la raiz del proyecto:",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#(= docker compose up -d postgres redis)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#(= docker compose up -d postgres redis)",
+      "target": "backend/README.md#2. Backend",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#Solo API (2)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#Solo Worker (otra terminal)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#backend/README.md",
+      "target": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#3. App (otra terminal)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#Despliegue con Docker (produccion)",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#Validacion de esquema al arranque",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#Pruebas",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#Endpoint principal",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/README.md#O ambos a la vez (desde la raiz):",
+      "target": "backend/README.md#Notas operativas",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#capture",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#runPm",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#runPm",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#sleep",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#runPm",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#runPm",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#runPm",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#capture",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#capture",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#sleep",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#capture",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/scripts/local-setup.cjs#backend/scripts/local-setup.cjs",
+      "target": "backend/scripts/local-setup.cjs#run",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/app.js#backend/src/app.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/app.js#createApp",
+      "target": "backend/src/middleware/auth.js#requireBackendAuth",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/app.js#createApp",
+      "target": "backend/src/routes/index.js#createRootRouter",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/app.js#createApp",
+      "target": "backend/src/routes/health.js#createHealthRouter",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/app.js#createApp",
+      "target": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/db.js#backend/src/db.js",
+      "target": "backend/src/db.js#query",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/middleware/auth.js#backend/src/middleware/auth.js",
+      "target": "backend/src/middleware/auth.js#requireBackendAuth",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/middleware/error-handler.js#backend/src/middleware/error-handler.js",
+      "target": "backend/src/middleware/error-handler.js#errorHandler",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#backend/src/pereiraAutomation.js",
+      "target": "backend/src/pereiraAutomation.js#escapeRegex",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#backend/src/pereiraAutomation.js",
+      "target": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "target": "backend/src/pereiraAutomation.js#setCheckedBySelector",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "target": "backend/src/pereiraAutomation.js#setCheckedBySelector",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "target": "backend/src/pereiraAutomation.js#setCheckedBySelector",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/pereiraAutomation.js#backend/src/pereiraAutomation.js",
+      "target": "backend/src/pereiraAutomation.js#setCheckedBySelector",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/queue.js#backend/src/queue.js",
+      "target": "backend/src/queue.js#getQueue",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/routes/health.js#backend/src/routes/health.js",
+      "target": "backend/src/routes/health.js#createHealthRouter",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/routes/index.js#backend/src/routes/index.js",
+      "target": "backend/src/routes/index.js#createRootRouter",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#backend/src/routes/pqrs.js",
+      "target": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/database.service.js#queryTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/request.service.js#cleanupFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/request.service.js#cleanupFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/validation.js#mapToHumanValues",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/request.service.js#buildTrackingCode",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/request.service.js#persistReceivedRequest",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/routes/pqrs.js#createPqrsRouter",
+      "target": "backend/src/services/request.service.js#cleanupFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/server.js#backend/src/server.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/server.js#backend/src/server.js",
+      "target": "backend/src/services/database.service.js#ensureDatabaseBootstrap",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/database.service.js#backend/src/services/database.service.js",
+      "target": "backend/src/services/database.service.js#ensureDatabaseBootstrap",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/services/database.service.js#ensureDatabaseBootstrap",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/database.service.js#backend/src/services/database.service.js",
+      "target": "backend/src/services/database.service.js#queryTrackingStatus",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/services/database.service.js#queryTrackingStatus",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/database.service.js#queryTrackingStatus",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/hash.service.js#backend/src/services/hash.service.js",
+      "target": "backend/src/services/hash.service.js#computeFileHash",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/services/request.service.js#backend/src/services/request.service.js",
+      "target": "backend/src/services/request.service.js#buildTrackingCode",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/services/request.service.js#backend/src/services/request.service.js",
+      "target": "backend/src/services/request.service.js#persistReceivedRequest",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/services/request.service.js#persistReceivedRequest",
+      "target": "backend/src/services/hash.service.js#computeFileHash",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/request.service.js#persistReceivedRequest",
+      "target": "backend/src/queue.js#getQueue",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/request.service.js#persistReceivedRequest",
+      "target": "backend/src/queue.js#getQueue",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/services/request.service.js#backend/src/services/request.service.js",
+      "target": "backend/src/services/request.service.js#cleanupFiles",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/validation.js#backend/src/validation.js",
+      "target": "backend/src/validation.js#sanitizeText",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/validation.js#backend/src/validation.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/validation.js#backend/src/validation.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/validation.js#backend/src/validation.js",
+      "target": "backend/src/validation.js#mapToHumanValues",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#sanitizeText",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/validation.test.js#backend/src/validation.test.js",
+      "target": "backend/src/validation.js#validateBody",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker-entry.js#backend/src/worker-entry.js",
+      "target": "backend/src/worker-entry.js#main",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker-entry.js#main",
+      "target": "backend/src/services/database.service.js#ensureDatabaseBootstrap",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker-entry.js#main",
+      "target": "backend/src/worker.js#setupWorker",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker-entry.js#main",
+      "target": "backend/src/worker-entry.js#shutdown",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker-entry.js#backend/src/worker-entry.js",
+      "target": "backend/src/worker-entry.js#main",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#processJob",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/worker.js#loadRequestJobData",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/worker.js#markRequestProcessing",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/pereiraAutomation.js#submitAnonymousPQRS",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/worker.js#markRequestSuccessful",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#processJob",
+      "target": "backend/src/worker.js#cleanupRequestFiles",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#setupWorker",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#setupWorker",
+      "target": "backend/src/worker.js#markRequestFailed",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#loadRequestJobData",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#loadRequestJobData",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#loadRequestJobData",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#markRequestProcessing",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestProcessing",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestProcessing",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#markRequestSuccessful",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestSuccessful",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestSuccessful",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#markRequestFailed",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestFailed",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#markRequestFailed",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/src/worker.js#backend/src/worker.js",
+      "target": "backend/src/worker.js#cleanupRequestFiles",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/src/worker.js#cleanupRequestFiles",
+      "target": "backend/src/db.js#query",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/health.test.js#backend/tests/health.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/health.test.js#backend/tests/health.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/health.test.js#backend/tests/health.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "contains"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/tests/pqrs.test.js#makeMockServices",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "backend/tests/pqrs.test.js#backend/tests/pqrs.test.js",
+      "target": "backend/src/app.js#createApp",
+      "kind": "calls"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "target": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "target": "docs/ARCHITECTURE.md#Componentes",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "target": "docs/ARCHITECTURE.md#Flujo de datos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "target": "docs/ARCHITECTURE.md#Lectura del flujo",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "target": "docs/ARCHITECTURE.md#Cola de trabajos (Redis + BullMQ)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Arquitectura del proyecto",
+      "target": "docs/ARCHITECTURE.md#Despliegue con Docker",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#Despliegue con Docker",
+      "target": "docs/ARCHITECTURE.md#Desarrollo local (sin Docker para api/worker)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "target": "docs/ARCHITECTURE.md#Infraestructura (PostgreSQL + Redis)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "target": "docs/ARCHITECTURE.md#Terminal 1 — API",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "target": "docs/ARCHITECTURE.md#Terminal 2 — Worker",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "target": "docs/ARCHITECTURE.md#O ambas a la vez:",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#O ambas a la vez:",
+      "target": "docs/ARCHITECTURE.md#Configuracion",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ARCHITECTURE.md#O ambas a la vez:",
+      "target": "docs/ARCHITECTURE.md#Superficie historica",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#docs/AUDIT.md",
+      "target": "docs/AUDIT.md#Auditoria del estado actual",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Auditoria del estado actual",
+      "target": "docs/AUDIT.md#Alcance",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Auditoria del estado actual",
+      "target": "docs/AUDIT.md#Hallazgos originales y resolucion",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Hallazgos originales y resolucion",
+      "target": "docs/AUDIT.md#Deuda tecnica",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Hallazgos originales y resolucion",
+      "target": "docs/AUDIT.md#Inconsistencias",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Hallazgos originales y resolucion",
+      "target": "docs/AUDIT.md#Vulnerabilidades y riesgos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Auditoria del estado actual",
+      "target": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#Seguridad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#Refactor",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#Infraestructura",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#Documentacion",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#CI / Testing",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Trazabilidad completa de cambios",
+      "target": "docs/AUDIT.md#Skills OpenCode",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Auditoria del estado actual",
+      "target": "docs/AUDIT.md#Estado actual",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Estado actual",
+      "target": "docs/AUDIT.md#Testing",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Estado actual",
+      "target": "docs/AUDIT.md#Seguridad (2)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Estado actual",
+      "target": "docs/AUDIT.md#Infraestructura (2)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Estado actual",
+      "target": "docs/AUDIT.md#Pendiente (manual)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/AUDIT.md#Auditoria del estado actual",
+      "target": "docs/AUDIT.md#Lectura ejecutiva",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#docs/Auditoria del estado actual.md",
+      "target": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#Alcance",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#✅ Resuelto desde la auditoría anterior",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🔴 Seguridad — Crítico",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🔴 Seguridad — Crítico",
+      "target": "docs/Auditoria del estado actual.md#~~1. Token de producción sin rotación en `.env.production`~~ ✅ ROTADO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🔴 Seguridad — Crítico",
+      "target": "docs/Auditoria del estado actual.md#~~2. Detalles de error expuestos al cliente~~ ✅ OCULTO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🟡 Seguridad — Medio",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟡 Seguridad — Medio",
+      "target": "docs/Auditoria del estado actual.md#~~3. Sin validación de trackingCode en endpoint público~~ ✅ VALIDADO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟡 Seguridad — Medio",
+      "target": "docs/Auditoria del estado actual.md#~~4. Magic number validation: silent pass si `fileTypeFromFile` retorna null~~ ✅ RECHAZADO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟡 Seguridad — Medio",
+      "target": "docs/Auditoria del estado actual.md#5. `ALLOWED_ORIGIN=*` en `.env` de desarrollo",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🔵 Código Muerto / No Usado",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🔵 Código Muerto / No Usado",
+      "target": "docs/Auditoria del estado actual.md#~~6. `src/hooks/useLocationPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🔵 Código Muerto / No Usado",
+      "target": "docs/Auditoria del estado actual.md#~~7. `src/hooks/usePhotoPicker.ts` — hook no usado~~ ✅ EXTRAÍDO A COMPONENTE",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🟠 Refactorización Pendiente — Parcial",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟠 Refactorización Pendiente — Parcial",
+      "target": "docs/Auditoria del estado actual.md#~~8. `App.tsx` — monolito de ~1610 líneas~~ ✅ REFACTORIZADO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟠 Refactorización Pendiente — Parcial",
+      "target": "docs/Auditoria del estado actual.md#~~9. Import dinámico innecesario en `database.service.js`~~ ✅ CORREGIDO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟠 Refactorización Pendiente — Parcial",
+      "target": "docs/Auditoria del estado actual.md#~~10. Backend sin `.gitignore` propio~~ ✅ CORREGIDO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🟢 Escalabilidad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟢 Escalabilidad",
+      "target": "docs/Auditoria del estado actual.md#~~11. Worker bloqueante en el mismo proceso~~ ✅ EXTRAÍDO A PROCESO SEPARADO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟢 Escalabilidad",
+      "target": "docs/Auditoria del estado actual.md#~~12. Pool de conexiones sin límite explícito~~ ✅ CORREGIDO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🟢 Escalabilidad",
+      "target": "docs/Auditoria del estado actual.md#~~13. Sin health check para Playwright~~ ✅ CORREGIDO",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#🐳 Docker",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#🐳 Docker",
+      "target": "docs/Auditoria del estado actual.md#14. Contenerización",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#💚 Prácticas Correctas (no tocar)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#📊 Resumen Ejecutivo",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/Auditoria del estado actual.md#Auditoría del estado actual",
+      "target": "docs/Auditoria del estado actual.md#Prioridad sugerida",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#docs/PRIVACY_POLICY.md",
+      "target": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#1. Quienes somos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#2. Datos que tratamos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#3. Finalidad del tratamiento",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#4. Base de legitimacion y consentimiento",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#5. Comparticion de datos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#6. Retencion de datos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#7. Seguridad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#8. Derechos del titular",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#9. Permisos de la aplicacion",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#10. Menores de edad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#11. Cambios a esta politica",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/PRIVACY_POLICY.md#Politica de Privacidad - Pereira Te Escucha",
+      "target": "docs/PRIVACY_POLICY.md#12. Contacto",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Roadmap para Publicar en Play Store",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#Roadmap para Publicar en Play Store",
+      "target": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#1. Configuración Básica ⚙️",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#2. Documentación Legal 📄",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#3. Seguridad y Calidad ✅",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#4. Configuración Android 📱",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#5. Assets de Play Store 🎨",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#6. Backend en Producción 🌐",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🎯 Checklist Pre-Publicación",
+      "target": "docs/ROADMAP_PLAY_STORE.md#7. Build y Publicación 🚀",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#1. Build de producción",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#2. Descargar el .aab generado",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#3. Subir a Play Console",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#- Ir a \"Producción\" > \"Crear versión\"",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#- Subir el .aab",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#- Completar datos del listing",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#- Enviar para revisión",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#- Enviar para revisión",
+      "target": "docs/ROADMAP_PLAY_STORE.md#8. Post-Publicación 📊",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#- Enviar para revisión",
+      "target": "docs/ROADMAP_PLAY_STORE.md#🛠️ Comandos Útiles",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#🛠️ Comandos Útiles",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Desarrollo Local",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Frontend con Expo Go",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Backend",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#Backend",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Build Development",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#Backend",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Build Producción",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#Backend",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Actualizar versión",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#1) En app.json cambiar expo.version",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#2) En package.json alinear version",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#3) Build number:",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#Con appVersionSource=remote, EAS administra internamente",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "target": "docs/ROADMAP_PLAY_STORE.md#la numeracion usada por Play Store en cada build.",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#la numeracion usada por Play Store en cada build.",
+      "target": "docs/ROADMAP_PLAY_STORE.md#⚠️ Puntos Críticos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/ROADMAP_PLAY_STORE.md#la numeracion usada por Play Store en cada build.",
+      "target": "docs/ROADMAP_PLAY_STORE.md#📚 Recursos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#docs/TERMS_OF_SERVICE.md",
+      "target": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#1. Aceptación de términos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#2. Descripción del servicio",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#3. Naturaleza del servicio",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#4. Responsabilidades del usuario",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#5. Limitación de responsabilidad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#6. Propiedad intelectual",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#7. Privacidad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#8. Modificaciones del servicio",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#9. Legislación aplicable",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/TERMS_OF_SERVICE.md#Términos de Servicio — Pereira Te Escucha",
+      "target": "docs/TERMS_OF_SERVICE.md#10. Contacto",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#docs/USER_FLOW.md",
+      "target": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Descripción general",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Flujo principal del usuario",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Detalle paso a paso",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Detalle paso a paso",
+      "target": "docs/USER_FLOW.md#Paso 1: Seleccionar ubicación",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Detalle paso a paso",
+      "target": "docs/USER_FLOW.md#Paso 2: Tipo de solicitud y mensaje ciudadano",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Detalle paso a paso",
+      "target": "docs/USER_FLOW.md#Paso 3: Evidencias y datos personales",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Detalle paso a paso",
+      "target": "docs/USER_FLOW.md#Paso 4: Envío y reescritura formal",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Detalle paso a paso",
+      "target": "docs/USER_FLOW.md#Paso 5: Seguimiento del estado",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Flujo técnico detallado",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Flujo técnico detallado",
+      "target": "docs/USER_FLOW.md#Flujo de datos",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Flujo técnico detallado",
+      "target": "docs/USER_FLOW.md#Timeline de estados",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Estados de error y recuperación",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Estados de error y recuperación",
+      "target": "docs/USER_FLOW.md#Errores en tiempo de envío",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Estados de error y recuperación",
+      "target": "docs/USER_FLOW.md#Errores en tiempo de seguimiento",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Accesibilidad y usabilidad",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Accesibilidad y usabilidad",
+      "target": "docs/USER_FLOW.md#Indicadores de progreso",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Accesibilidad y usabilidad",
+      "target": "docs/USER_FLOW.md#Retroalimentación al usuario",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Accesibilidad y usabilidad",
+      "target": "docs/USER_FLOW.md#Navegación",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Flujo técnico de backend",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Flujo técnico de backend",
+      "target": "docs/USER_FLOW.md#API Endpoints",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Flujo técnico de backend",
+      "target": "docs/USER_FLOW.md#Flujo de automatización del worker",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Diagrama de secuencias (User Journey)",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Métricas y análisis",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Métricas y análisis",
+      "target": "docs/USER_FLOW.md#Eventos de seguimiento",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Métricas y análisis",
+      "target": "docs/USER_FLOW.md#KPIs de usuario",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Documentación relacionada",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Documentación relacionada",
+      "target": "docs/ARCHITECTURE.md#docs/ARCHITECTURE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Documentación relacionada",
+      "target": "docs/AUDIT.md#docs/AUDIT.md",
+      "kind": "imports"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Documentación relacionada",
+      "target": "docs/PRIVACY_POLICY.md#docs/PRIVACY_POLICY.md",
+      "kind": "imports"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Documentación relacionada",
+      "target": "docs/ROADMAP_PLAY_STORE.md#docs/ROADMAP_PLAY_STORE.md",
+      "kind": "imports"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Diagrama de Flujo de Usuario (User Journey)",
+      "target": "docs/USER_FLOW.md#Notas de implementación",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Notas de implementación",
+      "target": "docs/USER_FLOW.md#Consideraciones de diseño",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Notas de implementación",
+      "target": "docs/USER_FLOW.md#Flujos edge case",
+      "kind": "contains"
+    },
+    {
+      "source": "docs/USER_FLOW.md#Notas de implementación",
+      "target": "docs/USER_FLOW.md#Consideraciones de internacionalización",
+      "kind": "contains"
+    },
+    {
+      "source": "plugins/withKotlinVersion.js#plugins/withKotlinVersion.js",
+      "target": "plugins/withKotlinVersion.js#setGradleProperty",
+      "kind": "contains"
+    },
+    {
+      "source": "plugins/withKotlinVersion.js#plugins/withKotlinVersion.js",
+      "target": "plugins/withKotlinVersion.js#setGradleProperty",
+      "kind": "calls"
+    },
+    {
+      "source": "plugins/withKotlinVersion.js#plugins/withKotlinVersion.js",
+      "target": "plugins/withKotlinVersion.js#setGradleProperty",
+      "kind": "calls"
+    },
+    {
+      "source": "src/components/AppNotice.tsx#src/components/AppNotice.tsx",
+      "target": "src/components/AppNotice.tsx#AppNotice",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepEvidence.tsx#src/components/StepEvidence.tsx",
+      "target": "src/components/StepEvidence.tsx#StepEvidence",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepLocation.tsx#src/components/StepLocation.tsx",
+      "target": "src/components/StepLocation.tsx#StepLocation",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepMessage.tsx#src/components/StepMessage.tsx",
+      "target": "src/components/StepMessage.tsx#StepMessage",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepReview.tsx#src/components/StepReview.tsx",
+      "target": "src/components/StepReview.tsx#StepReview",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#src/components/StepStatus.tsx",
+      "target": "src/components/StepStatus.tsx#StepStatus",
+      "kind": "contains"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#StepStatus",
+      "target": "src/utils/formatters.ts#formatTrackingStatusLabel",
+      "kind": "calls"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#StepStatus",
+      "target": "src/utils/formatters.ts#formatStatusDate",
+      "kind": "calls"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#StepStatus",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "calls"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#StepStatus",
+      "target": "src/utils/formatters.ts#formatTrackingStatusLabel",
+      "kind": "calls"
+    },
+    {
+      "source": "src/components/StepStatus.tsx#StepStatus",
+      "target": "src/utils/formatters.ts#formatStatusDate",
+      "kind": "calls"
+    },
+    {
+      "source": "src/config/env.ts#src/config/env.ts",
+      "target": "src/config/env.ts#trimTrailingSlashes",
+      "kind": "contains"
+    },
+    {
+      "source": "src/config/env.ts#src/config/env.ts",
+      "target": "src/config/env.ts#trimTrailingSlashes",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/api.ts#src/services/api.ts",
+      "target": "src/services/api.ts#fetchWithTimeout",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/api.ts#src/services/api.ts",
+      "target": "src/services/api.ts#readJsonSafe",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/api.ts#src/services/api.ts",
+      "target": "src/services/api.ts#buildBackendHeaders",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#src/services/letter.ts",
+      "target": "src/services/letter.ts#formalizeContext",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#applyFormalLanguage",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#normalizeSentence",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#pickSentencesByKeywords",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#pickSentencesByKeywords",
+      "target": "src/services/letter.ts#normalizeSentence",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#pickSentencesByKeywords",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#pickSentencesByKeywords",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#pickSentencesByKeywords",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#pickSentencesByKeywords",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#applyFormalLanguage",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#formalizeContext",
+      "target": "src/services/letter.ts#applyFormalLanguage",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/letter.ts#src/services/letter.ts",
+      "target": "src/services/letter.ts#buildFormalLetter",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/letter.ts#buildFormalLetter",
+      "target": "src/services/letter.ts#formalizeContext",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/tracking.ts#src/services/tracking.ts",
+      "target": "src/services/tracking.ts#fetchTrackingStatus",
+      "kind": "contains"
+    },
+    {
+      "source": "src/services/tracking.ts#fetchTrackingStatus",
+      "target": "src/services/api.ts#fetchWithTimeout",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/tracking.ts#fetchTrackingStatus",
+      "target": "src/services/api.ts#buildBackendHeaders",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/tracking.ts#fetchTrackingStatus",
+      "target": "src/utils/formatters.ts#parseRetryAfterMs",
+      "kind": "calls"
+    },
+    {
+      "source": "src/services/tracking.ts#fetchTrackingStatus",
+      "target": "src/utils/formatters.ts#shouldContinuePolling",
+      "kind": "calls"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#formatAddressFromReverseGeocode",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#formatTrackingStatusLabel",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#formatStatusDate",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#parseRetryAfterMs",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#computeBackoffDelayMs",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#generateSubjectFromMessage",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#mapTypeToApi",
+      "kind": "contains"
+    },
+    {
+      "source": "src/utils/formatters.ts#src/utils/formatters.ts",
+      "target": "src/utils/formatters.ts#shouldContinuePolling",
+      "kind": "contains"
+    }
+  ]
+}
