@@ -4,6 +4,20 @@ import { PEREIRA_FORM_URL, PLAYWRIGHT_HEADLESS, PLAYWRIGHT_TIMEOUT_MS } from './
 import { submitAnonymousPQRS } from './pereiraAutomation.js';
 import { logger } from './services/logger.js';
 
+export function classifyAutomationError(error) {
+  const message = String(error?.message || '').toLowerCase();
+
+  if (message.includes('timeout') || message.includes('timed out')) {
+    return { category: 'portal_timeout', code: 'PORTAL_TIMEOUT', severity: 'warning' };
+  }
+
+  if (message.includes('portal rechazo') || message.includes('no se pudo extraer') || message.includes('rejected')) {
+    return { category: 'portal_response_error', code: 'PORTAL_RESPONSE_ERROR', severity: 'warning' };
+  }
+
+  return { category: 'unknown', code: 'UNKNOWN_AUTOMATION_ERROR', severity: 'error' };
+}
+
 const REDIS_URL = process.env.REDIS_URL;
 const connection = REDIS_URL
   ? { url: REDIS_URL }
@@ -31,12 +45,18 @@ async function processJob(job) {
 
     await markRequestSuccessful(requestId, result);
   } catch (error) {
-    logger.error({ requestId, attempt: job.attemptsMade, err: error.message }, 'Job attempt failed');
+    const classification = classifyAutomationError(error);
+    logger.warn({
+      requestId,
+      attempt: job.attemptsMade,
+      classification,
+      err: error.message,
+    }, 'Job attempt failed');
 
     await query(
       `INSERT INTO request_status_events (request_id, from_status, to_status, reason, detail)
        VALUES ($1, 'en_proceso', 'error_temporal', 'automation_retry', $2)`,
-      [requestId, `Intento ${job.attemptsMade + 1} fallido: ${String(error.message).slice(0, 500)}`]
+      [requestId, `Intento ${job.attemptsMade + 1} fallido [${classification.code}]: ${String(error.message).slice(0, 500)}`]
     );
 
     throw error;
@@ -53,8 +73,14 @@ export function setupWorker() {
 
   worker.on('failed', async (job, error) => {
     const { requestId } = job.data;
-    logger.error({ requestId, err: error.message, attempts: job.attemptsMade }, 'Job failed after all retries');
-    await markRequestFailed(requestId, error, `Fallo tras ${job.attemptsMade} intentos`);
+    const classification = classifyAutomationError(error);
+    logger.error({
+      requestId,
+      err: error.message,
+      attempts: job.attemptsMade,
+      classification,
+    }, 'Job failed after all retries');
+    await markRequestFailed(requestId, error, `Fallo tras ${job.attemptsMade} intentos [${classification.code}]`);
   });
 
   worker.on('error', (error) => {

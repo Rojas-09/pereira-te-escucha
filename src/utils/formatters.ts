@@ -1,11 +1,11 @@
 import { TrackingSnapshot } from '../types';
 
 export function formatAddressFromReverseGeocode(result: {
-  street?: string;
-  streetNumber?: string;
-  district?: string;
-  city?: string;
-  region?: string;
+  street?: string | null;
+  streetNumber?: string | null;
+  district?: string | null;
+  city?: string | null;
+  region?: string | null;
 } | null): string {
   if (!result) return 'Direccion no disponible para este punto.';
   const parts = [result.street, result.streetNumber, result.district, result.city, result.region]

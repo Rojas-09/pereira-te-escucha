@@ -9,12 +9,13 @@ import createRootRouter from './routes/index.js';
 import createPqrsRouter from './routes/pqrs.js';
 import { requireBackendAuth } from './middleware/auth.js';
 import { errorHandler } from './middleware/error-handler.js';
+import { ALLOWED_ORIGIN as CONFIGURED_ALLOWED_ORIGIN } from './config.js';
 
 export function createApp(BACKEND_API_TOKEN, options = {}) {
   const {
     pqrsServices = {},
   } = options;
-  const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
+  const ALLOWED_ORIGIN = CONFIGURED_ALLOWED_ORIGIN;
 
   const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
