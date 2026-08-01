@@ -55,8 +55,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "c9370033-d12a-4959-9d99-5345a2a2124d"
+        "projectId": "b4a71a94-41e8-453b-ae7c-ebd17d167d1f"
       }
-    }
+    },
+    "owner": "rojas_09"
   }
 }

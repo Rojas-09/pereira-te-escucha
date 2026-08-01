@@ -48,18 +48,6 @@ const schemaStatements = [
     sha256 TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
   )`,
-
-  `CREATE TABLE IF NOT EXISTS automation_jobs (
-    id BIGSERIAL PRIMARY KEY,
-    request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE,
-    queue_name TEXT NOT NULL,
-    job_state TEXT NOT NULL,
-    retry_count INTEGER NOT NULL DEFAULT 0,
-    scheduled_at TIMESTAMPTZ,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (request_id)
-  )`,
 ];
 
 for (const stmt of schemaStatements) {
