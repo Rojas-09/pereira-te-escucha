@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS requests (
+  id BIGSERIAL PRIMARY KEY,
+  client_tracking_code TEXT NOT NULL UNIQUE,
+  status TEXT NOT NULL,
+  medio_respuesta TEXT NOT NULL,
+  correo TEXT,
+  tipo_solicitud TEXT NOT NULL,
+  asunto TEXT NOT NULL,
+  descripcion_original TEXT NOT NULL,
+  descripcion_formal TEXT NOT NULL,
+  consecutivo_oficial TEXT,
+  radicado_oficial TEXT,
+  portal_message TEXT,
+  attempts INTEGER NOT NULL DEFAULT 0,
+  last_error_code TEXT,
+  last_error_message TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS request_status_events (
+  id BIGSERIAL PRIMARY KEY,
+  request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE,
+  from_status TEXT,
+  to_status TEXT NOT NULL,
+  reason TEXT NOT NULL,
+  detail TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS request_attachments (
+  id BIGSERIAL PRIMARY KEY,
+  request_id BIGINT NOT NULL REFERENCES requests(id) ON DELETE CASCADE,
+  original_name TEXT NOT NULL,
+  mime_type TEXT NOT NULL,
+  extension TEXT,
+  size_bytes BIGINT NOT NULL,
+  storage_path TEXT NOT NULL,
+  sha256 TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
